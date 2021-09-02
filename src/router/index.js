@@ -1,25 +1,58 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Home from '../views/Home.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Front',
+    component: () => import('@/views/front/Index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('@/views/front/Home.vue'),
+      },
+      {
+        path: 'products',
+        name: 'Products',
+        component: () => import('@/views/front/Products.vue'),
+      },
+      {
+        path: 'cart',
+        name: 'Cart',
+        component: () => import('@/views/front/Cart.vue'),
+      },
+    ],
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/admin',
+    name: 'Back',
+    component: () => import('@/views/back/Admin.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Login',
+        component: () => import('@/views/back/Login.vue'),
+      },
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/back/Dashboard.vue'),
+        children: [
+          {
+            path: '',
+            name: 'BackProducts',
+            component: () => import('@/views/back/BackProducts.vue'),
+          },
+        ],
+      },
+    ],
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  linkExactActiveClass: 'active',
 });
 
 export default router;

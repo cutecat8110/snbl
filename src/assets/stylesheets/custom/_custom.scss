@@ -1,0 +1,12 @@
+.main-wrapper {
+  min-height: 100vh;
+  padding-top: 56px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+footer {
+  background: red;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
