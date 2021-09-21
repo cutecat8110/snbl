@@ -1,38 +1,41 @@
 <template>
-  <div class="container mt-5">
-    <form class="row justify-content-center" @submit.prevent="signIn">
-      <div class="col-md-6">
+  <div class="about">
+    <div class="container">
+      <div class="row justify-content-center">
         <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
-        <div class="mb-2">
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input
-            type="email"
-            id="inputEmail"
-            class="form-control"
-            placeholder="Email address"
-            v-model="user.username"
-            required
-            autofocus
-          />
-        </div>
-        <div class="mb-2">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
-            v-model="user.password"
-            placeholder="Password"
-            required
-          />
-        </div>
-        <div class="text-end mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">
-            登入
-          </button>
+        <div class="col-8">
+          <form id="form" class="form-signin" @submit.prevent="login">
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="username"
+                placeholder="name@example.com"
+                required
+                autofocus
+                v-model="user.username"
+              />
+              <label for="username">Email address</label>
+            </div>
+            <div class="form-floating">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+                required
+                v-model="user.password"
+              />
+              <label for="password">Password</label>
+            </div>
+            <button class="btn btn-lg btn-primary w-100 mt-3" type="submit">
+              登入
+            </button>
+          </form>
         </div>
       </div>
-    </form>
+      <p class="mt-5 mb-3 text-muted">&copy; 2021~∞ - 六角學院</p>
+    </div>
   </div>
 </template>
 
@@ -47,13 +50,20 @@ export default {
     };
   },
   methods: {
-    signIn() {
-      const api = `${process.env.VUE_APP_API}/admin/signin`;
-      this.$http.post(api, this.user).then((response) => {
-        if (response.data.success) {
-          const { token, expired } = response.data;
-          document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-          this.$router.push('/admin/dashboard');
+    login() {
+      this.$http.post(`${process.env.VUE_APP_API}admin/signin`, this.user).then((res) => {
+        if (res.data.success === true) {
+          console.log(res.data.message, this.user);
+          const { token } = res.data;
+          const { expired } = res.data;
+          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
+          this.$router.push('/admin/products');
+        } else {
+          console.log(res.data.message, this.user);
+          this.user.username = '';
+          this.user.password = '';
+          // eslint-disable-next-line no-alert
+          alert('帳號或密碼錯誤');
         }
       });
     },

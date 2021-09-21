@@ -1,5 +1,17 @@
+@import './custom/googleFonts';
 @import '~bootstrap/scss/functions';
 @import './helpers/variables';
+//Generating All Shades of Gray
+@each $key, $value in $grays {
+  .bg-gray-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-gray-#{$key} {
+    color: $value !important;
+  }
+}
+
 @import '~bootstrap/scss/bootstrap';
 @import './custom/custom';
 @import './custom/materialIcons';

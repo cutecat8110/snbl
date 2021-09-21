@@ -1,18 +1,42 @@
 <template>
-  <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark shadow-sm">
-    <div class="container-xxl">
-      <div class="navbar-brand user-select-none">後台</div>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-          <li class="nav-item">
-            <router-link :to="{ name: 'BackProducts' }" class="nav-link">產品管理列表</router-link>
-          </li>
-        </ul>
-        <router-link :to="{ name: 'Front' }" class="btn btn-outline-secondary btn-sm btn-oblong"
-          >回到前台</router-link
-        >
-      </div>
+  <div class="back">
+    <BackHeader />
+    <div class="position-relative">
+      <ToastMessages />
+      <router-view />
     </div>
-  </nav>
-  <router-view></router-view>
+  </div>
 </template>
+
+<script>
+import BackHeader from '@/components/back/BackHeader.vue';
+import emitter from '@/methods/eventBus';
+import ToastMessages from '@/components/back/ToastMessages.vue';
+import httpMessageState from '@/methods/pushMessageState';
+
+export default {
+  components: { BackHeader, ToastMessages },
+  provide() {
+    return {
+      emitter,
+      httpMessageState,
+    };
+  },
+  created() {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    this.$http.defaults.headers.common.Authorization = `${token}`;
+    const api = `${process.env.VUE_APP_API}api/user/check`;
+    this.$http.post(api).then((res) => {
+      if (!res.data.success) {
+        this.$swal({
+          icon: 'warning',
+          title: '登入過期',
+          text: '請重新登入',
+        }).then(() => {
+          this.$router.push('/login');
+        });
+      }
+    });
+  },
+};
+</script>
