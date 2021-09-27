@@ -1,71 +1,83 @@
 <template>
-  <div class="container py-4">
-    <div class="bg-white px-4 border">
-      <div class="navbar py-3">
-        <div class="container-fluid">
-          <span class="navbar-brand">優惠券管理列表</span>
-          <button
-            class="btn-sm btn-primary d-flex align-items-center"
-            @click="openCouponModal(true)"
-          >
-            <i class="material-icons md-18">add</i>
-            <span>新增</span>
-          </button>
+  <div>
+    <Loading :active="isLoading" :z-index="1060"></Loading>
+    <div class="container py-4">
+      <div class="bg-white px-4 border">
+        <div class="navbar py-3">
+          <div class="container-fluid">
+            <span class="navbar-brand">優惠管理列表</span>
+            <button
+              class="btn-sm btn-primary d-flex align-items-center"
+              @click="openCouponModal(true)"
+            >
+              <i class="material-icons md-18">add</i>
+              <span>新增</span>
+            </button>
+          </div>
         </div>
+        <div class="table-responsive mb-3">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-gray-000">
+              <tr>
+                <th class="position-relative" width="128">有效期限</th>
+                <th class="position-relative ">名稱</th>
+                <th class="position-relative">優惠碼</th>
+                <th class="position-relative">折扣</th>
+                <th class="position-relative" width="128">狀態</th>
+                <th width="128">編輯</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, key) in coupons" :key="key">
+                <td>{{ $filters.date(item.due_date) }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.code }}</td>
+                <td>{{ item.percent / 10 }} 折</td>
+                <td>
+                  <div class="text-success d-flex align-items-center" v-if="item.is_enabled === 1">
+                    <div class="circle bg-success me-2"></div>
+                    <span>啟用 </span>
+                  </div>
+                  <span class="d-flex align-items-center" v-else>
+                    <div class="circle bg-gray-300 me-2"></div>
+                    <span>關閉 </span>
+                  </span>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      @click="openCouponModal(false, item)"
+                    >
+                      編輯
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm" @click="openDelCouponModal(item)">
+                      刪除
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <Pagination :pages="pagination" @emit-page="getCoupons"></Pagination>
       </div>
-      <div class="table-responsive mb-3">
-        <table class="table table-hover align-middle mb-0">
-          <thead class="bg-gray-000">
-            <tr>
-              <th class="position-relative col-4">名稱</th>
-              <th class="position-relative">折扣百分比</th>
-              <th class="position-relative">到期日</th>
-              <th class="position-relative">是否啟用</th>
-              <th class="col-1">編輯</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, key) in coupons" :key="key">
-              <td>{{ item.title }}</td>
-              <td>{{ item.percent }}%</td>
-              <td>{{ $filters.date(item.due_date) }}</td>
-              <td>
-                <div class="text-success d-flex align-items-center" v-if="item.is_enabled === 1">
-                  <div class="circle bg-success me-2"></div>
-                  <span>啟用 </span>
-                </div>
-                <span class="d-flex align-items-center" v-else>
-                  <div class="circle bg-gray-300 me-2"></div>
-                  <span>關閉 </span>
-                </span>
-              </td>
-              <td>
-                <div class="btn-group">
-                  <button
-                    class="btn btn-outline-primary btn-sm"
-                    @click="openCouponModal(false, item)"
-                  >
-                    編輯
-                  </button>
-                  <button class="btn btn-outline-danger btn-sm" @click="openDelCouponModal(item)">
-                    刪除
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <Pagination :pages="pagination" @emit-page="getCoupons"></Pagination>
     </div>
+    <!-- 新增/編輯 元件 -->
+    <CouponModal
+      :coupon="tempCoupon"
+      :is-new="isNew"
+      ref="couponModal"
+      @update-coupon="updateCoupon"
+    ></CouponModal>
+    <!-- 刪除 元件 -->
+    <DelModal
+      :origin="pageName"
+      :delItem="tempCoupon.title"
+      ref="delModal"
+      @del-item="delCoupon"
+    ></DelModal>
   </div>
-  <CouponModal
-    :coupon="tempCoupon"
-    :is-new="isNew"
-    ref="couponModal"
-    @update-coupon="updateCoupon"
-  />
-  <DelModal :item="tempCoupon" ref="delModal" @del-item="delCoupon" />
 </template>
 
 <script>
@@ -78,6 +90,7 @@ export default {
   inject: ['httpMessageState'],
   data() {
     return {
+      pageName: '優惠',
       coupons: {},
       pagination: [],
       tempCoupon: {
@@ -105,61 +118,52 @@ export default {
     },
     openDelCouponModal(item) {
       this.tempCoupon = { ...item };
-      const delComponent = this.$refs.delModal;
-      delComponent.openModal();
+      this.$refs.delModal.openModal();
     },
     getCoupons(page = 1) {
+      this.isLoading = true;
       this.currentPage = page;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons`;
       this.$http.get(url, this.tempProduct).then((res) => {
         this.pagination = res.data.pagination;
         this.coupons = res.data.coupons;
+        this.isLoading = false;
       });
     },
-    updateCoupon(tempCoupon) {
+    updateCoupon(item) {
       this.isLoading = true;
-      if (this.isNew) {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
-        this.$http.post(url, { data: tempCoupon }).then((res) => {
-          if (res.data.success) {
-            this.httpMessageState(res, '新增優惠券');
-            this.isLoading = false;
-            this.getCoupons(this.currentPage);
-            this.$refs.couponModal.hideModal();
-          } else {
-            this.httpMessageState(res, '新增優惠券');
-            this.isLoading = false;
-          }
-        });
-      } else {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
-        this.$http.put(url, { data: this.tempCoupon }).then((res) => {
-          if (res.data.success) {
-            this.httpMessageState(res, '更新優惠券');
-            this.isLoading = false;
-            this.getCoupons(this.currentPage);
-            this.$refs.couponModal.hideModal();
-          } else {
-            this.httpMessageState(res, '更新優惠券');
-            this.isLoading = false;
-          }
-        });
+      this.tempCoupon = item;
+      this.tempCoupon.is_enabled = Number(this.tempCoupon.is_enabled);
+
+      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
+      let httpMethod = 'post';
+      let status = '新增優惠';
+      if (!this.isNew) {
+        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
+        httpMethod = 'put';
+        status = '更新優惠';
       }
+
+      this.$http[httpMethod](api, { data: this.tempCoupon }).then((res) => {
+        if (res.data.success) {
+          this.getCoupons(this.currentPage);
+          this.isLoading = false;
+          this.$refs.couponModal.hideModal();
+          this.httpMessageState(res, status);
+        } else {
+          this.isLoading = false;
+          this.httpMessageState(res, status);
+        }
+      });
     },
     delCoupon() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
       this.isLoading = true;
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
       this.$http.delete(url).then((res) => {
-        if (res.data.success) {
-          this.httpMessageState(res, '刪除優惠券');
-          const delComponent = this.$refs.delModal;
-          delComponent.hideModal();
-          this.isLoading = false;
-          this.getCoupons(this.currentPage);
-        } else {
-          this.httpMessageState(res, '刪除優惠券');
-          this.isLoading = false;
-        }
+        this.getCoupons(this.currentPage);
+        this.isLoading = false;
+        this.httpMessageState(res, '刪除優惠');
+        this.$refs.delModal.hideModal();
       });
     },
   },
@@ -168,3 +172,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/stylesheets/custom/_backTable';
+</style>

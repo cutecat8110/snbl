@@ -30,7 +30,6 @@
           <i class="material-icons">cloud_upload</i>
         </div>
       </nav>
-      <menu-icon class="search" />
     </header>
     <div class="main-wrapper">
       <main>
@@ -46,3 +45,10 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.front {
+  min-height: 100%;
+  background: green;
+}
+</style>

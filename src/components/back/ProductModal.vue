@@ -1,6 +1,5 @@
 <template>
   <div
-    id="productModal"
     ref="modal"
     class="modal fade"
     tabindex="-1"
@@ -40,7 +39,7 @@
             </ul>
           </div>
         </nav>
-        <div class="modal-body modal-xl" ref="modalBody">
+        <div class="modal-body" ref="modalBody">
           <!-- 基本資訊 -->
           <section class="mb-4" ref="basic">
             <h5>基本資訊</h5>
@@ -215,7 +214,7 @@
                           type="text"
                           class="form-control "
                           :class="item.colorChart ? 'colorChart' : 'chart'"
-                          placeholder="請輸入色票，例如：#FFFFF"
+                          placeholder="請輸入色票，例如：#F1F1F1"
                           v-model="item.colorChart"
                         />
                         <button
@@ -409,7 +408,7 @@
                   <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                 </div>
               </div>
-              <!-- 模特展示 -->
+              <!-- 展示 -->
               <template v-if="product.modelImagesUrl">
                 <div class="m-2" v-for="(image, key) in product.modelImagesUrl" :key="key">
                   <div
@@ -440,7 +439,7 @@
                     <div class="fs-6 fw-normal text-gray-600">Upload</div>
                   </label>
                   <div class="form-label mt-2 text-center">
-                    模特展示{{ key + 1 }}
+                    展示 {{ key + 1 }}
                     <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                   </div>
                 </div>
@@ -516,7 +515,7 @@
                     <div class="fs-6 fw-normal text-gray-600">Upload</div>
                   </label>
                   <div class="form-label mt-2 text-center">
-                    細節{{ key + 1 }}
+                    細節 {{ key + 1 }}
                     <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                   </div>
                 </div>
@@ -574,7 +573,7 @@
                     type="file"
                     class="d-none"
                     :ref="item.ref"
-                    @change="uploadFile('item.ref', 'item.ref')"
+                    @change="uploadFile(item.ref, item.ref)"
                   />
                   <i class="material-icons md-dark">file_upload</i>
                   <div class="fs-6 fw-normal text-gray-600">Upload</div>
@@ -721,7 +720,7 @@ export default {
           this.product[item] = [];
         }
       });
-      if (!this.product.is_enabled) {
+      if (this.product.is_enabled === undefined) {
         this.product.is_enabled = 1;
       }
     },
@@ -775,3 +774,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/stylesheets/custom/_modal';
+.modal-content .modal-body {
+  padding: 1.5rem 119px 3rem 1.5rem;
+}
+</style>

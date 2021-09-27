@@ -19,26 +19,29 @@
           <table class="table table-hover align-middle mb-0">
             <thead class="bg-gray-000">
               <tr>
-                <th class="position-relative">分類</th>
-                <th class="position-relative col-5">產品名稱</th>
+                <th class="position-relative" width="128">分類</th>
+                <th class="position-relative">產品名稱</th>
                 <th class="position-relative">原價</th>
                 <th class="position-relative">售價</th>
-                <th class="position-relative">狀態</th>
-                <th class="col-1">編輯</th>
+                <th class="position-relative" width="128">狀態</th>
+                <th width="128">編輯</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in products" :key="item.id">
                 <td>{{ item.category }}</td>
                 <td>
-                  <router-link :to="{ path: `Product/${item.id}` }">{{ item.title }}</router-link>
+                  <router-link v-if="item.is_enabled" :to="{ path: `Product/${item.id}` }">{{
+                    item.title
+                  }}</router-link>
+                  <span v-else>{{ item.title }}</span>
                 </td>
-                <td class="text-end">{{ item.origin_price }}</td>
-                <td class="text-end">{{ item.price }}</td>
+                <td>{{ item.origin_price }}</td>
+                <td>{{ item.price }}</td>
                 <td>
                   <div class="text-success d-flex align-items-center" v-if="item.is_enabled">
                     <div class="circle bg-success me-2"></div>
-                    <span>啟用 </span>
+                    <span>已上架 </span>
                   </div>
                   <span class="d-flex align-items-center" v-else>
                     <div class="circle bg-gray-300 me-2"></div>
@@ -80,7 +83,12 @@
       ref="ProductModal"
     ></ProductModal>
     <!-- 刪除 元件 -->
-    <DelModal @del-item="deleteProduct" ref="DelModal"></DelModal>
+    <DelModal
+      :origin="pageName"
+      :delItem="tempProduct.title"
+      @del-item="deleteProduct"
+      ref="DelModal"
+    ></DelModal>
   </div>
 </template>
 
@@ -98,6 +106,8 @@ export default {
   inject: ['httpMessageState'],
   data() {
     return {
+      whateverActivatesThisLink: false,
+      pageName: '商品',
       isLoading: false,
       products: [],
       pagination: [],
@@ -141,6 +151,7 @@ export default {
       this.tempProduct.imagesUrl = this.tempProduct.imagesUrl.filter(Boolean);
       this.tempProduct.modelImagesUrl = this.tempProduct.modelImagesUrl.filter(Boolean);
       this.tempProduct.detalImagesUrl = this.tempProduct.detalImagesUrl.filter(Boolean);
+      this.tempProduct.is_enabled = Number(this.tempProduct.is_enabled);
       const clothSize = ['S', 'M', 'L', 'XL', 'F'];
       this.tempProduct.clothSize = clothSize.filter(
         (val) => this.tempProduct.clothSize.indexOf(val) !== -1,
@@ -162,12 +173,12 @@ export default {
         httpMethod = 'put';
         status = '更新產品';
       }
-      const productComponent = this.$refs.ProductModal;
+
       this.$http[httpMethod](api, { data: this.tempProduct }).then((res) => {
         if (res.data.success) {
           this.getData(this.currentPage);
           this.isLoading = false;
-          productComponent.hideModal();
+          this.$refs.ProductModal.hideModal();
           this.httpMessageState(res, status);
         } else {
           this.isLoading = false;
@@ -182,19 +193,16 @@ export default {
         this.getData(this.currentPage);
         this.isLoading = false;
         this.httpMessageState(res, '刪除產品');
-        const delComponent = this.$refs.DelModal;
-        delComponent.hideModal();
+        this.$refs.DelModal.hideModal();
       });
     },
   },
   created() {
     this.getData();
-    // const x = ['IdA', 'idB', 'IdC', 'IdD', 'IdE'];
-    // const y = ['idB', 'IdE', 'IdF'];
-
-    // const z = x.filter((val) => y.indexOf(val) !== -1);
-
-    // console.log(z);
   },
 };
 </script>
+
+<style  lang="scss" scoped>
+@import '@/assets/stylesheets/custom/_backTable';
+</style>

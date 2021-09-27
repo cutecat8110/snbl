@@ -8,11 +8,11 @@
     aria-hidden="true"
     data-bs-backdrop="static"
   >
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content  border-0">
         <div class="modal-header">
           <h3 id="exampleModalLabel" class="modal-title">
-            <span>訂單細節</span>
+            <span>編輯訂單</span>
           </h3>
           <button
             type="button"
@@ -22,10 +22,10 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="row">
-            <div class="col-md-4">
-              <h5>用戶資料</h5>
-              <table class="table">
+          <section class="mb-4">
+            <h5>客戶資訊</h5>
+            <div class="pb-2 w-100">
+              <table class="table m-0">
                 <tbody v-if="tempOrder.user">
                   <tr>
                     <th style="width: 100px">姓名</th>
@@ -46,20 +46,22 @@
                 </tbody>
               </table>
             </div>
-            <div class="col-md-8">
-              <h5>訂單細節</h5>
-              <table class="table">
+          </section>
+          <section class="mb-4">
+            <h5>訂單資訊</h5>
+            <div class="pb-2 w-100">
+              <table class="table m-0">
                 <tbody>
                   <tr>
                     <th style="width: 100px">訂單編號</th>
                     <td>{{ tempOrder.id }}</td>
                   </tr>
                   <tr>
-                    <th>下單時間</th>
+                    <th>下單日期</th>
                     <td>{{ $filters.date(tempOrder.create_at) }}</td>
                   </tr>
                   <tr>
-                    <th>付款時間</th>
+                    <th>付款日期</th>
                     <td>
                       <span v-if="tempOrder.paid_date">
                         {{ $filters.date(tempOrder.paid_date) }}
@@ -68,54 +70,73 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>付款狀態</th>
+                    <th>狀態</th>
                     <td>
                       <strong v-if="tempOrder.is_paid" class="text-success">已付款</strong>
-                      <span v-else class="text-muted">尚未付款</span>
+                      <span v-else class="text-gray-500">尚未付款</span>
                     </td>
                   </tr>
                   <tr>
-                    <th>總金額</th>
+                    <th>應付金額</th>
                     <td>
                       {{ $filters.currency(tempOrder.total) }}
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <h5>選購商品</h5>
-              <table class="table">
-                <thead>
-                  <tr></tr>
-                </thead>
+            </div>
+          </section>
+          <section class="mb-4">
+            <h5>訂單明細</h5>
+            <div class="pb-2 mw-100">
+              <table class="table m-0">
                 <tbody>
                   <tr v-for="item in tempOrder.products" :key="item.id">
-                    <th>
+                    <th style="white-space: normal; ">
                       {{ item.product.title }}
                     </th>
-                    <td>{{ item.qty }} / {{ item.product.unit }}</td>
-                    <td class="text-end">
+                    <td class="col-1">{{ item.qty }} / {{ item.product.unit }}</td>
+                    <td class="col-1 text-end">
                       {{ $filters.currency(item.final_total) }}
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <div class="d-flex justify-content-end mb-3">
-                <div class="form-check">
+            </div>
+          </section>
+          <section class="mb-3">
+            <h5>付款狀態</h5>
+            <div class="row g-3 p-2">
+              <div class="col">
+                <!-- 開啟 -->
+                <label for="isEnabled1" class="d-inline-block py-2 me-2">
                   <input
+                    id="isEnabled1"
                     class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="flexCheckDefault"
+                    type="radio"
                     v-model="tempOrder.is_paid"
+                    value="true"
                   />
-                  <label class="form-check-label" for="flexCheckDefault">
-                    <span v-if="tempOrder.is_paid">已付款</span>
-                    <span v-else>未付款</span>
-                  </label>
-                </div>
+                  <span class="px-2">
+                    開啟
+                  </span>
+                </label>
+                <!-- 關閉 -->
+                <label for="isEnabled0" class="d-inline-block py-2 me-2">
+                  <input
+                    id="isEnabled0"
+                    class="form-check-input"
+                    type="radio"
+                    v-model="tempOrder.is_paid"
+                    value="false"
+                  />
+                  <span class="px-2">
+                    關閉
+                  </span>
+                </label>
               </div>
             </div>
-          </div>
+          </section>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary me-3" data-bs-dismiss="modal">
@@ -147,7 +168,9 @@ export default {
     return {
       status: {},
       modal: '',
-      tempOrder: {},
+      tempOrder: {
+        is_paid: '',
+      },
       isPaid: false,
     };
   },
@@ -155,6 +178,20 @@ export default {
     order() {
       this.tempOrder = { ...this.order };
     },
+    'tempOrder.is_paid': {
+      handler() {
+        if (this.tempOrder.is_paid === 'true') {
+          this.tempOrder.is_paid = true;
+        } else if (this.tempOrder.is_paid === 'false') {
+          this.tempOrder.is_paid = false;
+        }
+      },
+      deep: true,
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/stylesheets/custom/_modal';
+</style>

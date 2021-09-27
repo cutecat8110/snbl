@@ -10,6 +10,7 @@ $white: #fff !default;
 $gray-000: #fafafa !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
+$gray-250: #f0f0f0 !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default;
@@ -512,7 +513,7 @@ $border-widths: (
   5: 5px,
 ) !default;
 
-$border-color: #f0f0f0 !default; //$gray-300
+$border-color: $gray-250 !default; //$gray-300
 // scss-docs-end border-variables
 
 // scss-docs-start border-radius-variables
@@ -701,11 +702,11 @@ $table-hover-bg: $gray-000 !default; //rgba($black, $table-hover-bg-factor)
 
 $table-border-factor: 0.1 !default;
 $table-border-width: $border-width !default;
-$table-border-color: #f0f0f0 !default; //$border-color
+$table-border-color: $border-color !default;
 
 $table-striped-order: odd !default;
 
-$table-group-separator-color: #f0f0f0 !default; //currentColor
+$table-group-separator-color: $gray-250 !default; //currentColor
 
 $table-caption-color: $text-muted !default;
 

@@ -1,30 +1,26 @@
 <template>
-  <div
-    class="toast-container position-absolute pt-4 pe-4 top-0 end-0"
-    style="z-index: 1500"
-  >
-    <div
-      v-for="(msg, key) in messages"
-      :key="key"
-      class="toast show"
-      :class="`toast${key}`"
-      role="alert"
-    >
-      <div class="toast-header">
-        <span
-          :class="`bg-${msg.style}`"
-          class="p-2 rounded me-2 d-inline-block"
-        ></span>
-        <strong class="me-auto">{{ msg.title }}</strong>
-        <button
-          type="button"
-          class="btn-close"
-          @click="clearToast(key)"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="toast-body" v-if="msg.content">
-        {{ msg.content }}
+  <div class="position-relative">
+    <div class="toast-container position-absolute pt-4 pe-4 top-0 end-0" style="z-index: 1500">
+      <div
+        v-for="(msg, key) in messages"
+        :key="key"
+        class="toast show"
+        :class="`toast${key}`"
+        role="alert"
+      >
+        <div class="toast-header">
+          <span :class="`bg-${msg.style}`" class="p-2 rounded me-2 d-inline-block"></span>
+          <strong class="me-auto">{{ msg.title }}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            @click="clearToast(key)"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body" v-if="msg.content">
+          {{ msg.content }}
+        </div>
       </div>
     </div>
   </div>
@@ -42,7 +38,7 @@ export default {
     toastShow() {
       setTimeout(() => {
         this.messages.shift();
-      }, 4500);
+      }, 45009999);
     },
     clearToast(index) {
       this.messages.splice(index, 1);

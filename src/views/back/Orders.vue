@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading :active="isLoading" :z-index="1600"></Loading>
+    <Loading :active="isLoading" :z-index="1060"></Loading>
     <div class="container py-4">
       <div class="bg-white px-4 border">
         <div class="navbar py-3">
@@ -12,19 +12,19 @@
           <table class="table table-hover align-middle mb-0">
             <thead class="bg-gray-000">
               <tr>
-                <th class="position-relative">購買時間</th>
-                <th class="position-relative">Email</th>
-                <th class="position-relative col-4">購買款項</th>
-                <th class="position-relative">應付金額</th>
-                <th class="position-relative">是否付款</th>
-                <th class="col-1">編輯</th>
+                <th class="position-relative" width="128">下單日期</th>
+                <th class="position-relative">訂單編號</th>
+                <th class="position-relative">商品</th>
+                <th class="position-relative" width="128">應付金額</th>
+                <th class="position-relative" width="128">狀態</th>
+                <th width="128">編輯</th>
               </tr>
             </thead>
             <tbody>
               <template v-for="(item, key) in orders" :key="key">
-                <tr v-if="orders.length" :class="{ 'text-secondary': !item.is_paid }">
+                <tr v-if="orders.length" :class="{ 'text-gray-500 fw-light': !item.is_paid }">
                   <td>{{ $filters.date(item.create_at) }}</td>
-                  <td><span v-text="item.user.email" v-if="item.user"></span></td>
+                  <td>{{ item.id.substr(1) }}</td>
                   <td>
                     <ul class="list-unstyled my-0">
                       <li v-for="(product, i) in item.products" :key="i">
@@ -33,7 +33,7 @@
                       </li>
                     </ul>
                   </td>
-                  <td class="text-end">{{ item.total }}</td>
+                  <td>{{ $filters.currency(item.total) }}</td>
                   <td>
                     <div class="form-check form-switch">
                       <input
@@ -44,7 +44,7 @@
                         @change="updatePaid(item)"
                       />
                       <label class="form-check-label" :for="`paidSwitch${item.id}`">
-                        <span v-if="item.is_paid">已付款</span>
+                        <span v-if="item.is_paid">付款</span>
                         <span v-else>未付款</span>
                       </label>
                     </div>
@@ -75,8 +75,15 @@
         <Pagination :pages="pagination" @emit-page="getOrders"></Pagination>
       </div>
     </div>
+    <!-- 編輯 元件 -->
     <OrderModal :order="tempOrder" ref="orderModal" @update-paid="updatePaid"></OrderModal>
-    <DelModal ref="delModal" @del-item="delOrder"></DelModal>
+    <!-- 刪除 元件 -->
+    <DelModal
+      :origin="pageName"
+      :delItem="tempOrder.id"
+      ref="delModal"
+      @del-item="delOrder"
+    ></DelModal>
   </div>
 </template>
 
@@ -94,17 +101,20 @@ export default {
   inject: ['httpMessageState'],
   data() {
     return {
+      pageName: '訂單',
       isLoading: false,
       pagination: [],
       currentPage: 1,
       orders: [],
-      tempOrder: {},
+      tempOrder: {
+        id: '',
+      },
     };
   },
   methods: {
     getOrders(page = 1) {
-      this.currentPage = page;
       this.isLoading = true;
+      this.currentPage = page;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(url, this.tempProduct).then((res) => {
         this.orders = res.data.orders;
@@ -135,11 +145,12 @@ export default {
       });
     },
     delOrder() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`;
       this.isLoading = true;
-      this.$http.delete(url).then(() => {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`;
+      this.$http.delete(url).then((res) => {
         this.getOrders(this.currentPage);
         this.isLoading = false;
+        this.httpMessageState(res, '刪除訂單');
         this.$refs.delModal.hideModal();
       });
     },
@@ -149,3 +160,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/stylesheets/custom/_backTable';
+</style>

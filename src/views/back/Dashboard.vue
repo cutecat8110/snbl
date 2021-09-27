@@ -1,10 +1,8 @@
 <template>
-  <div class="back">
+  <div id="dashboard">
     <BackHeader />
-    <div class="position-relative">
-      <ToastMessages />
-      <router-view />
-    </div>
+    <ToastMessages />
+    <router-view />
   </div>
 </template>
 
@@ -40,3 +38,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+#dashboard {
+  min-height: 100%;
+  background: #f0f2f5;
+  padding-top: 56px;
+}
+</style>
