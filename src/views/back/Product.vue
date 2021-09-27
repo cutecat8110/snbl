@@ -37,14 +37,46 @@
           <div class="product-order position-fixed">
             <div>
               <!-- 商品名稱 -->
-              <h3 class="mb-4">{{ product.title }}</h3>
+              <h4 class="mb-3">{{ product.title }}</h4>
               <!-- 價目 -->
-              <div class="fs-4 mb-4 d-flex align-items-center">
-                <span class="origin-price text-decoration-line-through me-3">
-                  NT.&nbsp;{{ product.origin_price }}
+              <div class="fs-4 d-flex align-items-center">
+                <span class="me-3">NT$&nbsp;{{ product.price }}</span>
+                <span class="origin-price text-decoration-line-through">
+                  NT$&nbsp;{{ product.origin_price }}
                 </span>
-                <span class="text-danger">NT.&nbsp;{{ product.price }}</span>
               </div>
+              <div>
+                <span
+                  v-if="product.origin_price == product.price"
+                  class="bg-dark text-white px-1 fs-6"
+                >
+                  NEW
+                </span>
+                <span v-else class="bg-dark text-white px-1 fs-6">SALE</span>
+              </div>
+              <div class="mb-4">
+                <a
+                  href=""
+                  class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+                  @click.prevent=""
+                  >模特展示</a
+                >
+                <span>｜</span>
+                <a
+                  href=""
+                  class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+                  @click.prevent=""
+                  >細節展示</a
+                >
+                <span>｜</span>
+                <a
+                  href=""
+                  class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+                  @click.prevent=""
+                  >商品訊息</a
+                >
+              </div>
+
               <!-- 顏色 -->
               <div class="mb-3">
                 <div class="form-label fs-6">COLOR : &nbsp;{{ selected.color.name }}</div>
@@ -259,7 +291,7 @@ export default {
 }
 
 .origin-price {
-  color: $color-secondary;
+  color: $gray-500;
 }
 .active-box-shadow {
   &:active {
@@ -273,14 +305,13 @@ export default {
   }
   .active {
     .selected-size-box {
-      border: 1px solid #656565;
+      border: 1px solid #656565 !important;
     }
   }
   .selected-size-box {
     border: 1px solid $gray-250;
-
     &:hover {
-      border: 1px solid #656565;
+      border: 1px solid #656565 !important;
     }
   }
 }
