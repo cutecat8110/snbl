@@ -1,228 +1,214 @@
 <template>
-  <main class="bg-white">
-    <Loading :active="isLoading" :z-index="1060"></Loading>
-    <div class="container py-4">
-      <div class="row g-0">
-        <div class="aside-navbar position-relative">
-          <div class="aside-navbar position-fixed">
-            <AsideNavbar></AsideNavbar>
+  <Loading :active="isLoading" :z-index="1060"></Loading>
+  <div class="container py-4">
+    <div class="position-relative">
+      <div class="aside-navbar position-fixed">
+        <AsideNavbar></AsideNavbar>
+      </div>
+    </div>
+    <main>
+      <div class="product">
+        <ProductSwiper :tempProduct="product"></ProductSwiper>
+        <img class="img-fluid" :src="product.modelImageUrl" alt="形象封面.png" />
+        <div ref="modelImagesUrl"></div>
+        <img
+          class="img-fluid"
+          v-for="(item, index) in product.modelImagesUrl"
+          :key="index"
+          :src="item"
+          :alt="'展示圖.png' + index"
+        />
+        <div ref="detalImagesUrl"></div>
+        <img
+          class="img-fluid"
+          v-for="(item, index) in product.detalImagesUrl"
+          :key="index"
+          :src="item"
+          :alt="'細節圖.png' + index"
+        />
+        <img ref="infolImageUrl" class="img-fluid" :src="product.infolImageUrl" alt="款號.png" />
+        <img class="img-fluid" :src="product.sizeImageUrl" alt="尺碼.png" />
+        <img class="img-fluid" :src="product.modelInfoImageUrl" alt="模特.png" />
+        <img class="img-fluid" :src="product.tryOnImageUrl" alt="試穿.png" />
+        <img class="img-fluid" :src="product.tabricImageUrl" alt="面料.png" />
+      </div>
+      <div class="position-relative">
+        <div class="product-order position-fixed">
+          <!-- 商品名稱 -->
+          <h1 class="mb-3 product-title">{{ product.title }}</h1>
+          <!-- 價目 -->
+          <div class="fs-2 d-flex align-items-center">
+            <span class="me-3">NT$&nbsp;{{ product.price }}</span>
+            <span
+              v-if="!(product.price == product.origin_price)"
+              class="origin-price text-decoration-line-through"
+            >
+              NT$&nbsp;{{ product.origin_price }}
+            </span>
           </div>
-        </div>
-        <div class="col product">
           <div>
-            <img class="img-fluid" :src="product.imageUrl" alt="" />
-            <img class="img-fluid" :src="product.modelImageUrl" alt="" />
-            <img
-              class="img-fluid"
-              v-for="(item, index) in product.modelImagesUrl"
-              :key="index"
-              :src="item"
-              alt=""
-            />
-            <img
-              class="img-fluid"
-              v-for="(item, index) in product.detalImagesUrl"
-              :key="index"
-              :src="item"
-              alt=""
-            />
-            <img class="img-fluid" :src="product.infolImageUrl" alt="" />
-            <img class="img-fluid" :src="product.sizeImageUrl" alt="" />
-            <img class="img-fluid" :src="product.modelInfoImageUrl" alt="" />
-            <img class="img-fluid" :src="product.tryOnImageUrl" alt="" />
-            <img class="img-fluid" :src="product.tabricImageUrl" alt="" />
+            <span v-if="product.origin_price == product.price" class="bg-dark text-white px-1 fs-6">
+              NEW
+            </span>
+            <span v-else class="bg-dark text-white px-1 fs-6">SALE</span>
           </div>
-        </div>
-        <div class="product-order position-relative">
-          <div class="product-order position-fixed">
-            <div>
-              <!-- 商品名稱 -->
-              <h4 class="mb-3">{{ product.title }}</h4>
-              <!-- 價目 -->
-              <div class="fs-4 d-flex align-items-center">
-                <span class="me-3">NT$&nbsp;{{ product.price }}</span>
-                <span class="origin-price text-decoration-line-through">
-                  NT$&nbsp;{{ product.origin_price }}
-                </span>
-              </div>
-              <div>
-                <span
-                  v-if="product.origin_price == product.price"
-                  class="bg-dark text-white px-1 fs-6"
-                >
-                  NEW
-                </span>
-                <span v-else class="bg-dark text-white px-1 fs-6">SALE</span>
-              </div>
-              <div class="mb-4">
-                <a
-                  href=""
-                  class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
-                  @click.prevent=""
-                  >模特展示</a
-                >
-                <span>｜</span>
-                <a
-                  href=""
-                  class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
-                  @click.prevent=""
-                  >細節展示</a
-                >
-                <span>｜</span>
-                <a
-                  href=""
-                  class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
-                  @click.prevent=""
-                  >商品訊息</a
-                >
-              </div>
+          <div class="mb-4">
+            <a
+              href="#"
+              class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+              @click.prevent="subNav('modelImagesUrl')"
+              >模特展示</a
+            >
+            <span>｜</span>
+            <a
+              href="#"
+              class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+              @click.prevent="subNav('detalImagesUrl')"
+              >細節展示</a
+            >
+            <span>｜</span>
+            <a
+              href="#"
+              class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+              @click.prevent="subNav('infolImageUrl')"
+              >商品信息</a
+            >
+          </div>
 
-              <!-- 顏色 -->
-              <div class="mb-3">
-                <div class="form-label fs-6">COLOR : &nbsp;{{ selected.color.name }}</div>
-                <div class="color">
-                  <label
-                    v-for="(item, index) in product.colors"
-                    :key="index"
-                    :for="'colors' + index"
-                    class="pointer"
-                    :class="selected.color.name === item.name ? 'active' : ''"
-                  >
-                    <input
-                      :id="'colors' + index"
-                      class="d-none"
-                      type="radio"
-                      :value="item"
-                      v-model="selected.color"
-                    />
-                    <div
-                      class="h-36 w-36 selected-size-box rounded active-box-shadow border
+          <!-- 顏色 -->
+          <div class="mb-3">
+            <div class="form-label fs-6">COLOR : &nbsp;{{ selected.color.name }}</div>
+            <div class="color">
+              <label
+                v-for="(item, index) in product.colors"
+                :key="index"
+                :for="'colors' + index"
+                class="pointer"
+                :class="selected.color.name === item.name ? 'active' : ''"
+              >
+                <input
+                  :id="'colors' + index"
+                  class="d-none"
+                  type="radio"
+                  :value="item"
+                  v-model="selected.color"
+                />
+                <div
+                  class="h-36 w-36 selected-size-box rounded active-box-shadow
                     d-flex justify-content-center align-items-center"
-                    >
-                      <div
-                        class="h-28 w-28 rounded"
-                        :style="{ backgroundColor: item.colorChart }"
-                      ></div>
-                    </div>
-                  </label>
+                >
+                  <div
+                    class="h-28 w-28 rounded"
+                    :style="{ backgroundColor: item.colorChart }"
+                  ></div>
                 </div>
-              </div>
-              <!-- 尺寸 -->
-              <div class="mb-3">
-                <div class="form-label fs-6">SIZE : &nbsp;{{ selected.name }}</div>
-                <div class="size">
-                  <label
-                    v-for="(item, index) in product.clothSize"
-                    :key="index"
-                    :for="'clothSize' + index"
-                    class="pointer"
-                    :class="selected.name === item ? 'active' : ''"
-                  >
-                    <input
-                      :id="'clothSize' + index"
-                      class="d-none"
-                      type="radio"
-                      :value="item"
-                      v-model="selected.name"
-                    />
-                    <div
-                      class="h-36 w-36 selected-size-box rounded active-box-shadow
+              </label>
+            </div>
+          </div>
+          <!-- 尺寸 -->
+          <div class="mb-3">
+            <div class="form-label fs-6">SIZE : &nbsp;{{ selected.name }}</div>
+            <div class="size">
+              <label
+                v-for="(item, index) in product.clothSize"
+                :key="index"
+                :for="'clothSize' + index"
+                class="pointer"
+                :class="selected.name === item ? 'active' : ''"
+              >
+                <input
+                  :id="'clothSize' + index"
+                  class="d-none"
+                  type="radio"
+                  :value="item"
+                  v-model="selected.name"
+                />
+                <div
+                  class="h-36 w-36 selected-size-box rounded active-box-shadow
                     d-flex justify-content-center align-items-center"
-                    >
-                      {{ item }}
-                    </div>
-                  </label>
+                >
+                  {{ item }}
                 </div>
-              </div>
-              <!-- 數量 -->
-              <div class="mb-3">
-                <div class="d-flex align-items-center">
-                  <div class="qty input-group bg-light border flex-nowrap rounded">
-                    <div>
-                      <button
-                        class="qty-btn btn border-0 h-36 w-36 shadow-none active-box-shadow
+              </label>
+            </div>
+          </div>
+          <!-- 數量 -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <div class="qty input-group bg-light border flex-nowrap rounded">
+                <div>
+                  <button
+                    class="qty-btn btn h-36 w-36 active-box-shadow
                     d-flex justify-content-center align-items-cente"
-                        type="button"
-                        @mousedown="qty--"
-                        :disabled="qty === 1"
-                      >
-                        <i class="material-icons md-dark">remove</i>
-                      </button>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control border-0 text-center bg-light shadow-none"
-                      :min="min"
-                      :max="max"
-                      @input="handleInput"
-                      @blur="makeUp"
-                      v-model.number="qty"
-                    />
-                    <div>
-                      <button
-                        class="qty-btn btn border-0 h-36 w-36 shadow-none active-box-shadow
+                    type="button"
+                    @mousedown="qty--"
+                    :disabled="qty === 1"
+                  >
+                    <i class="material-icons md-dark">remove</i>
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  class="form-control border-0 text-center bg-light shadow-none"
+                  :min="min"
+                  :max="max"
+                  @input="handleInput"
+                  @blur="makeUp"
+                  v-model.number="qty"
+                />
+                <div>
+                  <button
+                    class="qty-btn btn h-36 w-36 active-box-shadow
                     d-flex justify-content-center align-items-cente"
-                        type="button"
-                        @mousedown="qty++"
-                        :disabled="qty === 99"
-                      >
-                        <i class="material-icons md-dark">add</i>
-                      </button>
-                    </div>
-                  </div>
+                    type="button"
+                    @mousedown="qty++"
+                    :disabled="qty === 99"
+                  >
+                    <i class="material-icons md-dark">add</i>
+                  </button>
                 </div>
               </div>
-              <!-- 加入購物車/立即購買 -->
-              <div class="row mb-4">
-                <div class="col-12">
-                  <a
-                    v-if="!selected.color"
-                    href="#"
-                    class="go-buy text-nowrap btn
-                  shadow-none active-box-shadow w-100 py-2"
-                    @click.prevent="console.log(123)"
-                    >請選擇顏色
-                  </a>
-                  <a
-                    v-else-if="!selected.name"
-                    href="#"
-                    class="go-buy text-nowrap btn
-                  shadow-none active-box-shadow w-100 py-2"
-                    @click.prevent="console.log(123)"
-                    >請選擇尺寸
-                  </a>
-                  <a
-                    v-else
-                    href="#"
-                    class="add-cart text-white text-nowrap btn
-                  shadow-none active-box-shadow w-100 py-2"
-                    @click.prevent="console.log(123)"
-                    >加入購物車
-                  </a>
-                </div>
+            </div>
+          </div>
+          <!-- 加入購物車/立即購買 -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div
+                v-if="!selected.color"
+                class="text-nowrap text-center border cursor unselect rounded
+                  shadow-none w-100 py-2"
+              >
+                請選擇顏色
               </div>
-              <!-- <div class="col-12">
+              <div
+                v-else-if="!selected.name"
+                class="text-nowrap text-center border cursor unselect rounded
+                  shadow-none w-100 py-2"
+              >
+                請選擇尺寸
+              </div>
               <a
+                v-else
                 href="#"
-                class="go-buy text-nowrap btn shadow-none
-                  active-box-shadow w-100 py-2 "
+                class="add-cart text-white text-nowrap btn
+                  shadow-none active-box-shadow w-100 py-2"
                 @click.prevent="console.log(123)"
-                >加入追蹤清單
+                >加入購物車
               </a>
-            </div> -->
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>
+import ProductSwiper from '@/components/back/ProductSwiper.vue';
 import AsideNavbar from '@/components/back/AsideNavbar.vue';
 
 export default {
-  components: { AsideNavbar },
+  components: { AsideNavbar, ProductSwiper },
 
   data() {
     return {
@@ -264,6 +250,10 @@ export default {
         this.qty = 1;
       }
     },
+    subNav(item) {
+      console.log(this.$refs[item].offsetTop);
+      window.scrollTo(0, this.$refs[item].offsetTop - 56);
+    },
   },
   created() {
     this.getProduct();
@@ -279,15 +269,40 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';
-.aside-navbar {
-  width: 208px;
-}
-.product {
-  margin: 0 48px 0 0;
-}
 
-.product-order {
-  width: 272px;
+.container {
+  display: grid;
+  grid-template-columns: $aside-navbar-width 1fr;
+  grid-column-gap: 5em;
+  .aside-navbar {
+    width: $aside-navbar-width;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr $product-order-width;
+    grid-column-gap: 2.5em;
+    .product {
+      display: grid;
+      grid-template-columns: 1fr;
+      .mySwiper {
+        width: 100%;
+        height: 100%;
+      }
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .product-order {
+      width: $product-order-width;
+      .product-title {
+        font-size: 1.5rem;
+        letter-spacing: -0.075em;
+      }
+    }
+  }
 }
 
 .origin-price {
@@ -305,31 +320,29 @@ export default {
   }
   .active {
     .selected-size-box {
-      border: 1px solid #656565 !important;
+      border: 1px solid #656565;
     }
   }
   .selected-size-box {
     border: 1px solid $gray-250;
     &:hover {
-      border: 1px solid #656565 !important;
+      border: 1px solid #656565;
     }
   }
 }
 .qty {
   .qty-btn {
-    border: 1px solid transparent !important;
-
+    border: 1px solid transparent;
+    &:focus {
+      box-shadow: none;
+    }
     &:hover {
-      border: 1px solid #656565 !important;
+      border: 1px solid #656565;
     }
   }
 }
 .go-buy {
   border: 1px solid $gray-250;
-
-  &:hover {
-    border: 1px solid #656565;
-  }
 }
 .add-cart {
   background: $color-main;

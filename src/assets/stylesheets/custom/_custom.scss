@@ -12,3 +12,11 @@ a {
 .pointer {
   cursor: pointer;
 }
+
+.cursor {
+  cursor: default;
+}
+
+.unselect {
+  user-select: none;
+}

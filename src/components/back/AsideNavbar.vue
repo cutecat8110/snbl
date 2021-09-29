@@ -1,5 +1,5 @@
 <template>
-  <div class="AsideNavbar">
+  <nav>
     <a href="#" class="py-2 d-block text-muted" @click.prevent="">
       ALL ITEMS
     </a>
@@ -10,7 +10,7 @@
         </a>
       </li>
     </ul>
-  </div>
+  </nav>
 </template>
 
 <script>
