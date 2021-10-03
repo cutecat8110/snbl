@@ -4,7 +4,7 @@ $color-main-active: #bd2b4d;
 $color-secondary: #6f7275;
 
 $aside-navbar-width: 168px;
-$product-order-width: 272px;
+$product-form-width: 272px;
 
 $height-width: (
   '16': 16px,
@@ -21,6 +21,48 @@ $height-width: (
   }
 }
 
+@mixin font-sm {
+  font-size: 0.875rem;
+}
+@mixin font-md {
+  font-size: 1rem;
+}
+@mixin font-lg {
+  font-size: 1.25rem;
+}
+@mixin font-xl {
+  font-size: 1.5rem;
+}
+@mixin font-xxl {
+  font-size: 1.875rem;
+}
+
+@mixin sm {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+@mixin md {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin lg {
+  @media (max-width: 992px) {
+    @content;
+  }
+}
+@mixin xl {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+@mixin xxl {
+  @media (max-width: 1400px) {
+    @content;
+  }
+}
+
 // scss-docs-start gray-color-variables
 $white: #fff;
 $gray-000: #fafafa;
@@ -33,7 +75,7 @@ $gray-500: #adb5bd;
 $gray-600: #6c757d;
 $gray-700: #495057;
 $gray-800: #343a40;
-$gray-900: #212529;
+$gray-900: #292b2c; // #212529
 $black: #000;
 // scss-docs-end gray-color-variables
 
@@ -341,3 +383,7 @@ $cyans: (
   'cyan-800': $cyan-800,
   'cyan-900': $cyan-900,
 );
+
+$body-bg: $white;
+$body-color: $gray-900;
+$body-text-align: null;

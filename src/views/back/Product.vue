@@ -279,7 +279,7 @@ export default {
   }
   main {
     display: grid;
-    grid-template-columns: 1fr $product-order-width;
+    grid-template-columns: 1fr $product-form-width;
     grid-column-gap: 2.5em;
     .product {
       display: grid;
@@ -296,7 +296,7 @@ export default {
       }
     }
     .product-order {
-      width: $product-order-width;
+      width: $product-form-width;
       .product-title {
         font-size: 1.5rem;
         letter-spacing: -0.075em;

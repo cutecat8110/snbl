@@ -674,7 +674,7 @@ export default {
       waitProcess: false,
       status: {},
       product: {},
-      category: ['上衣', '裙裝', '褲裝', '配飾', '套裝', '新品'],
+      category: ['NEW 新品', '上衣', '裙裝', '褲裝', '配飾', '套裝專區'],
       unit: ['套', '件'],
       clothSize: ['S', 'M', 'L', 'XL', 'F'],
       productInformation: [
