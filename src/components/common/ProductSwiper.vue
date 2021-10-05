@@ -1,7 +1,6 @@
 <template>
   <template v-if="product.imagesUrl">
     <swiper
-      :style="{ '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }"
       :navigation="true"
       :loop="true"
       :observer="true"
@@ -100,26 +99,69 @@ export default {
   width: 100%;
 }
 
+.mySwiperTop {
+  border-radius: 0.25rem;
+  overflow: hidden;
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: rgba(0, 0, 0, 0.54);
+    opacity: 0.38;
+    transition: color 150ms ease-in-out, opacity 150ms ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
+    &:active {
+      opacity: 1;
+      color: rgba(0, 0, 0, 0.74);
+    }
+  }
+}
+
 .mySwiperBottom {
   padding-top: 0.5rem;
   .swiper-slide {
-    opacity: 0.3;
     cursor: pointer;
-    border: 2px solid transparent;
+    transition: opacity 150ms ease-in-out, border 150ms ease-in-out;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    opacity: 0.7;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0.25rem;
+      border: 2px solid $color-border-active;
+      opacity: 0;
+      transition: opacity 150ms ease-in-out;
+    }
+    &:hover::after,
     &:hover {
       opacity: 1;
-      border: 2px solid #656565;
     }
-    &:active {
-      box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
+    img {
+      transition: transform 300ms ease-in-out;
+    }
+    &:hover:not(.swiper-slide-thumb-active) > img {
+      transform: scale(1.02);
+    }
+    &:active::after {
+      opacity: 1;
     }
   }
   .swiper-slide-thumb-active {
     cursor: default;
-    border: 2px solid #656565;
     opacity: 1;
+    &::after {
+      opacity: 1;
+    }
     &:active {
       box-shadow: none;
+    }
+    img {
+      transform: scale(1.02);
     }
   }
 }

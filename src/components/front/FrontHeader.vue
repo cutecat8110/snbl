@@ -18,10 +18,7 @@
             <router-link to="/products" class="nav-link">
               ALL ITEMS
             </router-link>
-            <router-link
-              to="/products/NEW 新品"
-              class="nav-link high-light"
-            >
+            <router-link to="/products/NEW 新品" class="nav-link highlight">
               NEW 新品
             </router-link>
             <router-link to="/products/上衣" class="nav-link">
@@ -37,11 +34,11 @@
         </nav>
         <div class="collapse navbar-collapse flex-grow-0" id="navbartest">
           <div class="navbar-nav">
-            <div class="nav-link d-flex align-items-center">
-              <i class="material-icons md-18 me-2">favorite</i>
+            <div class="nav-link d-flex align-items-center pointer">
+              <i class="material-icons md-18 me-2">bookmark</i>
               <span>WISHLIST</span>
             </div>
-            <div class="nav-link d-flex align-items-center">
+            <div class="nav-link d-flex align-items-center pointer">
               <i class="material-icons md-18 me-2">shopping_cart</i>
               <span>CART</span>
             </div>
@@ -57,14 +54,25 @@
 .navbar-light {
   .navbar-nav {
     .nav-link {
-      position: relative;
-      font-size: 0.875rem;
-      color: $body-color;
-      .active {
-        color: rgba(0, 0, 0, 0.9);
+      @include font-sm;
+      color: $gray-900;
+      transition: color 150ms ease-in-out;
+      font-weight: 500;
+
+      &:hover {
+        color: $gray-600;
       }
-      &.high-light {
+      &:active {
+        color: $gray-900;
+      }
+      &.highlight {
         color: $color-main;
+        &:hover {
+          color: $color-main-light-hover;
+        }
+        &:active {
+          color: $color-main-active;
+        }
       }
     }
   }

@@ -103,7 +103,7 @@
             <div>
               <button
                 class="qty-btn btn h-36 w-36 active-box-shadow
-                    d-flex justify-content-center align-items-cente"
+                    d-flex justify-content-center align-items-center"
                 type="button"
                 @mousedown="qty--"
                 :disabled="qty === 1"
@@ -208,7 +208,7 @@ section {
   position: fixed;
   width: $product-form-width;
   z-index: 1030;
-  @include lg {
+  @include md {
     display: none;
     width: 100%;
     border-top: 1px solid #656565;
@@ -217,7 +217,7 @@ section {
     left: 0;
   }
   .product-form-container {
-    @include lg {
+    @include md {
       width: 720px;
       margin: 0 auto;
     }
@@ -225,7 +225,7 @@ section {
 }
 
 .product-title {
-  font-size: 1.5rem;
+  @include font-xl;
   letter-spacing: -0.075em;
 }
 

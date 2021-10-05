@@ -1,11 +1,11 @@
 <template>
   <nav>
-    <div class="all-items">
+    <div class="aside-navbar-link">
       <router-link to="/products">
         ALL ITEMS
       </router-link>
     </div>
-    <div v-for="(item, index) in category" :key="index" class="p-2 px-3">
+    <div v-for="(item, index) in category" :key="index" class="aside-navbar-link">
       <router-link :to="'/products/' + item">
         {{ item }}
       </router-link>
@@ -25,32 +25,34 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';
-
 nav {
-
-  @include lg {
+  margin-left: -1rem;
+  width: $aside-navbar-width;
+  @include md {
+    width: auto;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 0.5rem;
   }
-  a {
-    white-space: nowrap;
-    color: $gray-600;
-    font-weight: 500;
-    transition: color 150ms ease-in-out;
-    &:hover {
-      color: $color-main;
+  .aside-navbar-link {
+    &:first-child {
+      a {
+        font-weight: 700;
+      }
     }
-  }
-  .all-items {
-    padding: 0.5rem;
-    @include lg {
+    a {
+      font-weight: 400;
+      border-radius: 0.25rem;
+      display: block;
       padding: 0.5rem 1rem;
-    }
-    & > a {
+      white-space: nowrap;
       color: $gray-900;
       transition: color 150ms ease-in-out;
       &:hover {
         color: $color-main;
+      }
+      &:active {
+        color: $color-main-active;
       }
     }
   }

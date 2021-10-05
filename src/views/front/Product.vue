@@ -5,17 +5,21 @@
       <AsideNavbar></AsideNavbar>
     </div>
     <main>
-      <SubNavbar :product="product"></SubNavbar>
       <div class="product">
+        <div class="product-title">
+          <h1>
+            {{ product.title }}
+          </h1>
+          <SubNavbar :product="product"></SubNavbar>
+        </div>
         <ProductSwiper :tempProduct="product"></ProductSwiper>
-        <img class="img-fluid" :src="product.modelImageUrl" alt="形象封面.png" />
+        <img class="img-fluid" :src="product.modelImageUrl" />
         <div ref="modelImagesUrl"></div>
         <img
           class="img-fluid"
           v-for="(item, index) in product.modelImagesUrl"
           :key="index"
           :src="item"
-          :alt="'展示圖.png' + index"
         />
         <div ref="detalImagesUrl"></div>
         <img
@@ -23,13 +27,12 @@
           v-for="(item, index) in product.detalImagesUrl"
           :key="index"
           :src="item"
-          :alt="'細節圖.png' + index"
         />
-        <img ref="infolImageUrl" class="img-fluid" :src="product.infolImageUrl" alt="款號.png" />
-        <img class="img-fluid" :src="product.sizeImageUrl" alt="尺碼.png" />
-        <img class="img-fluid" :src="product.modelInfoImageUrl" alt="模特.png" />
-        <img class="img-fluid" :src="product.tryOnImageUrl" alt="試穿.png" />
-        <img class="img-fluid" :src="product.tabricImageUrl" alt="面料.png" />
+        <img class="img-fluid" :src="product.tabricImageUrl" />
+        <img ref="infolImageUrl" class="img-fluid" :src="product.infolImageUrl" />
+        <img class="img-fluid" :src="product.sizeImageUrl" />
+        <img class="img-fluid" :src="product.modelInfoImageUrl" />
+        <img class="img-fluid" :src="product.tryOnImageUrl" />
       </div>
       <div class="product-form">
         <ProductForm :product="product" @subNav="subNav"></ProductForm>
@@ -85,18 +88,17 @@ export default {
   display: grid;
   grid-template-columns: $aside-navbar-width 1fr;
   grid-column-gap: 5em;
-  @include lg {
+  @include md {
     grid-template-columns: 1fr;
   }
   .aside-navbar {
     width: $aside-navbar-width;
-    position: relative;
-    @include lg {
+    @include md {
       width: initial;
     }
     nav {
       position: fixed;
-      @include lg {
+      @include md {
         position: static;
       }
     }
@@ -105,53 +107,32 @@ export default {
     display: grid;
     grid-template-columns: 1fr $product-form-width;
     grid-column-gap: 2.5em;
-    @include lg {
+    @include md {
       grid-template-columns: 1fr;
-    }
-    nav {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      grid-row-start: 1;
-      grid-row-end: 2;
-      @include lg {
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 1;
-        grid-row-end: 2;
-      }
     }
     .product {
       display: grid;
       grid-template-columns: 1fr;
-
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 2;
-      grid-row-end: 3;
-      @include lg {
-        margin-top: 2rem;
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 3;
-        grid-row-end: 4;
+      @include md {
         max-width: 750px;
         margin-left: auto;
         margin-right: auto;
       }
+      .product-title {
+        margin: 0.25rem 0 1rem 0;
+        h1 {
+          @include font-xl;
+          display: none;
+          margin: 0;
+          @include md {
+            display: block;
+          }
+        }
+      }
     }
     .product-form {
       width: $product-form-width;
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 2;
-      grid-row-end: 3;
-      @include lg {
-        width: auto;
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 2;
-        grid-row-end: 3;
-      }
+      padding-top: 3.5625rem;
     }
   }
 }
