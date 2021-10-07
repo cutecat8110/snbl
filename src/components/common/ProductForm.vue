@@ -151,7 +151,7 @@
         </div>
       </div>
     </div>
-    <a href="#" class="btn mobile rounded-0" @click.prevent="openModal">加入購物車 </a>
+    <a href="#" class="btn btn-dark mobile rounded-0" @click.prevent="openModal">加入購物車 </a>
   </section>
   <ProductFormModal
     ref="ProductFormModal"
@@ -410,9 +410,6 @@ section {
     }
   }
   .mobile {
-    color: #fff;
-    text-align: center;
-    background: $color-main;
     transition: box-shadow 150ms ease-in-out;
     display: none;
 
@@ -420,14 +417,8 @@ section {
       display: block;
     }
 
-    &:hover {
-      background: $color-main-hover;
-    }
     &:focus {
       box-shadow: none;
-    }
-    &:active {
-      background: $color-main-active;
     }
   }
 }
