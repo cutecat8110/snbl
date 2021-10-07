@@ -66,7 +66,7 @@ nav {
     justify-content: center;
     align-items: center;
 
-    transition: box-shadow, color, border 150ms ease-in-out;
+    transition: box-shadow 150ms ease-in-out, color 150ms ease-in-out, border 150ms ease-in-out;
 
     &.raquo {
       width: 28px;

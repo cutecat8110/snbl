@@ -71,7 +71,6 @@ export default {
       });
     },
     subNav(item) {
-      console.log(this.$refs[item].offsetTop);
       window.scrollTo(0, this.$refs[item].offsetTop - 56);
     },
   },
@@ -132,7 +131,9 @@ export default {
     }
     .product-form {
       width: $product-form-width;
-      padding-top: 3.5625rem;
+      @include md {
+        width: auto;
+      }
     }
   }
 }

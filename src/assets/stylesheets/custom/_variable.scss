@@ -11,6 +11,7 @@ $height-width: (
   '16': 16px,
   '28': 28px,
   '36': 36px,
+  '24': 24px,
 );
 
 @each $key, $value in $height-width {
@@ -23,19 +24,19 @@ $height-width: (
 }
 
 @mixin font-sm {
-  font-size: 0.875rem;
+  font-size: 0.875rem; // 14
 }
 @mixin font-md {
-  font-size: 1rem;
+  font-size: 1rem; // 16
 }
 @mixin font-lg {
-  font-size: 1.25rem;
+  font-size: 1.25rem; // 20
 }
 @mixin font-xl {
-  font-size: 1.5rem;
+  font-size: 1.5rem; // 24
 }
 @mixin font-xxl {
-  font-size: 1.875rem;
+  font-size: 1.875rem; // 30
 }
 
 @mixin xs {

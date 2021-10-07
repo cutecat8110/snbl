@@ -84,17 +84,16 @@ export default {
         transition: text-decoration 900ms ease-in-out;
       }
       .price {
-        display: inline-block;
-        color: $gray-600;
         @include font-sm;
         font-weight: 500;
+        color: $gray-600;
 
         @include xs {
           display: flex;
           flex-direction: column;
         }
         .origin-price {
-          font-weight: 400;
+          font-weight: 300;
           color: $gray-500;
           text-decoration: line-through;
         }

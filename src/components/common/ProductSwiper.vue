@@ -80,7 +80,6 @@ export default {
   },
   setup() {
     const onSlideChange = (swiper) => {
-      console.log('slide change');
       swiper.update();
     };
     return {
@@ -118,10 +117,11 @@ export default {
 }
 
 .mySwiperBottom {
-  padding-top: 0.5rem;
+  padding: 0.5rem;
+  margin: 0 -0.5rem -0.5rem -0.5rem;
   .swiper-slide {
     cursor: pointer;
-    transition: opacity 150ms ease-in-out, border 150ms ease-in-out;
+    transition: opacity 150ms ease-in-out, box-shadow 150ms ease-in-out;
     border-radius: 0.25rem;
     overflow: hidden;
     opacity: 0.7;
@@ -147,8 +147,8 @@ export default {
     &:hover:not(.swiper-slide-thumb-active) > img {
       transform: scale(1.02);
     }
-    &:active::after {
-      opacity: 1;
+    &:active {
+      box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
     }
   }
   .swiper-slide-thumb-active {
