@@ -67,21 +67,21 @@
       </div>
       <!-- 尺寸 -->
       <div class="size-container">
-        <div class="form-label">SIZE : &nbsp;{{ selected.name }}</div>
+        <div class="form-label">SIZE : &nbsp;{{ selected.size.name }}</div>
         <div class="size">
           <label
             v-for="(item, index) in product.clothSize"
             :key="index"
             :for="'clothSize' + index"
             class="pointer"
-            :class="selected.name === item ? 'active' : ''"
+            :class="selected.size === item ? 'active' : ''"
           >
             <input
               :id="'clothSize' + index"
               class="d-none"
               type="radio"
               :value="item"
-              v-model="selected.name"
+              v-model="selected.size"
             />
             <div class="h-36 w-36 selected-box rounded">
               {{ item }}
@@ -115,10 +115,10 @@
       <div v-if="!selected.color" class="btn cursor prompt d-block">
         請選擇顏色
       </div>
-      <div v-else-if="!selected.name" class="btn cursor prompt d-block">
+      <div v-else-if="!selected.size" class="btn cursor prompt d-block">
         請選擇尺寸
       </div>
-      <a v-else href="#" class="btn add-cart d-block" @click.prevent="">加入購物車 </a>
+      <a v-else href="#" class="btn add-cart d-block" @click.prevent="addToCart">加入購物車 </a>
       <!-- 分享 -->
       <div class="share-container">
         <div class="share-title">
@@ -158,6 +158,7 @@
     :product="product"
     :tempSelected="selected"
     :tempQty="qty"
+    @addToCart="addToCart"
     @getQty="getQty"
   ></ProductFormModal>
 </template>
@@ -169,6 +170,7 @@ export default {
   components: {
     ProductFormModal,
   },
+  inject: ['emitter'],
   props: ['product'],
   emits: ['subNav'],
   data() {
@@ -205,6 +207,29 @@ export default {
     },
     openModal() {
       this.$refs.ProductFormModal.openModal();
+    },
+    addToCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      // const time = new Date().getTime();
+      const cart = {
+        product_id: this.product.id,
+        qty: this.qty,
+        selected: {
+          color: this.selected.color,
+          size: this.selected.size,
+          qty: this.qty,
+        },
+      };
+      this.$http.post(url, { data: cart }).then((res) => {
+        if (res.data.success) {
+          this.selected.color = '';
+          this.selected.size = '';
+          this.qty = 1;
+          this.emitter.emit('getCart');
+          this.$refs.ProductFormModal.hideModal();
+        }
+      });
+      // console.log(time);
     },
   },
 };

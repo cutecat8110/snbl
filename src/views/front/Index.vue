@@ -11,9 +11,15 @@
 import ProductSwiper from '@/components/front/FrontHeader.vue';
 import FrontFooter from '@/components/front/FrontFooter.vue';
 import ScrollTop from '@/components/common/ScrollTop.vue';
+import emitter from '@/methods/eventBus';
 
 export default {
   components: { ProductSwiper, FrontFooter, ScrollTop },
+  provide() {
+    return {
+      emitter,
+    };
+  },
 };
 </script>
 

@@ -38,16 +38,41 @@
               <i class="material-icons md-18 me-2">bookmark</i>
               <span>WISHLIST</span>
             </div>
-            <div class="nav-link d-flex align-items-center pointer">
+            <a
+              href="#"
+              class="nav-link d-flex align-items-center pointer"
+              @click.prevent="openModal"
+            >
               <i class="material-icons md-18 me-2">shopping_cart</i>
               <span>CART</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>
     </nav>
   </header>
+  <CartModal ref="CartModal"></CartModal>
 </template>
+
+<script>
+import CartModal from '@/components/common/CartModal.vue';
+
+export default {
+  components: {
+    CartModal,
+  },
+  data() {
+    return {
+      cart: [],
+    };
+  },
+  methods: {
+    openModal() {
+      this.$refs.CartModal.openModal();
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';

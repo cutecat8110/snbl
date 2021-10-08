@@ -6,7 +6,6 @@
     tabindex="-1"
     aria-labelledby="ProductFormModalLabel"
     aria-hidden="true"
-    data-bs-backdrop="static"
   >
     <div class="modal-dialog fixed-bottom">
       <div class="modal-content border-0 rounded-0">
@@ -59,21 +58,21 @@
                 </div>
                 <!-- 尺寸 -->
                 <div class="size-container">
-                  <div class="form-label">SIZE : &nbsp;{{ selected.name }}</div>
+                  <div class="form-label">SIZE : &nbsp;{{ selected.size.name }}</div>
                   <div class="size">
                     <label
                       v-for="(item, index) in product.clothSize"
                       :key="index"
                       :for="'clothSize' + index"
                       class="pointer"
-                      :class="selected.name === item ? 'active' : ''"
+                      :class="selected.size === item ? 'active' : ''"
                     >
                       <input
                         :id="'clothSize' + index"
                         class="d-none"
                         type="radio"
                         :value="item"
-                        v-model="selected.name"
+                        v-model="selected.size"
                       />
                       <div class="h-36 w-36 selected-box rounded">
                         {{ item }}
@@ -121,10 +120,12 @@
               <div v-if="!selected.color" class="btn cursor prompt d-block">
                 請選擇顏色
               </div>
-              <div v-else-if="!selected.name" class="btn cursor prompt d-block">
+              <div v-else-if="!selected.size" class="btn cursor prompt d-block">
                 請選擇尺寸
               </div>
-              <a v-else href="#" class="btn add-cart d-block" @click.prevent="">加入購物車 </a>
+              <a v-else href="#" class="btn add-cart d-block" @click.prevent="$emit('addToCart')"
+                >加入購物車
+              </a>
             </div>
           </div>
         </div>
@@ -199,8 +200,7 @@ export default {
           grid-gap: 1.25rem;
           @include xs {
             grid-template-columns: 1fr 1fr;
-          grid-gap: 1rem;
-
+            grid-gap: 1rem;
           }
           .product-text {
             @include xs {
@@ -282,7 +282,7 @@ export default {
           grid-gap: 1.25rem;
           @include xs {
             grid-template-columns: 1fr;
-          grid-gap: 0.5rem;
+            grid-gap: 0.5rem;
           }
           .qty {
             @include font-sm;
