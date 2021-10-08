@@ -51,6 +51,7 @@ export default {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(url).then((res) => {
         this.cart = res.data.data;
+        this.emitter.emit('pushCart', this.cart);
       });
     },
     delCart(id) {

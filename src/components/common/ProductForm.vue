@@ -43,20 +43,20 @@
       </nav>
       <!-- 顏色 -->
       <div class="color-container">
-        <div class="form-label">COLOR : &nbsp;{{ selected.color.name }}</div>
+        <div class="form-label">COLOR : &nbsp;{{ selected.color }}</div>
         <div class="color">
           <label
             v-for="(item, index) in product.colors"
             :key="index"
             :for="'colors' + index"
             class="pointer"
-            :class="selected.color.name === item.name ? 'active' : ''"
+            :class="selected.color === item.name ? 'active' : ''"
           >
             <input
               :id="'colors' + index"
               class="d-none"
               type="radio"
-              :value="item"
+              :value="item.name"
               v-model="selected.color"
             />
             <div class="h-36 w-36 rounded selected-box">
@@ -175,6 +175,7 @@ export default {
   emits: ['subNav'],
   data() {
     return {
+      cart: {},
       selected: {
         color: '',
         size: '',
@@ -191,6 +192,11 @@ export default {
       } else if (this.qty < this.min) {
         this.qty = this.min;
       }
+    },
+  },
+  computed: {
+    tempSelectedProduct() {
+      return this.cart.carts.filter((item) => item.product_id.match(this.product.id));
     },
   },
   methods: {
@@ -210,16 +216,30 @@ export default {
     },
     addToCart() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      // const time = new Date().getTime();
-      const cart = {
-        product_id: this.product.id,
-        qty: this.qty,
-        selected: {
-          color: this.selected.color,
-          size: this.selected.size,
+      const cart = this.tempSelectedProduct.length > 0
+        ? {
+          product_id: this.product.id,
           qty: this.qty,
-        },
-      };
+          selected: [
+            ...this.tempSelectedProduct[0].selected,
+            {
+              color: this.selected.color,
+              size: this.selected.size,
+              qty: this.qty,
+            },
+          ],
+        }
+        : {
+          product_id: this.product.id,
+          qty: this.qty,
+          selected: [
+            {
+              color: this.selected.color,
+              size: this.selected.size,
+              qty: this.qty,
+            },
+          ],
+        };
       this.$http.post(url, { data: cart }).then((res) => {
         if (res.data.success) {
           this.selected.color = '';
@@ -229,8 +249,13 @@ export default {
           this.$refs.ProductFormModal.hideModal();
         }
       });
-      // console.log(time);
     },
+  },
+  created() {
+    this.emitter.on('pushCart', (cart) => {
+      this.cart = cart;
+    });
+    this.emitter.emit('getCart');
   },
 };
 </script>
