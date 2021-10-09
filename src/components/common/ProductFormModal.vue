@@ -31,20 +31,20 @@
                 </div>
                 <!-- 顏色 -->
                 <div class="color-container">
-                  <div class="form-label">COLOR : &nbsp;{{ selected.color.name }}</div>
+                  <div class="form-label">COLOR : &nbsp;{{ selected.color }}</div>
                   <div class="color">
                     <label
                       v-for="(item, index) in product.colors"
                       :key="index"
                       :for="'colors' + index"
                       class="pointer"
-                      :class="selected.color.name === item.name ? 'active' : ''"
+                      :class="selected.color === item.name ? 'active' : ''"
                     >
                       <input
                         :id="'colors' + index"
                         class="d-none"
                         type="radio"
-                        :value="item"
+                        :value="item.name"
                         v-model="selected.color"
                       />
                       <div class="h-36 w-36 rounded selected-box">
@@ -123,7 +123,11 @@
               <div v-else-if="!selected.size" class="btn cursor prompt d-block">
                 請選擇尺寸
               </div>
-              <a v-else href="#" class="btn add-cart d-block" @click.prevent="$emit('addToCart')"
+              <a
+                v-else
+                href="#"
+                class="btn add-cart d-block"
+                @click.prevent="$emit('addToCart', true)"
                 >加入購物車
               </a>
             </div>

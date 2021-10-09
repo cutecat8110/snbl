@@ -175,7 +175,6 @@ export default {
   emits: ['subNav'],
   data() {
     return {
-      cart: {},
       selected: {
         color: '',
         size: '',
@@ -183,6 +182,7 @@ export default {
       qty: 1,
       min: 0,
       max: 99,
+      modal: false,
     };
   },
   watch: {
@@ -192,11 +192,6 @@ export default {
       } else if (this.qty < this.min) {
         this.qty = this.min;
       }
-    },
-  },
-  computed: {
-    tempSelectedProduct() {
-      return this.cart.carts.filter((item) => item.product_id.match(this.product.id));
     },
   },
   methods: {
@@ -214,48 +209,28 @@ export default {
     openModal() {
       this.$refs.ProductFormModal.openModal();
     },
-    addToCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      const cart = this.tempSelectedProduct.length > 0
-        ? {
-          product_id: this.product.id,
-          qty: this.qty,
-          selected: [
-            ...this.tempSelectedProduct[0].selected,
-            {
-              color: this.selected.color,
-              size: this.selected.size,
-              qty: this.qty,
-            },
-          ],
-        }
-        : {
-          product_id: this.product.id,
-          qty: this.qty,
-          selected: [
-            {
-              color: this.selected.color,
-              size: this.selected.size,
-              qty: this.qty,
-            },
-          ],
-        };
-      this.$http.post(url, { data: cart }).then((res) => {
-        if (res.data.success) {
-          this.selected.color = '';
-          this.selected.size = '';
-          this.qty = 1;
-          this.emitter.emit('getCart');
-          this.$refs.ProductFormModal.hideModal();
-        }
+    addToCart(modal = false) {
+      this.modal = modal;
+      this.emitter.emit('emitToCart', {
+        id: this.product.id,
+        selected: this.selected,
+        qty: this.qty,
       });
     },
+    reSelected() {
+      this.selected.color = '';
+      this.selected.size = '';
+      this.qty = 1;
+      if (this.modal) {
+        this.$refs.ProductFormModal.hideModal();
+        this.modal = false;
+      }
+    },
   },
-  created() {
-    this.emitter.on('pushCart', (cart) => {
-      this.cart = cart;
+  mounted() {
+    this.emitter.on('emitReSelected', () => {
+      this.reSelected();
     });
-    this.emitter.emit('getCart');
   },
 };
 </script>

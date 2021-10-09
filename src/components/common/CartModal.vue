@@ -44,14 +44,19 @@ export default {
   data() {
     return {
       cart: {},
+      tempCart: {},
     };
+  },
+  computed: {
+    filterCart() {
+      return this.cart.carts.filter((item) => item.product_id.match(this.tempCart.id));
+    },
   },
   methods: {
     getCart() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(url).then((res) => {
         this.cart = res.data.data;
-        this.emitter.emit('pushCart', this.cart);
       });
     },
     delCart(id) {
@@ -62,11 +67,45 @@ export default {
         }
       });
     },
+    addToCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const cart = this.filterCart.length > 0
+        ? {
+          product_id: this.tempCart.id,
+          qty: this.tempCart.qty,
+          selected: [
+            ...this.filterCart[0].selected,
+            {
+              color: this.tempCart.selected.color,
+              size: this.tempCart.selected.size,
+              qty: this.tempCart.qty,
+            },
+          ],
+        }
+        : {
+          product_id: this.tempCart.id,
+          qty: this.tempCart.qty,
+          selected: [
+            {
+              color: this.tempCart.selected.color,
+              size: this.tempCart.selected.size,
+              qty: this.tempCart.qty,
+            },
+          ],
+        };
+      this.$http.post(url, { data: cart }).then((res) => {
+        if (res.data.success) {
+          this.getCart();
+          this.emitter.emit('emitReSelected');
+        }
+      });
+    },
   },
   created() {
     this.getCart();
-    this.emitter.on('getCart', () => {
-      this.getCart();
+    this.emitter.on('emitToCart', (item) => {
+      this.tempCart = item;
+      this.addToCart();
     });
   },
 };
