@@ -151,7 +151,7 @@
         </div>
       </div>
     </div>
-    <a href="#" class="btn btn-dark mobile rounded-0" @click.prevent="openModal">加入購物車 </a>
+    <a href="#" class="btn mobile rounded-0" @click.prevent="openModal">加入購物車 </a>
   </section>
   <ProductFormModal
     ref="ProductFormModal"
@@ -225,6 +225,12 @@ export default {
         this.$refs.ProductFormModal.hideModal();
         this.modal = false;
       }
+      this.$swal({
+        icon: 'success',
+        title: '加入購物車',
+        timer: 1500,
+        showConfirmButton: false,
+      });
     },
   },
   mounted() {
@@ -435,11 +441,19 @@ section {
     }
   }
   .mobile {
-    transition: box-shadow 150ms ease-in-out;
     display: none;
+    color: #fff;
+    background: $color-main;
+    transition: background 150ms ease-in-out;
 
     @include md {
       display: block;
+    }
+    &:hover {
+      background: $color-main-hover;
+    }
+    &:active {
+      background: $color-main-active;
     }
 
     &:focus {

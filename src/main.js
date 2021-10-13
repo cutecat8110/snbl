@@ -43,6 +43,7 @@ app.config.globalProperties.$filters = {
   date,
   currency,
 };
+
 app.use(router);
 app.use(VueAxios, axios);
 app.use(VueSweetalert2);

@@ -40,18 +40,19 @@
             </div>
             <a
               href="#"
-              class="nav-link d-flex align-items-center pointer"
+              class="nav-link d-flex align-items-center pointer cart"
+              :class="qty == 0 ? '' : 'active'"
               @click.prevent="openModal"
             >
               <i class="material-icons md-18 me-2">shopping_cart</i>
-              <span>CART</span>
+              <span>CART ( {{ qty }} )</span>
             </a>
           </div>
         </div>
       </div>
     </nav>
   </header>
-  <CartModal ref="CartModal"></CartModal>
+  <CartModal ref="CartModal" @upDateQty="upDateQty"></CartModal>
 </template>
 
 <script>
@@ -63,12 +64,15 @@ export default {
   },
   data() {
     return {
-      cart: [],
+      qty: 0,
     };
   },
   methods: {
     openModal() {
       this.$refs.CartModal.openModal();
+    },
+    upDateQty(qty) {
+      this.qty = qty;
     },
   },
 };
@@ -99,6 +103,30 @@ export default {
           color: $color-main-active;
         }
       }
+    }
+  }
+}
+.cart {
+  span {
+    transition: background 150ms ease-in-out, color 150ms ease-in-out,
+      border-radius 300ms ease-in-out, padding 300ms ease-in-out;
+  }
+  &.active {
+    &:hover {
+      span {
+        background: $color-main-light-hover;
+      }
+    }
+    &:active {
+      span {
+        background: $color-main-active;
+      }
+    }
+    span {
+      border-radius: 50rem;
+      padding: 0 0.25rem;
+      background: $color-main;
+      color: #fff;
     }
   }
 }
