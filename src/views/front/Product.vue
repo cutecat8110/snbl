@@ -60,6 +60,11 @@ export default {
       product: [],
     };
   },
+  watch: {
+    $route() {
+      this.getProduct();
+    },
+  },
   methods: {
     getProduct() {
       this.isLoading = true;
