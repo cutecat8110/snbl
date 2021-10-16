@@ -92,7 +92,7 @@
       <!-- 數量 -->
       <div class="qty input-group bg-light border flex-nowrap rounded">
         <div>
-          <button class="qty-btn btn" type="button" @mousedown="qty--" :disabled="qty === 1">
+          <button class="qty-btn btn" type="button" @mousedown="qty--" :disabled="qty <= 1">
             <i class="material-icons md-dark">remove</i>
           </button>
         </div>
@@ -102,11 +102,11 @@
           :min="min"
           :max="max"
           @input="handleInput"
-          @blur="makeUp"
+          @blur="makeUp(index)"
           v-model.number="qty"
         />
         <div>
-          <button class="qty-btn btn" type="button" @mousedown="qty++" :disabled="qty === 99">
+          <button class="qty-btn btn" type="button" @mousedown="qty++" :disabled="qty >= 99">
             <i class="material-icons md-dark">add</i>
           </button>
         </div>
@@ -217,26 +217,6 @@ export default {
         qty: this.qty,
       });
     },
-    reSelected() {
-      this.selected.color = '';
-      this.selected.size = '';
-      this.qty = 1;
-      if (this.modal) {
-        this.$refs.ProductFormModal.hideModal();
-        this.modal = false;
-      }
-      this.$swal({
-        icon: 'success',
-        title: '加入購物車',
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    },
-  },
-  mounted() {
-    this.emitter.on('emitReSelected', () => {
-      this.reSelected();
-    });
   },
 };
 </script>

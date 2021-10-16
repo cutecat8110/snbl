@@ -52,16 +52,17 @@
       </div>
     </nav>
   </header>
-  <CartModal ref="CartModal" @upDateQty="upDateQty"></CartModal>
+  <AsideCartModal ref="AsideCartModal"></AsideCartModal>
 </template>
 
 <script>
-import CartModal from '@/components/common/CartModal.vue';
+import AsideCartModal from '@/components/common/AsideCartModal.vue';
 
 export default {
   components: {
-    CartModal,
+    AsideCartModal,
   },
+  inject: ['emitter'],
   data() {
     return {
       qty: 0,
@@ -69,11 +70,13 @@ export default {
   },
   methods: {
     openModal() {
-      this.$refs.CartModal.openModal();
+      this.$refs.AsideCartModal.openModal();
     },
-    upDateQty(qty) {
+  },
+  created() {
+    this.emitter.on('upDateQty', (qty) => {
       this.qty = qty;
-    },
+    });
   },
 };
 </script>

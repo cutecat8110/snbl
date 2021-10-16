@@ -73,7 +73,7 @@ nav {
       padding: 0;
       border: 1px solid transparent;
       &:hover > .md-dark {
-        color: rgba(0, 0, 0, 0.64);
+        color: rgba(0, 0, 0, 0.65);
       }
       &:active > .md-dark {
         color: rgba(0, 0, 0, 0.74);
