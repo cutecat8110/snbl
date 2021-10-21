@@ -1,5 +1,4 @@
 <template>
-  <Loading :active="isLoading" :z-index="1060"></Loading>
   <div
     id="CartModal"
     ref="modal"
@@ -54,9 +53,14 @@
                     {{ item.selected[0].qty }}&nbsp;x&nbsp; NT$&nbsp;{{ item.product.price }}
                   </div>
                 </div>
-                <button class="btn delCart" @click.prevent="delCart(item.id, item.selected[0])">
-                  <i class="material-icons md-dark">close</i>
-                </button>
+                <div class="delCart-wrapper">
+                  <button
+                    class="btn delCart"
+                    @click.prevent="$emit('delCart', item.id, item.selected[0])"
+                  >
+                    <i class="material-icons md-dark">close</i>
+                  </button>
+                </div>
               </div>
             </template>
             <div v-else class="nothing">
@@ -73,7 +77,7 @@
               <span>總額&nbsp;NT$&nbsp;{{ cart.total }}</span>
             </div>
             <router-link to="/cart" class="btn w-100 checkout" @click="hideModal">
-              前往結帳
+              訂單結帳
             </router-link>
           </div>
         </template>
@@ -89,171 +93,7 @@ import TooltipMixin from '@/mixins/TooltipMixin';
 export default {
   mixins: [modalMixin, TooltipMixin],
   inject: ['emitter'],
-  data() {
-    return {
-      isLoading: false,
-      cart: {},
-      selected: {},
-      showCart: [],
-      qty: 0,
-    };
-  },
-  methods: {
-    getCart(addToCart) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.$http.get(url).then((res) => {
-        this.cart = res.data.data;
-        // 渲染畫面
-        this.showCart = [];
-        this.cart.carts.forEach((item) => {
-          if (item.selected.length === 1) {
-            this.showCart.push(item);
-          } else {
-            for (let i = 0; i < item.selected.length; i += 1) {
-              const tempProduct = JSON.parse(JSON.stringify(item));
-              const singleSelected = [tempProduct.selected[i]];
-              delete tempProduct.selected;
-              tempProduct.selected = singleSelected;
-              this.showCart.push(tempProduct);
-            }
-          }
-        });
-        // 計算 qty
-        this.qty = 0;
-        if (this.cart.carts.length !== 0) {
-          this.cart.carts.forEach((item) => {
-            this.qty += item.qty;
-          });
-        }
-        this.emitter.emit('upDateQty', this.qty);
-        this.emitter.emit('upDateCart', [this.cart, this.showCart]);
-        if (addToCart) {
-          this.addToCart();
-        }
-      });
-    },
-    delCart(id, selected) {
-      const delCart = this.cart.carts.filter((item) => item.id.match(id));
-      if (delCart[0].selected.length === 1) {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-        this.$http.delete(url).then((res) => {
-          if (res.data.success) {
-            this.getCart();
-            this.$swal({
-              icon: 'success',
-              title: '移除成功',
-              timer: 1500,
-              showConfirmButton: false,
-            });
-          }
-        });
-      } else {
-        this.delPartCart(id, selected, delCart);
-      }
-    },
-    delPartCart(id, selected, delCart) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-      const delPartCart = delCart;
-      const cart = {
-        product_id: delPartCart[0].product_id,
-        qty: delPartCart[0].qty,
-        selected: delPartCart[0].selected,
-      };
-      let selectedIndex = '';
-      cart.selected.forEach((item, index) => {
-        if (item.color.match(selected.color) && item.size.match(selected.size)) {
-          selectedIndex = index;
-        }
-      });
-      cart.qty -= selected.qty;
-      cart.selected.splice(selectedIndex, 1);
-      this.$http.put(url, { data: cart }).then(() => {
-        this.getCart();
-        this.$swal({
-          icon: 'success',
-          title: '移除成功',
-          timer: 1500,
-          showConfirmButton: false,
-        });
-      });
-    },
-    delAllCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`;
-      this.$http.delete(url).then((res) => {
-        if (res.data.message) {
-          this.getCart();
-        }
-      });
-    },
-    addToCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      const cart = {
-        product_id: this.selected.id,
-        qty: this.selected.qty,
-        selected: [],
-      };
-      // 檢查購物車是否已有該商品
-      const checkCart = this.cart.carts.filter((item) => item.product_id.match(this.selected.id));
-      let checkProduct = '';
-
-      if (checkCart.length === 0) {
-        cart.selected = [
-          {
-            color: this.selected.selected.color,
-            size: this.selected.selected.size,
-            qty: this.selected.qty,
-          },
-        ];
-      } else {
-        checkCart[0].selected.forEach((item, index) => {
-          if (
-            item.color.match(this.selected.selected.color)
-            && item.size.match(this.selected.selected.size)
-          ) {
-            checkProduct = index;
-          }
-        });
-      }
-
-      if (checkProduct === '' && checkCart.length !== 0) {
-        cart.selected = [
-          ...checkCart[0].selected,
-          {
-            color: this.selected.selected.color,
-            size: this.selected.selected.size,
-            qty: this.selected.qty,
-          },
-        ];
-      } else if (checkProduct !== '') {
-        const tempSelected = JSON.parse(JSON.stringify(checkCart[0].selected));
-        tempSelected[checkProduct].qty += this.selected.qty;
-        cart.selected = tempSelected;
-      }
-
-      this.$http.post(url, { data: cart }).then((res) => {
-        if (res.data.success) {
-          this.getCart();
-          this.$swal({
-            icon: 'success',
-            title: '加入成功',
-            timer: 1500,
-            showConfirmButton: false,
-          });
-        }
-      });
-    },
-  },
-  created() {
-    this.getCart();
-    this.emitter.on('emitToCart', (item) => {
-      this.selected = item;
-      this.getCart(item);
-    });
-    this.emitter.on('upDateAsideCartModal', (item) => {
-      this.cart = JSON.parse(JSON.stringify(item[0]));
-      this.showCart = JSON.parse(JSON.stringify(item[1]));
-    });
-  },
+  props: ['cart', 'showCart', 'qty'],
 };
 </script>
 
@@ -307,7 +147,7 @@ export default {
           padding: 0.5rem;
           margin: 0 -0.5rem;
           display: grid;
-          grid-template-columns: 4rem 1fr 1.5rem;
+          grid-template-columns: 4rem 1fr 2rem;
           grid-gap: 0.5rem;
           border-radius: 0.25rem;
           border: 1px solid transparent;
@@ -316,9 +156,11 @@ export default {
           &:hover {
             background: $gray-100;
             border: 1px solid $gray-250;
-            .delCart {
-              opacity: 1;
-              transform: translateX(-0.125rem);
+            .delCart-wrapper {
+              .delCart {
+                opacity: 1;
+                transform: translateX(-0.125rem);
+              }
             }
           }
           .text-container {
@@ -340,32 +182,36 @@ export default {
             }
             .price {
               @include font-sm;
-
-              // font-weight: 500;
               color: $gray-600;
             }
           }
-          .delCart {
-            padding: 0;
-            opacity: 0;
-            transform: translateX(0.125rem);
+          .delCart-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .delCart {
+              padding: 0;
+              opacity: 0;
+              line-height: 0;
+              transform: translateX(0.125rem);
 
-            transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-            .material-icons {
-              color: $gray-500;
-              transition: color 150ms ease-in-out;
-            }
-            &:focus {
-              box-shadow: none;
-            }
-            &:hover > .material-icons {
-              color: rgba(0, 0, 0, 0.54);
-            }
-            &:active > .material-icons {
-              color: rgba(0, 0, 0, 0.65);
-            }
-            &:active {
-              box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
+              transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+              .material-icons {
+                color: $gray-500;
+                transition: color 150ms ease-in-out;
+              }
+              &:focus {
+                box-shadow: none;
+              }
+              &:hover > .material-icons {
+                color: rgba(0, 0, 0, 0.54);
+              }
+              &:active > .material-icons {
+                color: rgba(0, 0, 0, 0.65);
+              }
+              &:active {
+                box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
+              }
             }
           }
         }

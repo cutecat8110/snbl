@@ -203,6 +203,6 @@ export default {
 };
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_backTable';
 </style>

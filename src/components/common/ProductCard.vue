@@ -14,7 +14,9 @@
         </h4>
         <div class="price">
           <span class="me-2">NT$&nbsp;{{ item.price }}</span>
-          <span class="origin-price">NT$&nbsp;{{ item.origin_price }}</span>
+          <span v-if="item.price != item.origin_price" class="origin-price">
+            NT$&nbsp;{{ item.origin_price }}
+          </span>
         </div>
       </div>
       <div class="pointer">

@@ -1,5 +1,5 @@
+P
 <template>
-  <Loading :active="isLoading" :z-index="1060"></Loading>
   <div class="container py-4">
     <div class="aside-navbar">
       <AsideNavbar></AsideNavbar>
@@ -23,6 +23,7 @@ import Pagination from '@/components/front/Pagination.vue';
 import ProductCard from '@/components/common/ProductCard.vue';
 
 export default {
+  inject: ['emitter'],
   components: {
     AsideNavbar,
     SubNavbar,
@@ -31,7 +32,6 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
       products: [],
       productsAll: [],
       pagination: [],
@@ -41,21 +41,21 @@ export default {
   },
   methods: {
     getData(page = 1) {
-      this.isLoading = true;
+      this.emitter.emit('isLoading', true);
       this.currentPage = page;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`;
       this.$http.get(url).then((res) => {
         this.products = res.data.products;
         this.pagination = res.data.pagination;
-        this.isLoading = false;
+        this.emitter.emit('isLoading', false);
       });
     },
     getAll() {
-      this.isLoading = true;
+      this.emitter.emit('isLoading', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(url).then((res) => {
         this.productsAll = res.data.products;
-        this.isLoading = false;
+        this.emitter.emit('isLoading', false);
       });
     },
   },

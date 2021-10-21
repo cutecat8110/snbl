@@ -52,7 +52,13 @@
       </div>
     </nav>
   </header>
-  <AsideCartModal ref="AsideCartModal"></AsideCartModal>
+  <AsideCartModal
+    ref="AsideCartModal"
+    :cart="cart"
+    :showCart="showCart"
+    :qty="qty"
+    @delCart="delCart"
+  ></AsideCartModal>
 </template>
 
 <script>
@@ -66,16 +72,193 @@ export default {
   data() {
     return {
       qty: 0,
+      cart: {},
+      showCart: [],
+      selected: {},
+      tempShowCart: [],
     };
   },
+  watch: {
+    $route() {
+      if (this.$route.path === '/cart') {
+        this.getCart();
+      }
+    },
+  },
   methods: {
+    getCart(addToCart) {
+      this.emitter.emit('isLoading', true);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.get(url).then((res) => {
+        this.cart = res.data.data;
+        // 渲染畫面
+        this.showCart = [];
+        this.cart.carts.forEach((item) => {
+          if (item.selected.length === 1) {
+            this.showCart.push(item);
+          } else {
+            for (let i = 0; i < item.selected.length; i += 1) {
+              const tempProduct = JSON.parse(JSON.stringify(item));
+              const singleSelected = [tempProduct.selected[i]];
+              delete tempProduct.selected;
+              tempProduct.selected = singleSelected;
+              this.showCart.push(tempProduct);
+            }
+          }
+        });
+        this.tempShowCart = JSON.parse(JSON.stringify(this.showCart));
+        // 計算 qty
+        this.qty = 0;
+        if (this.cart.carts.length !== 0) {
+          this.cart.carts.forEach((item) => {
+            this.qty += item.qty;
+          });
+        }
+        this.emitter.emit('upDateQty', this.qty);
+        this.emitter.emit('upDateCart', [this.cart, this.showCart, this.tempShowCart]);
+        if (addToCart) {
+          this.addToCart();
+        } else {
+          this.emitter.emit('isLoading', false);
+        }
+      });
+    },
+    delCart(id, selected) {
+      this.emitter.emit('isLoading', true);
+      const delCart = this.cart.carts.filter((item) => item.id.match(id));
+      if (delCart[0].selected.length === 1) {
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+        this.$http.delete(url).then((res) => {
+          if (res.data.success) {
+            this.getCart();
+            this.$swal({
+              icon: 'success',
+              title: '商品已移出購物車',
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        });
+      } else {
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+        const delPartCart = delCart;
+        const cart = {
+          product_id: delPartCart[0].product_id,
+          qty: delPartCart[0].qty,
+          selected: delPartCart[0].selected,
+        };
+        let selectedIndex = '';
+        cart.selected.forEach((item, index) => {
+          if (item.color.match(selected.color) && item.size.match(selected.size)) {
+            selectedIndex = index;
+          }
+        });
+        cart.qty -= selected.qty;
+        cart.selected.splice(selectedIndex, 1);
+        this.$http.put(url, { data: cart }).then(() => {
+          this.getCart();
+          this.$swal({
+            icon: 'success',
+            title: '商品已移出購物車',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        });
+      }
+    },
+    addToCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const cart = {
+        product_id: this.selected.id,
+        qty: this.selected.qty,
+        selected: [],
+      };
+      // 檢查購物車是否已有該商品
+      const checkCart = this.cart.carts.filter((item) => item.product_id.match(this.selected.id));
+      let checkProduct = '';
+
+      if (checkCart.length === 0) {
+        cart.selected = [
+          {
+            color: this.selected.selected.color,
+            size: this.selected.selected.size,
+            qty: this.selected.qty,
+          },
+        ];
+      } else {
+        checkCart[0].selected.forEach((item, index) => {
+          if (
+            item.color.match(this.selected.selected.color)
+            && item.size.match(this.selected.selected.size)
+          ) {
+            checkProduct = index;
+          }
+        });
+      }
+
+      if (checkProduct === '' && checkCart.length !== 0) {
+        cart.selected = [
+          ...checkCart[0].selected,
+          {
+            color: this.selected.selected.color,
+            size: this.selected.selected.size,
+            qty: this.selected.qty,
+          },
+        ];
+      } else if (checkProduct !== '') {
+        const tempSelected = JSON.parse(JSON.stringify(checkCart[0].selected));
+        tempSelected[checkProduct].qty += this.selected.qty;
+        cart.selected = tempSelected;
+      }
+
+      this.$http.post(url, { data: cart }).then((res) => {
+        if (res.data.success) {
+          this.getCart();
+          this.$swal({
+            icon: 'success',
+            title: '商品已加入購物車',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        }
+      });
+    },
+    upDate(index, id, selected) {
+      this.emitter.emit('isLoading', true);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+      const delCart = this.cart.carts.filter((item) => item.id.match(id));
+      const cart = {
+        product_id: delCart[0].product_id,
+        qty: delCart[0].qty,
+        selected: delCart[0].selected,
+      };
+      let selectedIndex = '';
+      cart.selected.forEach((item, i) => {
+        if (item.color.match(selected.color) && item.size.match(selected.size)) {
+          selectedIndex = i;
+        }
+      });
+      cart.qty = cart.qty - this.tempShowCart[index].selected[0].qty + selected.qty;
+      cart.selected.splice(selectedIndex, 1, selected);
+      this.$http.put(url, { data: cart }).then(() => {
+        this.getCart();
+      });
+    },
     openModal() {
       this.$refs.AsideCartModal.openModal();
     },
   },
   created() {
-    this.emitter.on('upDateQty', (qty) => {
-      this.qty = qty;
+    this.getCart();
+    this.emitter.on('emitToCart', (item) => {
+      this.selected = item;
+      this.getCart(item);
+    });
+    this.emitter.on('emitDelCart', (item) => {
+      this.delCart(...item);
+    });
+    this.emitter.on('emitUpDate', (item) => {
+      this.upDate(...item);
     });
   },
 };

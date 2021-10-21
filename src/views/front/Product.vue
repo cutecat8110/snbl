@@ -1,5 +1,4 @@
 <template>
-  <Loading :active="isLoading" :z-index="1060"></Loading>
   <div class="container py-4">
     <div class="aside-navbar">
       <AsideNavbar></AsideNavbar>
@@ -48,6 +47,7 @@ import ProductSwiper from '@/components/common/ProductSwiper.vue';
 import SubNavbar from '@/components/common/SubNavbar.vue';
 
 export default {
+  inject: ['emitter'],
   components: {
     AsideNavbar,
     ProductForm,
@@ -56,7 +56,6 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
       product: [],
     };
   },
@@ -67,12 +66,12 @@ export default {
   },
   methods: {
     getProduct() {
-      this.isLoading = true;
+      this.emitter.emit('isLoading', true);
       const { id } = this.$route.params;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`;
       this.$http.get(url).then((res) => {
         this.product = res.data.product;
-        this.isLoading = false;
+        this.emitter.emit('isLoading', false);
       });
     },
     subNav(item) {
