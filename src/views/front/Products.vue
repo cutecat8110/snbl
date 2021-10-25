@@ -1,4 +1,3 @@
-P
 <template>
   <div class="container py-4">
     <div class="aside-navbar">
@@ -97,7 +96,7 @@ export default {
 .container {
   display: grid;
   grid-template-columns: $aside-navbar-width 1fr;
-  grid-column-gap: 5em;
+  grid-column-gap: 5rem;
   @include md {
     grid-template-columns: 1fr;
   }
@@ -118,7 +117,7 @@ export default {
       padding: 1rem 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-gap: 2em;
+      grid-gap: 2rem;
 
       @include xl {
         grid-template-columns: repeat(3, 1fr);
@@ -127,7 +126,7 @@ export default {
         grid-template-columns: repeat(2, 1fr);
       }
       @include xs {
-        grid-gap: 1em;
+        grid-gap: 1rem;
       }
     }
   }

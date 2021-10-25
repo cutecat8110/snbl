@@ -1,0 +1,29 @@
+.mobile{
+ display: none;
+ overflow: hidden;
+ border-radius: 0.25rem;
+
+@include sm{
+  display: block;
+ }
+
+ .cart-process-card{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: $gray-250;
+  color: $gray-600;
+
+@include font-sm;
+
+  .text{
+   display: flex;
+   align-items: center;
+  }
+  .material-icons{
+   margin-right: 1rem;
+   opacity: 0.54;
+  }
+ }
+}

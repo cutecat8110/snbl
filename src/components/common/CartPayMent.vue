@@ -1,121 +1,139 @@
 <template>
   <aside>
     <section>
-      <h2 class="item-title">送貨及付款方式</h2>
-      <div class="item-body">
-        <!-- 優惠碼-->
-        <div class="form-group">
-          <a
-            href="#"
-            class="coupons-toogle"
-            v-if="!couponToogle"
-            @click.prevent="couponToogle = true"
-          >
-            使用優惠碼
-          </a>
-          <template v-else>
-            <label class="form-label">
-              優惠碼
-            </label>
-            <div class="form-input-group-wrapper">
-              <div class="form-input-group" :class="couponCode ? 'inputClear' : ''">
-                <input
-                  ref="coupons"
-                  type="text"
-                  class="form-control"
-                  v-model="couponCode"
-                  placeholder="請輸入"
-                />
-                <button
-                  v-if="couponCode"
-                  type="button"
-                  class="btn-close position-absolute top-50 end-0 translate-middle-y"
-                  v-on:click="
-                    couponCode = '';
-                    clearFocus('coupons');
-                  "
-                ></button>
+      <div class="item-wrapper">
+        <h2 class="item-title">付款方式</h2>
+        <div class="item-body">
+          <!-- 優惠碼-->
+          <div class="form-group">
+            <a
+              href="#"
+              class="coupons-toogle"
+              v-if="!couponToogle"
+              @click.prevent="couponToogle = true"
+            >
+              使用優惠代碼
+            </a>
+            <template v-else>
+              <label class="form-label">
+                優惠碼
+              </label>
+              <div class="form-input-group-wrapper">
+                <div class="form-input-group" :class="couponCode ? 'inputClear' : ''">
+                  <input
+                    ref="coupons"
+                    type="text"
+                    class="form-control"
+                    v-model="couponCode"
+                    placeholder="請輸入"
+                  />
+                  <button
+                    v-if="couponCode"
+                    type="button"
+                    class="btn-close position-absolute top-50 end-0 translate-middle-y"
+                    v-on:click="
+                      couponCode = '';
+                      clearFocus('coupons');
+                    "
+                  ></button>
+                </div>
+                <button class="btn coupons-btn" type="button" @click="addCouponCode">
+                  使用
+                </button>
               </div>
-              <button class="btn coupons-btn" type="button" @click="addCouponCode">
-                使用
-              </button>
-            </div>
-          </template>
+            </template>
+          </div>
+          <!-- 運送區域 -->
+          <div class="form-group">
+            <label class="form-label">
+              運送區域
+            </label>
+            <select class="form-select" v-model="payment.country">
+              <option value="" disabled>請選擇</option>
+              <option v-for="(item, index) in country" :key="index" :value="item.value">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+          <!-- 運送方式 -->
+          <div class="form-group">
+            <label class="form-label">
+              運送方式
+            </label>
+            <select class="form-select" v-model="payment.conveyance">
+              <option value="" disabled>請選擇</option>
+              <option v-for="(item, index) in showConveyance" :key="index" :value="item.value">
+                {{ item.value }}
+              </option>
+            </select>
+          </div>
+          <!-- 運送方式 - 註釋 -->
+          <ul class="payment-text">
+            <li v-for="(item, index) in showConveyanceText" :key="index">
+              {{ item }}
+            </li>
+          </ul>
+          <!-- 付款方式 -->
+          <div class="form-group">
+            <label class="form-label">
+              付款方式
+            </label>
+            <select class="form-select" v-model="payment.method">
+              <option value="" disabled>請選擇</option>
+              <option v-for="(item, index) in showMethod" :key="index" :value="item.value">
+                {{ item.value }}
+              </option>
+            </select>
+          </div>
+          <!-- 付款方式 - 註釋 -->
+          <ul v-if="showMethoText[0] != ''" class="payment-text">
+            <li v-for="(item, index) in showMethoText" :key="index">
+              {{ item }}
+            </li>
+          </ul>
         </div>
-        <!-- 運送區域 -->
-        <div class="form-group">
-          <label class="form-label">
-            運送區域
-          </label>
-          <select class="form-select" v-model="payment.country">
-            <option value="" disabled>請選擇</option>
-            <option v-for="(item, index) in country" :key="index" :value="item.value">
-              {{ item.name }}
-            </option>
-          </select>
-        </div>
-        <!-- 運送方式 -->
-        <div class="form-group">
-          <label class="form-label">
-            運送方式
-          </label>
-          <select class="form-select" v-model="payment.conveyance">
-            <option value="" disabled>請選擇</option>
-            <option v-for="(item, index) in showConveyance" :key="index" :value="item.value">
-              {{ item.value }}
-            </option>
-          </select>
-        </div>
-        <!-- 運送方式 - 註釋 -->
-        <ul class="payment-text">
-          <li v-for="(item, index) in showConveyanceText" :key="index">
-            {{ item }}
-          </li>
-        </ul>
-        <!-- 付款方式 -->
-        <div class="form-group">
-          <label class="form-label">
-            付款方式
-          </label>
-          <select class="form-select" v-model="payment.method">
-            <option value="" disabled>請選擇</option>
-            <option v-for="(item, index) in showMethod" :key="index" :value="item.value">
-              {{ item.value }}
-            </option>
-          </select>
-        </div>
-        <!-- 付款方式 - 註釋 -->
-        <ul v-if="showMethoText[0] != ''" class="payment-text">
-          <li v-for="(item, index) in showMethoText" :key="index">
-            {{ item }}
-          </li>
-        </ul>
       </div>
     </section>
-    <section class="order-summary">
-      <h2 class="item-title">訂單資訊</h2>
-      <div class="item-body">
-        <!-- 運送區域 -->
-        <div class="text-content">
-          <span>小計</span>
-          <span>{{ cart.total }}</span>
+    <section>
+      <div class="item-wrapper">
+        <h2 class="item-title">訂單信息</h2>
+        <div class="item-body">
+          <!-- 運送區域 -->
+          <div class="text-content">
+            <div class="oder-text">
+              <span class="text-name">總數量</span>
+              <span class="text-oder"> {{ qty }} 件</span>
+            </div>
+            <div class="oder-text">
+              <span class="text-name">商品小計</span>
+              <span class="text-oder">{{ $filters.currency(cart.total) }} </span>
+            </div>
+            <div class="oder-text">
+              <span class="text-name">運費</span>
+              <span class="text-oder">
+                {{ isNaN(conveyanceCost) ? '' : '+&nbsp;' }}
+                {{ conveyanceCost }}
+              </span>
+            </div>
+            <div class="oder-text">
+              <span class="text-name">優惠代碼</span>
+              <span class="text-oder">
+                -&nbsp;{{ $filters.currency(cart.total - cart.final_total) }}
+              </span>
+            </div>
+          </div>
+          <div class="total">
+            <div class="oder-text">
+              <span class="text-name">合計</span>
+              <span class="text-oder">
+                NT$&nbsp;{{ $filters.currency(cart.final_total + conveyanceCost) }}
+              </span>
+            </div>
+          </div>
+          <router-link to="/cart/add" class="btn w-100 checkout">
+            下一步
+          </router-link>
         </div>
-        <div class="text-content">
-          <span>優惠碼</span>
-          <span>{{ cart.final_total - cart.total }}</span>
-        </div>
-        <div class="text-content">
-          <span>運費</span>
-          <span>{{ conveyanceCost }}</span>
-        </div>
-        <div class="border m-1"></div>
-        <div class="text-content">
-          <span>總金額</span>
-          <span>{{ cart.final_total }}</span>
-        </div>
-        <router-link to="/cart" class="btn w-100 checkout">
-          下一步
-        </router-link>
       </div>
     </section>
   </aside>
@@ -512,10 +530,11 @@ export default {
             this.conveyanceCost += 30;
           }
         } else if (this.payment.conveyance === '國際配送') {
-          this.conveyanceCost = '國際配送運費另計';
+          this.conveyanceCost = '未包含';
         } else {
-          this.conveyanceCost = '0';
+          this.conveyanceCost = 0;
         }
+        this.emitter.emit('emitToAdd', this.payment);
       },
       deep: true,
       immediate: true,
@@ -545,7 +564,6 @@ export default {
             text: '請檢查代碼是否有誤及字母大小寫是否相符。',
           });
         }
-        console.log(res);
         this.emitter.emit('emitToCart');
       });
     },
@@ -558,156 +576,238 @@ export default {
       this.cart = JSON.parse(JSON.stringify(item[0]));
     });
     this.emitter.emit('emitToCart');
+    this.emitter.on('upDatePayment', () => {
+      this.emitter.emit('emitToAdd', [this.payment, this.conveyanceCost]);
+    });
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';
+
 aside {
-  section {
+  display: grid;
+  grid-gap: 2.5rem;
+  grid-template-columns: 1fr;
+
+  @include xl {
+    grid-template-columns: 2fr 1fr;
+  }
+  @include md {
+    grid-template-columns: 3fr 2fr;
+  }
+  @include sm {
+    grid-template-columns: 1fr;
+    grid-gap: 1.5rem;
+  }
+
+  .item-wrapper {
     border: 1px solid $gray-250;
     border-radius: 0.25rem;
-    &:first-child {
-      margin-bottom: 1rem;
-    }
+
     h2 {
-      color: $gray-600;
-      line-height: 1.5;
-      @include font-md;
-      background: $gray-250;
-      font-weight: 500;
-      padding: 0.25rem 1rem;
-      text-align: center;
       margin: 0;
+      padding: 0.25rem 1rem;
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+      color: $gray-600;
+      background: $gray-250;
+      @include font-md;
     }
+
     .item-body {
       padding: 1rem;
       color: $gray-600;
+
       .form-group {
         &:not(:first-child) {
           margin-top: 1rem;
         }
+
         .coupons-toogle {
-          color: $color-main;
           text-decoration: underline;
-          cursor: pointer;
+          color: $color-main;
+
           transition: color 150ms ease-in-out;
+          cursor: pointer;
+
           &:hover {
             color: $color-main-light-hover;
           }
+
           &:active {
             color: $color-main-active;
           }
         }
+
         .form-input-group-wrapper {
           display: grid;
-          grid-template-columns: 1fr 5rem;
           grid-gap: 0.5rem;
+          grid-template-columns: 1fr 5rem;
+
           .form-input-group {
             position: relative;
+
             .btn-close {
               visibility: hidden;
-              margin-right: 4px;
               position: absolute;
               top: 50%;
               right: 0;
+
+              margin-right: 4px;
               opacity: 0;
 
               transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out,
                 box-shadow 150ms ease-in-out;
+
               &:active {
                 box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
               }
             }
+
             &.inputClear:hover {
               .btn-close {
                 visibility: visible;
+
                 opacity: 1;
+
                 transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
               }
             }
+
             input {
               padding-right: 32px;
-              color: #000;
+              color: #000000;
+
               &::placeholder {
                 font-weight: 300;
               }
+
               &:focus + .btn-close {
                 visibility: visible;
+
                 opacity: 1;
+
                 transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
               }
             }
           }
+
           .coupons-btn {
             border: 1px solid $gray-250;
+
             transition: background 150ms ease-in-out, box-shadow 150ms ease-in-out;
+
             &:focus {
               box-shadow: none;
             }
+
             &:hover {
               background: $gray-250;
             }
+
             &:active {
               box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
             }
           }
         }
-        .form-label {
-        }
+
         .form-select,
         .form-control {
-          font-weight: 500;
-          transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
           border-color: $gray-250;
+          font-weight: 500;
+
+          transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
+
           &:hover {
             border-color: $color-border-active;
           }
+
           &:focus {
             border-color: $color-border-active;
             box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
           }
         }
       }
+
       .payment-text {
-        font-weight: 300;
-        padding: 0.5rem 0 0 1.07rem;
         margin: 0;
+        padding: 0.5rem 0 0 1.07rem;
+        font-weight: 300;
         white-space: normal;
         @include font-sm;
+
         & > li:not(:last-child) {
           margin-bottom: 0.25rem;
         }
+
         li {
           &::marker {
             content: '• ';
+
             font-weight: bold;
           }
         }
       }
-    }
-    &.order-summary {
-      .text-content {
-        display: flex;
-        justify-content: space-between;
+
+      .text-content,
+      .total {
+        margin-bottom: 1rem;
+
+        .oder-text {
+          display: flex;
+          justify-content: space-between;
+
+          margin-bottom: 0.125rem;
+
+          .text-oder {
+            font-weight: 500;
+            color: $gray-900;
+          }
+        }
       }
+
+      .total {
+        margin-bottom: 0;
+        border-top: 1px solid $gray-250;
+        padding-top: 0.5rem;
+
+        .oder-text {
+          align-items: baseline;
+
+          .text-oder {
+            @include font-lg;
+          }
+        }
+      }
+
       .checkout {
-        margin: 0;
-        color: #fff;
+        margin: 1rem 0 0 0;
+        color: #ffffff;
         background: $color-main;
+
         transition: background 150ms ease-in-out;
+
         &:hover {
           background: $color-main-hover;
         }
+
         &:active {
           background: $color-main-active;
         }
+
         &:focus {
           box-shadow: none;
         }
+
         &:active {
           box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
+        }
+
+        &:disabled {
+          background: coral;
         }
       }
     }

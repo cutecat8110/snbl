@@ -24,6 +24,16 @@ const routes = [
       {
         path: 'cart',
         component: () => import('@/views/front/Cart.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('@/views/front/CartCheckOut.vue'),
+          },
+          {
+            path: 'add',
+            component: () => import('@/views/front/CartAdd.vue'),
+          },
+        ],
       },
     ],
   },
@@ -40,7 +50,7 @@ const routes = [
         component: () => import('@/views/back/Products.vue'),
       },
       {
-        path: 'Product/:id',
+        path: 'product/:id',
         component: () => import('@/views/back/Product.vue'),
       },
       {

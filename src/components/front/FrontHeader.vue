@@ -79,10 +79,11 @@ export default {
     };
   },
   watch: {
-    $route() {
-      if (this.$route.path === '/cart') {
+    $route: {
+      handler() {
         this.getCart();
-      }
+      },
+      immediate: true,
     },
   },
   methods: {
@@ -247,6 +248,15 @@ export default {
     openModal() {
       this.$refs.AsideCartModal.openModal();
     },
+    createOrder(item) {
+      console.log(item);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
+      this.$http.post(url, { data: item }).then((res) => {
+        if (res.data.success) {
+          this.getCart();
+        }
+      });
+    },
   },
   created() {
     this.getCart();
@@ -259,6 +269,9 @@ export default {
     });
     this.emitter.on('emitUpDate', (item) => {
       this.upDate(...item);
+    });
+    this.emitter.on('emitCreateOrder', (item) => {
+      this.createOrder(item);
     });
   },
 };

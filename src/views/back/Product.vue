@@ -192,7 +192,6 @@
                 href="#"
                 class="add-cart text-white text-nowrap btn
                   shadow-none active-box-shadow w-100 py-2"
-                @click.prevent="console.log(123)"
                 >加入購物車
               </a>
             </div>
