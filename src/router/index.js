@@ -35,6 +35,27 @@ const routes = [
           },
         ],
       },
+      {
+        name: 'cart-completed',
+        path: 'order/:id',
+        component: () => import('@/views/front/CartCompleted.vue'),
+      },
+      {
+        path: 'story',
+        component: () => import('@/views/front/Story.vue'),
+      },
+      {
+        path: 'try-free',
+        component: () => import('@/views/front/TryFree.vue'),
+      },
+      {
+        path: 'vip',
+        component: () => import('@/views/front/Vip.vue'),
+      },
+      {
+        path: 'qa',
+        component: () => import('@/views/front/Qa.vue'),
+      },
     ],
   },
   {
@@ -84,6 +105,9 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  scrollBehavior() {
+    return { left: 0, top: 0, behavior: 'instant' };
+  },
   linkExactActiveClass: 'active',
 });
 

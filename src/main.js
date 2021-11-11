@@ -5,6 +5,8 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 // Bootstrap
 import 'bootstrap';
+// Font CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
 // Font Awesome
 import '@fortawesome/fontawesome-free/css/all.css';
 // Sweet Alert
@@ -46,6 +48,7 @@ app.config.globalProperties.$filters = {
 
 app.use(router);
 app.use(VueAxios, axios);
+app.use(CKEditor);
 app.use(VueSweetalert2);
 app.component('Loading', Loading);
 app.component('ErrorMessage', ErrorMessage);

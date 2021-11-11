@@ -534,7 +534,6 @@ export default {
         } else {
           this.conveyanceCost = 0;
         }
-        this.emitter.emit('emitToAdd', this.payment);
       },
       deep: true,
       immediate: true,
@@ -546,7 +545,7 @@ export default {
       const couponCode = {
         code: this.couponCode,
       };
-      if (this.couponCode === '') {
+      if (this.couponCode === '' && this.cart.total - this.cart.final_total !== 0) {
         couponCode.code = 'reset';
       }
       this.$http.post(url, { data: couponCode }).then((res) => {
@@ -588,7 +587,7 @@ export default {
 
 aside {
   display: grid;
-  grid-gap: 2.5rem;
+  grid-gap: 2rem;
   grid-template-columns: 1fr;
 
   @include xl {
@@ -682,7 +681,8 @@ aside {
               color: #000000;
 
               &::placeholder {
-                font-weight: 300;
+                font-weight: 400;
+                color: $gray-500;
               }
 
               &:focus + .btn-close {
@@ -696,19 +696,21 @@ aside {
           }
 
           .coupons-btn {
-            border: 1px solid $gray-250;
+            color: #ffffff;
+            background: $gray-500;
 
-            transition: background 150ms ease-in-out, box-shadow 150ms ease-in-out;
+            transition: opacity 150ms ease-in-out, box-shadow 150ms ease-in-out;
 
             &:focus {
               box-shadow: none;
             }
 
             &:hover {
-              background: $gray-250;
+              opacity: 0.7;
             }
 
             &:active {
+              opacity: 1;
               box-shadow: 0 0 0 0.25rem rgba(211, 212, 213, 0.5);
             }
           }

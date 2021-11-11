@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4 ">
+  <div class="container py-4">
     <CartProcess></CartProcess>
     <main v-if="qty != 0">
       <router-view v-slot="{ Component }">
@@ -35,10 +35,12 @@ export default {
     };
   },
   watch: {
-    qty() {
-      if (this.qty === 0 && this.$route.path !== '/cart') {
-        this.$router.push('/cart');
-      }
+    qty: {
+      handler() {
+        if (this.qty === 0 && this.$route.path !== '/cart') {
+          this.$router.push('/cart');
+        }
+      },
     },
   },
   created() {

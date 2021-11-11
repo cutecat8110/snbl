@@ -19,11 +19,11 @@
           </div>
         </div>
       </router-link>
-      <div class="process-wrapper">
+      <div class="process-wrapper" :class="order ? 'active' : ''">
         <div class="process">
           <i class="material-icons md-36">local_shipping</i>
           <div class="text">
-            <div class="cn">訂購完成</div>
+            <div class="cn">訂單完成</div>
             <div class="en">Oder completed</div>
           </div>
         </div>
@@ -50,11 +50,11 @@
         </div>
         <i class="material-icons md-24">edit</i>
       </router-link>
-      <div class="process-wrapper">
+      <div class="process-wrapper" :class="order ? 'active' : ''">
         <div class="text">
           <div class="order">3.</div>
           <div class="text-group">
-            <div class="cn">訂購完成</div>
+            <div class="cn">訂單完成</div>
             <div class="en">Oder completed</div>
           </div>
         </div>
@@ -63,14 +63,31 @@
     </div>
   </section>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      order: false,
+    };
+  },
+  watch: {
+    $route: {
+      handler() {
+        if (this.$route.name === 'cart-completed') {
+          this.order = true;
+        }
+      },
+      immediate: true,
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';
 
 section {
   margin-top: 1rem;
-  .disabled {
-    pointer-events: none;
-  }
+  pointer-events: none;
 
   .web {
     display: grid;

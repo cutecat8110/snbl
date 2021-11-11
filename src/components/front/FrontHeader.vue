@@ -1,6 +1,6 @@
 <template>
   <header class="fixed-top">
-    <nav class="navbar navbar-expand-lg shadow-sm navbar-light bg-white">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
         <router-link to="/">
           <img src="@/assets/logo.png" alt="logo.png" />
@@ -249,11 +249,12 @@ export default {
       this.$refs.AsideCartModal.openModal();
     },
     createOrder(item) {
-      console.log(item);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
       this.$http.post(url, { data: item }).then((res) => {
         if (res.data.success) {
           this.getCart();
+          const id = res.data.orderId;
+          this.$router.push(`/order/${id}`);
         }
       });
     },
@@ -280,26 +281,29 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';
 .navbar-light {
-  .navbar-nav {
-    .nav-link {
-      @include font-sm;
-      color: $gray-900;
-      transition: color 150ms ease-in-out;
-      font-weight: 500;
-
-      &:hover {
-        color: $gray-600;
-      }
-      &:active {
+  .container {
+    min-height: 2.5rem;
+    .navbar-nav {
+      .nav-link {
+        @include font-sm;
         color: $gray-900;
-      }
-      &.highlight {
-        color: $color-main;
+        transition: color 150ms ease-in-out;
+        font-weight: 500;
+
         &:hover {
-          color: $color-main-light-hover;
+          color: $gray-600;
         }
         &:active {
-          color: $color-main-active;
+          color: $gray-900;
+        }
+        &.highlight {
+          color: $color-main;
+          &:hover {
+            color: $color-main-light-hover;
+          }
+          &:active {
+            color: $color-main-active;
+          }
         }
       }
     }
