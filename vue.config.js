@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/snbl/dist/'
+  publicPath: '/Snbl/dist/'
 }
