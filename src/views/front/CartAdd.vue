@@ -920,10 +920,10 @@ export default {
       qty: 0,
       form: {
         user: {
-          name: '王小明',
-          email: 'Wang@gmail.com',
-          tel: '0980416325',
-          address: '404台中市北區三民路三段161號',
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
         },
         message: {
           payment: {
