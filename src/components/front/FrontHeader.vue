@@ -34,18 +34,23 @@
         </nav>
         <div class="collapse navbar-collapse flex-grow-0" id="navbartest">
           <div class="navbar-nav">
-            <div class="nav-link d-flex align-items-center pointer">
+            <a
+              href="#"
+              class="nav-link d-flex align-items-center pointer cart"
+              :class="myFavoriteQty == 0 ? '' : 'active'"
+              @click.prevent="openModal('AsideWishModal')"
+            >
               <i class="material-icons md-18 me-2">bookmark</i>
-              <span>WISHLIST</span>
-            </div>
+              <span>WISHLIST {{ myFavoriteQty === 0 ? '' : `( ` + myFavoriteQty + ` )` }} </span>
+            </a>
             <a
               href="#"
               class="nav-link d-flex align-items-center pointer cart"
               :class="qty == 0 ? '' : 'active'"
-              @click.prevent="openModal"
+              @click.prevent="openModal('AsideCartModal')"
             >
               <i class="material-icons md-18 me-2">shopping_cart</i>
-              <span>CART ( {{ qty }} )</span>
+              <span>CART {{ qty === 0 ? '' : `( ` + qty + ` )` }}</span>
             </a>
           </div>
         </div>
@@ -59,14 +64,31 @@
     :qty="qty"
     @delCart="delCart"
   ></AsideCartModal>
+  <AsideWishModal
+    ref="AsideWishModal"
+    :myFavoriteProducts="myFavoriteProducts"
+    @addMyFavorite="addMyFavorite"
+  ></AsideWishModal>
 </template>
 
 <script>
 import AsideCartModal from '@/components/common/AsideCartModal.vue';
+import AsideWishModal from '@/components/common/AsideWishModal.vue';
+
+const sotrageMethods = {
+  save(favorite) {
+    const favoriteString = JSON.stringify(favorite);
+    localStorage.setItem('Snblfavorite', favoriteString);
+  },
+  get() {
+    return JSON.parse(localStorage.getItem('Snblfavorite'));
+  },
+};
 
 export default {
   components: {
     AsideCartModal,
+    AsideWishModal,
   },
   inject: ['emitter'],
   data() {
@@ -76,6 +98,8 @@ export default {
       showCart: [],
       selected: {},
       tempShowCart: [],
+      productsAll: [],
+      myFavorite: sotrageMethods.get() || [],
     };
   },
   watch: {
@@ -86,7 +110,42 @@ export default {
       immediate: true,
     },
   },
+  computed: {
+    myFavoriteQty() {
+      return this.myFavorite.length;
+    },
+    myFavoriteProducts() {
+      const tempMyFavoriteProducts = [];
+      this.productsAll.forEach((item) => {
+        if (this.myFavorite.includes(item.id)) {
+          tempMyFavoriteProducts.push(item);
+        }
+      });
+      return tempMyFavoriteProducts;
+    },
+  },
   methods: {
+    addMyFavorite(id) {
+      if (this.myFavorite.includes(id)) {
+        this.myFavorite.splice(this.myFavorite.indexOf(id), 1);
+        this.$swal({
+          icon: 'success',
+          title: '商品已移出願望清單',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      } else {
+        this.myFavorite.push(id);
+        this.$swal({
+          icon: 'success',
+          title: '商品已加入願望清單',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+      sotrageMethods.save(this.myFavorite);
+      this.emitter.emit('getMyFavorite');
+    },
     getCart(addToCart) {
       this.emitter.emit('isLoading', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
@@ -122,6 +181,14 @@ export default {
         } else {
           this.emitter.emit('isLoading', false);
         }
+      });
+    },
+    getAll() {
+      this.emitter.emit('isLoading', true);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(url).then((res) => {
+        this.productsAll = res.data.products;
+        this.emitter.emit('isLoading', false);
       });
     },
     delCart(id, selected) {
@@ -245,8 +312,8 @@ export default {
         this.getCart();
       });
     },
-    openModal() {
-      this.$refs.AsideCartModal.openModal();
+    openModal(item) {
+      this.$refs[item].openModal();
     },
     createOrder(item) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
@@ -261,6 +328,7 @@ export default {
   },
   created() {
     this.getCart();
+    this.getAll();
     this.emitter.on('emitToCart', (item) => {
       this.selected = item;
       this.getCart(item);
@@ -273,6 +341,9 @@ export default {
     });
     this.emitter.on('emitCreateOrder', (item) => {
       this.createOrder(item);
+    });
+    this.emitter.on('emitUpDateMyFavorite', (id) => {
+      this.addMyFavorite(id);
     });
   },
 };

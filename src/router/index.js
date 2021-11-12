@@ -56,6 +56,22 @@ const routes = [
         path: 'qa',
         component: () => import('@/views/front/Qa.vue'),
       },
+      {
+        path: 'shopping-process',
+        component: () => import('@/views/front/ShoppingProcess.vue'),
+      },
+      {
+        path: 'policy',
+        component: () => import('@/views/front/Policy.vue'),
+      },
+      {
+        path: 'payment-delivery',
+        component: () => import('@/views/front/PaymentDelivery.vue'),
+      },
+      {
+        path: 'terms',
+        component: () => import('@/views/front/Terms.vue'),
+      },
     ],
   },
   {

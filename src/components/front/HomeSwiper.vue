@@ -11,8 +11,44 @@
       :effect="'fade'"
       class="mySwiperTop"
     >
-      <swiper-slide v-for="(item, index) in image" :key="index">
-        <div class="banner-img" :style="{ backgroundImage: 'url(' + item + ')' }">
+      <swiper-slide>
+        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[0] + ')' }">
+          <div class="text-box">
+            <div class="title">SNBL</div>
+            <div class="slogan">一千萬少女的選擇</div>
+          </div>
+        </div>
+        <div class="mark"></div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[1] + ')' }">
+          <div class="text-box">
+            <div class="title">SNBL</div>
+            <div class="slogan">一千萬少女的選擇</div>
+          </div>
+        </div>
+        <div class="mark"></div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[2] + ')' }">
+          <div class="text-box">
+            <div class="title">SNBL</div>
+            <div class="slogan">一千萬少女的選擇</div>
+          </div>
+        </div>
+        <div class="mark"></div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[3] + ')' }">
+          <div class="text-box">
+            <div class="title">SNBL</div>
+            <div class="slogan">一千萬少女的選擇</div>
+          </div>
+        </div>
+        <div class="mark"></div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[4] + ')' }">
           <div class="text-box">
             <div class="title">SNBL</div>
             <div class="slogan">一千萬少女的選擇</div>

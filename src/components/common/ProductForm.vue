@@ -4,7 +4,15 @@
       <!-- 商品名稱 -->
       <div class="product-title">
         <h1>{{ product.title }}</h1>
-        <i class="material-icons pointer">bookmark_border</i>
+        <a
+          class="pointer"
+          @click.prevent="emitUpDateMyFavorite(product.id)"
+          :class="{ active: myFavorite.includes(product.id) }"
+        >
+          <i class="material-icons">
+            {{ myFavorite.includes(product.id) ? 'bookmark' : 'bookmark_border' }}
+          </i>
+        </a>
       </div>
       <!-- 價格 -->
       <div class="price">
@@ -166,6 +174,16 @@
 <script>
 import ProductFormModal from '@/components/common/ProductFormModal.vue';
 
+const sotrageMethods = {
+  save(favorite) {
+    const favoriteString = JSON.stringify(favorite);
+    localStorage.setItem('Snblfavorite', favoriteString);
+  },
+  get() {
+    return JSON.parse(localStorage.getItem('Snblfavorite'));
+  },
+};
+
 export default {
   components: {
     ProductFormModal,
@@ -183,6 +201,7 @@ export default {
       min: 0,
       max: 99,
       modal: false,
+      myFavorite: sotrageMethods.get() || [],
     };
   },
   watch: {
@@ -195,6 +214,9 @@ export default {
     },
   },
   methods: {
+    emitUpDateMyFavorite(id) {
+      this.emitter.emit('emitUpDateMyFavorite', id);
+    },
     handleInput(e) {
       this.qty = e.target.value.replace(/[^\d]/g, '');
     },
@@ -217,6 +239,11 @@ export default {
         qty: this.qty,
       });
     },
+  },
+  created() {
+    this.emitter.on('getMyFavorite', () => {
+      this.myFavorite = sotrageMethods.get();
+    });
   },
 };
 </script>
@@ -248,12 +275,25 @@ section {
         @include font-xl;
         margin: 0;
       }
-      .material-icons {
-        margin-top: 0.25rem;
-        color: $gray-500;
-        transition: color 150ms ease-in-out;
-        &:hover {
-          color: $color-main;
+      a {
+        .material-icons {
+          margin-top: 0.25rem;
+          color: $gray-500;
+          transition: color 150ms ease-in-out;
+          &:hover {
+            color: $color-main;
+          }
+          &:active {
+            color: $color-main-active;
+          }
+        }
+        &.active {
+          .material-icons {
+            color: $color-main;
+            &:active {
+              color: $color-main-active;
+            }
+          }
         }
       }
     }

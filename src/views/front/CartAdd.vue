@@ -251,7 +251,7 @@
                     class="form-control"
                     cols="30"
                     rows="5"
-                    placeholder="有什麼想告訴我們嗎？"
+                    placeholder="有什麼想告訴我們嗎?"
                     v-model="form.message.message"
                   ></textarea>
                 </div>
@@ -587,8 +587,15 @@
                 v-model="agree.term"
               ></Field>
               <div class="text-gray">
-                我同意接受&nbsp;<span class="text-decoration-underline">服務條款</span
-                >&nbsp;和&nbsp;<span class="text-decoration-underline">隱私政策</span>&nbsp;
+                我同意接受&nbsp;
+                <router-link to="/terms" class="text-decoration-underline" target="_blank">
+                  服務條款</router-link
+                >
+                &nbsp;和&nbsp;
+                <router-link to="/terms" class="text-decoration-underline" target="_blank">
+                  隱私政策</router-link
+                >
+                &nbsp;
               </div>
               <error-message name="服務條款" class="invalid-feedback ms-4 mt-1"> </error-message>
             </div>

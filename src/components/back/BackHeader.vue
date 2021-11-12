@@ -22,11 +22,9 @@
             <router-link to="/admin/orders" class="nav-link">訂單</router-link>
             <router-link to="/admin/coupons" class="nav-link">優惠</router-link>
             <router-link to="/admin/article" class="nav-link">文章</router-link>
-            <a href="#" @click.prevent="logout" class="nav-link">登出</a>
           </div>
           <div class="navbar-nav ms-auto">
-            <router-link to="/admin/articles" class="nav-link">Blog</router-link>
-            <router-link to="/admin/cart" class="nav-link">購物車</router-link>
+            <a href="#" @click.prevent="logout" class="nav-link">登出</a>
           </div>
         </div>
       </div>

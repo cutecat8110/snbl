@@ -8,35 +8,33 @@
         <section>
           <h6>COMPANY</h6>
           <div class="footer-link">
-            <router-link to="/story" target="_blank"> 品牌故事<span>Story</span> </router-link>
+            <router-link to="/story"> 品牌故事<span>Story</span> </router-link>
           </div>
           <div class="footer-link">
-            <router-link to="/try-free" target="_blank"> 免費試穿<span>Try Free</span> </router-link>
+            <router-link to="/try-free"> 免費試穿<span>Try Free</span> </router-link>
           </div>
           <div class="footer-link">
-            <router-link to="/vip" target="_blank"> 會員福利<span>VIP</span> </router-link>
+            <router-link to="/vip"> 會員福利<span>VIP</span> </router-link>
           </div>
         </section>
         <section>
           <h6>SERVICE</h6>
           <div class="footer-link">
-            <router-link to="/qa" target="_blank"> 常見問題<span>FAQ</span> </router-link>
+            <router-link to="/qa"> 常見問題<span>FAQ</span> </router-link>
           </div>
           <div class="footer-link">
-            <router-link to="/login" target="_blank"> 購物流程<span>How To Buy</span> </router-link>
+            <router-link to="/shopping-process"> 購物流程<span>How To Buy</span> </router-link>
           </div>
           <div class="footer-link">
-            <router-link to="/login" target="_blank">
-              退換貨說明<span>After-sales service</span>
-            </router-link>
+            <router-link to="/policy"> 退換貨說明<span>After-sales service</span> </router-link>
           </div>
           <div class="footer-link">
-            <router-link to="/login" target="_blank">
+            <router-link to="/payment-delivery">
               付款及配送<span>Payment&Delivery</span>
             </router-link>
           </div>
           <div class="footer-link">
-            <router-link to="/login" target="_blank"> 條款及細則<span>Privacy</span> </router-link>
+            <router-link to="/terms"> 條款及細則<span>Privacy</span> </router-link>
           </div>
         </section>
         <section>
@@ -105,6 +103,7 @@ footer {
 
   border-top: rgba(0, 0, 0, 0.075) 1px dashed;
   background: #ffffff;
+  white-space: nowrap;
 
   .container {
     .logo {
@@ -112,6 +111,9 @@ footer {
       height: $aside-navbar-width;
       display: flex;
       justify-content: center;
+      @include xs {
+        margin: 1rem 0 1rem 0;
+      }
     }
     .section-wrapper {
       margin-bottom: 1.5rem;
@@ -120,15 +122,25 @@ footer {
       grid-template-columns: repeat(3, auto);
 
       padding: 2.5rem;
-
+      @include sm {
+        grid-template-columns: 1fr;
+        grid-gap: 2rem;
+        padding: 1rem;
+      }
       section {
         display: flex;
         flex-direction: column;
+        @include sm {
+          margin-bottom: 0.5rem;
+        }
 
         h6 {
           margin-bottom: 2rem;
           font-weight: 700;
           @include font-md;
+          @include sm {
+            margin-bottom: 0.5rem;
+          }
         }
 
         .footer-link {
@@ -245,6 +257,7 @@ footer {
       text-align: center;
       color: $gray-500;
       @include font-sm;
+      white-space: normal;
     }
   }
 }
