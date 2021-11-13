@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <Loading :active="isLoading" :z-index="1060" :opacity="1"></Loading>
     <div class="container shadow-sm">
       <div class="logo">
         <img class="img-fluid" src="@/assets/logo2.png" alt="logo2.png" />
@@ -49,14 +50,18 @@ export default {
         password: '',
       },
       loginImage: [],
+      isLoading: false,
+      fullPage: true,
     };
   },
   methods: {
     render() {
+      this.isLoading = true;
       const id = '-MoNVFrUSDDA2ZXh9gFh';
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`;
       this.$http.get(url).then((res) => {
         this.loginImage = res.data.article.articleImagesUrl;
+        this.isLoading = false;
       });
     },
     login() {
