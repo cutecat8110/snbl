@@ -100,13 +100,16 @@ export default {
       const filterProducts = this.productsAll.filter(
         (product) => product.category === this.product.category,
       );
+      console.log(filterProducts);
+
       const arrSet = new Set([]);
       for (let index = 0; arrSet.size < filterProducts.length; index + 1) {
-        const num = getRandomInt(this.productsAll.length);
+        const num = getRandomInt(filterProducts.length);
         arrSet.add(num);
       }
+      this.randomProducts = [];
       arrSet.forEach((i) => {
-        this.randomProducts.push(this.productsAll[i]);
+        this.randomProducts.push(filterProducts[i]);
       });
     },
   },

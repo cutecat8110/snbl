@@ -74,7 +74,7 @@
           <div v-if="cart.carts.length != 0" class="modal-footer border-0">
             <div class="total">
               <span>商品總數&nbsp;{{ qty }}</span>
-              <span>總額&nbsp;NT$&nbsp;{{ cart.total }}</span>
+              <span>總額&nbsp;NT$&nbsp;{{ $filters.currency(cart.total) }}</span>
             </div>
             <router-link to="/cart" class="btn w-100 checkout" @click="hideModal">
               訂單結帳

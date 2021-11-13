@@ -26,7 +26,7 @@
             </thead>
             <tbody>
               <template v-for="(item, key) in articles" :key="key">
-                <tr v-if="articles.length" :class="{ 'text-gray-500 fw-light': !item.is_paid }">
+                <tr v-if="articles.length" :class="{ 'text-gray-500 fw-light': !item.isPublic }">
                   <td>{{ item.title }}</td>
                   <td>{{ item.author }}</td>
                   <td>{{ item.description }}</td>

@@ -24,9 +24,9 @@
                 <h1>{{ product.title }}</h1>
                 <!-- 價格 -->
                 <div class="price">
-                  <span class="me-2">NT$&nbsp;{{ product.price }}</span>
+                  <span class="me-2">NT$&nbsp;{{ $filters.currency(product.pric) }}</span>
                   <span v-if="!(product.price == product.origin_price)" class="origin-price">
-                    NT$&nbsp;{{ product.origin_price }}
+                    NT$&nbsp;{{ $filters.currency(product.origin_price) }}
                   </span>
                 </div>
                 <!-- 顏色 -->

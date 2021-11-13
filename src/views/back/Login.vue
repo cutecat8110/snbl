@@ -30,12 +30,13 @@
             />
             <label for="password">Password</label>
           </div>
-          <button class="btn btn-lg btn-primary w-100 mt-3" type="submit">
+          <button class="btn btn-lg btn-primary w-100" type="submit">
             登入
           </button>
         </form>
       </div>
     </div>
+    <div class="loginImage" :style="{ backgroundImage: 'url(' + loginImage + ')' }"></div>
   </div>
 </template>
 
@@ -47,9 +48,17 @@ export default {
         username: '',
         password: '',
       },
+      loginImage: [],
     };
   },
   methods: {
+    render() {
+      const id = '-MoNVFrUSDDA2ZXh9gFh';
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`;
+      this.$http.get(url).then((res) => {
+        this.loginImage = res.data.article.articleImagesUrl;
+      });
+    },
     login() {
       this.$http.post(`${process.env.VUE_APP_API}admin/signin`, this.user).then((res) => {
         if (res.data.success === true) {
@@ -68,6 +77,9 @@ export default {
       });
     },
   },
+  created() {
+    this.render();
+  },
 };
 </script>
 
@@ -75,23 +87,39 @@ export default {
 @import '@/assets/stylesheets/custom/_variable';
 
 .login {
+  min-height: 100%;
+  display: grid;
+  background: rgba(0, 0, 0, 0.38);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  min-height: 100%;
-  background: #f0f2f5;
-
+  .loginImage {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    opacity: 0.4;
+    width: 100%;
+    height: 100%;
+  }
   .container {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2.5rem;
 
     max-width: 450px;
     border-radius: 0.25rem;
     padding: 2.5rem;
     background: #ffffff;
     .logo {
-      margin: 1rem 0;
+      margin: 0 0 2.5rem 0;
       display: flex;
       justify-content: center;
       img {
@@ -100,6 +128,9 @@ export default {
     }
     h1 {
       @include font-lg;
+    }
+    .btn {
+      margin-top: 1.5rem;
     }
   }
 }
