@@ -32,6 +32,7 @@
         <img class="img-fluid" :src="product.sizeImageUrl" />
         <img class="img-fluid" :src="product.modelInfoImageUrl" />
         <img class="img-fluid" :src="product.tryOnImageUrl" />
+        <MoreSwiper :tempProduct="randomProducts"></MoreSwiper>
       </div>
       <div class="product-form">
         <ProductForm :product="product" @subNav="subNav"></ProductForm>
@@ -45,6 +46,11 @@ import AsideNavbar from '@/components/common/AsideNavbar.vue';
 import ProductForm from '@/components/common/ProductForm.vue';
 import ProductSwiper from '@/components/common/ProductSwiper.vue';
 import SubNavbar from '@/components/common/SubNavbar.vue';
+import MoreSwiper from '@/components/common/MoreSwiper.vue';
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 export default {
   inject: ['emitter'],
@@ -53,10 +59,13 @@ export default {
     ProductForm,
     ProductSwiper,
     SubNavbar,
+    MoreSwiper,
   },
   data() {
     return {
       product: [],
+      productsAll: [],
+      randomProducts: [],
     };
   },
   watch: {
@@ -72,10 +81,33 @@ export default {
       this.$http.get(url).then((res) => {
         this.product = res.data.product;
         this.emitter.emit('isLoading', false);
+        this.getAll();
       });
     },
     subNav(item) {
       window.scrollTo(0, this.$refs[item].offsetTop - 56);
+    },
+    getAll() {
+      this.emitter.emit('isLoading', true);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(url).then((res) => {
+        this.productsAll = res.data.products;
+        this.emitter.emit('isLoading', false);
+        this.getLookAlick();
+      });
+    },
+    getLookAlick() {
+      const filterProducts = this.productsAll.filter(
+        (product) => product.category === this.product.category,
+      );
+      const arrSet = new Set([]);
+      for (let index = 0; arrSet.size < filterProducts.length; index + 1) {
+        const num = getRandomInt(this.productsAll.length);
+        arrSet.add(num);
+      }
+      arrSet.forEach((i) => {
+        this.randomProducts.push(this.productsAll[i]);
+      });
     },
   },
   created() {

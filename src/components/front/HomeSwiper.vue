@@ -9,7 +9,7 @@
       }"
       :allowTouchMove="false"
       :effect="'fade'"
-      class="mySwiperTop"
+      class="mySwiperHome"
     >
       <swiper-slide>
         <div class="banner-img" :style="{ backgroundImage: 'url(' + image[0] + ')' }">
@@ -99,7 +99,7 @@ export default {
 <style lang="scss">
 @import '@/assets/stylesheets/custom/_variable';
 
-.mySwiperTop {
+.mySwiperHome {
   width: 100%;
   height: 600px;
   @include md {
@@ -107,7 +107,7 @@ export default {
   }
 }
 
-.mySwiperTop {
+.mySwiperHome {
   overflow: hidden;
 
   border-radius: 0.25rem;
