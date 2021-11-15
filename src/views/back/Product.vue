@@ -38,7 +38,7 @@
           <h1 class="mb-3 product-title">{{ product.title }}</h1>
           <!-- 價目 -->
           <div class="fs-2 d-flex align-items-center">
-            <span class="me-3">NT$&nbsp;{{ $filters.currency(product.pric) }}</span>
+            <span class="me-3">NT$&nbsp;{{ $filters.currency(product.price) }}</span>
             <span
               v-if="!(product.price == product.origin_price)"
               class="origin-price text-decoration-line-through"

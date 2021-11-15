@@ -16,7 +16,7 @@
       </div>
       <!-- 價格 -->
       <div class="price">
-        <span class="me-2">NT$&nbsp;{{ $filters.currency(product.pric) }}</span>
+        <span class="me-2">NT$&nbsp;{{ $filters.currency(product.price) }}</span>
         <span v-if="!(product.price == product.origin_price)" class="origin-price">
           NT$&nbsp;{{ $filters.currency(product.origin_price) }}
         </span>
