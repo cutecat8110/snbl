@@ -223,7 +223,8 @@
 @import '@/assets/stylesheets/custom/_variable';
 
 .qa-container {
-  padding: 2.5rem 0;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 
   h1 {
     margin-bottom: 1.5rem;

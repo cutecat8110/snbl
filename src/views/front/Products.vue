@@ -46,6 +46,9 @@ export default {
       this.$http.get(url).then((res) => {
         this.products = res.data.products;
         this.pagination = res.data.pagination;
+        window.scrollTo({
+          top: 0,
+        });
         this.emitter.emit('isLoading', false);
       });
     },
