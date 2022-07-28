@@ -4,7 +4,7 @@
     <section>
       <div class="text-box">
         <div class="black">
-          露比午茶提供貼心服務<span class="main">【&nbsp;七天鑑賞期退貨免運費&nbsp;&nbsp;】</span>
+          森女部落提供貼心服務<span class="main">【&nbsp;七天鑑賞期退貨免運費&nbsp;&nbsp;】</span>
         </div>
       </div>
     </section>

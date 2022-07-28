@@ -112,10 +112,10 @@
         ，系統會發送一組驗證碼簡訊至手機，輸入後即可重設新的密碼。
       </div>
       <div class="text-box">
-        <div class="black"><i class="fas fa-heart"></i>&nbsp;收不到露比的通知信、會員電子報?</div>
+        <div class="black"><i class="fas fa-heart"></i>&nbsp;收不到森女的通知信、會員電子報?</div>
         請先登入會員至會員資料管理確認信箱是否填寫完整。<br />
         由於信箱大多有檔信功能， 常誤判&nbsp;Snbl's&nbsp;的重要信件為垃圾信、而漏信或跑到垃圾桶。<br />
-        請將露比信箱加入通訊錄、或是設定為非垃圾郵件，以避免收步道重要的通知信件或優惠喔！
+        請將森女信箱加入通訊錄、或是設定為非垃圾郵件，以避免收步道重要的通知信件或優惠喔！
       </div>
       <div class="text-box">
         <div class="black"><i class="fas fa-heart"></i>&nbsp;舊會員如何登入新官網?</div>
