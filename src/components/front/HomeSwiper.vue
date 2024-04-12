@@ -1,15 +1,15 @@
 <template>
   <template v-if="image">
     <swiper
-      :pagination="true"
-      :loop="true"
+      class="mySwiperHome"
+      :allowTouchMove="false"
       :autoplay="{
         delay: 4500,
-        disableOnInteraction: false,
+        disableOnInteraction: false
       }"
-      :allowTouchMove="false"
       :effect="'fade'"
-      class="mySwiperHome"
+      :loop="true"
+      :pagination="true"
     >
       <swiper-slide>
         <div class="banner-img" :style="{ backgroundImage: 'url(' + image[0] + ')' }">
@@ -56,7 +56,7 @@
         </div>
         <div class="mark"></div>
       </swiper-slide>
-      <router-link to="/products" class="shop-btn-wrapper">
+      <router-link class="shop-btn-wrapper" to="/products">
         <div class="shop-btn">
           SHOP NOW
           <i class="fas fa-arrow-right"></i>
@@ -68,32 +68,30 @@
 
 <script>
 // Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
 // swiper bundle styles
-import 'swiper/swiper.min.css';
+import 'swiper/swiper.min.css'
 // swiper core styles
-import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper-bundle.min.css'
 
 // modules styles
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/components/navigation/navigation.min.css'
+import 'swiper/components/pagination/pagination.min.css'
 
 // import Swiper core and required modules
-import SwiperCore, {
-  EffectFade, Autoplay, Navigation, Thumbs, Pagination,
-} from 'swiper';
+import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination, Thumbs } from 'swiper'
 
 // install Swiper modules
-SwiperCore.use([Pagination, EffectFade, Autoplay, Navigation, Thumbs]);
+SwiperCore.use([Pagination, EffectFade, Autoplay, Navigation, Thumbs])
 
 export default {
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
-  props: ['image'],
-};
+  props: ['image']
+}
 </script>
 
 <style lang="scss">

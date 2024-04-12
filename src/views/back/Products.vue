@@ -39,11 +39,11 @@
                 <td>{{ item.origin_price }}</td>
                 <td>{{ item.price }}</td>
                 <td>
-                  <div class="text-success d-flex align-items-center" v-if="item.is_enabled">
+                  <div v-if="item.is_enabled" class="text-success d-flex align-items-center">
                     <div class="circle bg-success me-2"></div>
                     <span>已上架 </span>
                   </div>
-                  <span class="d-flex align-items-center" v-else>
+                  <span v-else class="d-flex align-items-center">
                     <div class="circle bg-gray-300 me-2"></div>
                     <span>關閉 </span>
                   </span>
@@ -51,15 +51,15 @@
                 <td>
                   <div class="btn-group">
                     <button
-                      type="button"
                       class="btn btn-outline-primary btn-sm"
+                      type="button"
                       @click="openModal('edit', index)"
                     >
                       編輯
                     </button>
                     <button
-                      type="button"
                       class="btn btn-outline-danger btn-sm"
+                      type="button"
                       @click="openModal('delete', index)"
                     >
                       刪除
@@ -77,31 +77,31 @@
     </div>
     <!-- 新增/編輯 元件 -->
     <ProductModal
+      ref="ProductModal"
       :is-new="isNew"
       :tempProduct="tempProduct"
       @update-product="updateProduct"
-      ref="ProductModal"
     ></ProductModal>
     <!-- 刪除 元件 -->
     <DelModal
-      :origin="pageName"
-      :delItem="tempProduct.title"
-      @del-item="deleteProduct"
       ref="DelModal"
+      :delItem="tempProduct.title"
+      :origin="pageName"
+      @del-item="deleteProduct"
     ></DelModal>
   </div>
 </template>
 
 <script>
-import DelModal from '@/components/back/DelModal.vue';
-import Pagination from '@/components/back/Pagination.vue';
-import ProductModal from '@/components/back/ProductModal.vue';
+import DelModal from '@/components/back/DelModal.vue'
+import Pagination from '@/components/back/Pagination.vue'
+import ProductModal from '@/components/back/ProductModal.vue'
 
 export default {
   components: {
     DelModal,
     Pagination,
-    ProductModal,
+    ProductModal
   },
   inject: ['httpMessageState'],
   data() {
@@ -114,93 +114,93 @@ export default {
       currentPage: 1,
       isNew: false,
       tempProduct: {
-        imagesUrl: [],
-      },
-    };
+        imagesUrl: []
+      }
+    }
   },
   methods: {
     getData(page = 1) {
-      this.isLoading = true;
-      this.currentPage = page;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`;
+      this.isLoading = true
+      this.currentPage = page
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
       this.$http.get(url).then((res) => {
-        this.products = res.data.products;
-        this.pagination = res.data.pagination;
-        this.isLoading = false;
-      });
+        this.products = res.data.products
+        this.pagination = res.data.pagination
+        this.isLoading = false
+      })
     },
     openModal(event, index) {
       if (event === 'create') {
         this.tempProduct = {
-          imagesUrl: [],
-        };
-        this.isNew = true;
-        this.$refs.ProductModal.openModal();
+          imagesUrl: []
+        }
+        this.isNew = true
+        this.$refs.ProductModal.openModal()
       } else if (event === 'edit') {
-        this.tempProduct = { ...this.products[index] };
-        this.isNew = false;
-        this.$refs.ProductModal.openModal();
+        this.tempProduct = { ...this.products[index] }
+        this.isNew = false
+        this.$refs.ProductModal.openModal()
       } else if (event === 'delete') {
-        this.tempProduct = { ...this.products[index] };
-        this.$refs.DelModal.openModal();
+        this.tempProduct = { ...this.products[index] }
+        this.$refs.DelModal.openModal()
       }
     },
     updateProduct(item) {
-      this.isLoading = true;
-      this.tempProduct = item;
-      this.tempProduct.imagesUrl = this.tempProduct.imagesUrl.filter(Boolean);
-      this.tempProduct.modelImagesUrl = this.tempProduct.modelImagesUrl.filter(Boolean);
-      this.tempProduct.detalImagesUrl = this.tempProduct.detalImagesUrl.filter(Boolean);
-      this.tempProduct.is_enabled = Number(this.tempProduct.is_enabled);
-      const clothSize = ['S', 'M', 'L', 'XL', 'F'];
+      this.isLoading = true
+      this.tempProduct = item
+      this.tempProduct.imagesUrl = this.tempProduct.imagesUrl.filter(Boolean)
+      this.tempProduct.modelImagesUrl = this.tempProduct.modelImagesUrl.filter(Boolean)
+      this.tempProduct.detalImagesUrl = this.tempProduct.detalImagesUrl.filter(Boolean)
+      this.tempProduct.is_enabled = Number(this.tempProduct.is_enabled)
+      const clothSize = ['S', 'M', 'L', 'XL', 'F']
       this.tempProduct.clothSize = clothSize.filter(
-        (val) => this.tempProduct.clothSize.indexOf(val) !== -1,
-      );
+        (val) => this.tempProduct.clothSize.indexOf(val) !== -1
+      )
 
-      const tempColors = [];
+      const tempColors = []
       this.tempProduct.colors.forEach((tempcolor) => {
         if (Object.keys(tempcolor.name).length || Object.keys(tempcolor.colorChart).length) {
-          tempColors.push(tempcolor);
+          tempColors.push(tempcolor)
         }
-      });
-      this.tempProduct.colors = tempColors;
+      })
+      this.tempProduct.colors = tempColors
 
-      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
-      let httpMethod = 'post';
-      let status = '新增產品';
+      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
+      let httpMethod = 'post'
+      let status = '新增產品'
       if (!this.isNew) {
-        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
-        httpMethod = 'put';
-        status = '更新產品';
+        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
+        httpMethod = 'put'
+        status = '更新產品'
       }
 
       this.$http[httpMethod](api, { data: this.tempProduct }).then((res) => {
         if (res.data.success) {
-          this.getData(this.currentPage);
-          this.isLoading = false;
-          this.$refs.ProductModal.hideModal();
-          this.httpMessageState(res, status);
+          this.getData(this.currentPage)
+          this.isLoading = false
+          this.$refs.ProductModal.hideModal()
+          this.httpMessageState(res, status)
         } else {
-          this.isLoading = false;
-          this.httpMessageState(res, status);
+          this.isLoading = false
+          this.httpMessageState(res, status)
         }
-      });
+      })
     },
     deleteProduct() {
-      this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
       this.$http.delete(url).then((res) => {
-        this.getData(this.currentPage);
-        this.isLoading = false;
-        this.httpMessageState(res, '刪除產品');
-        this.$refs.DelModal.hideModal();
-      });
-    },
+        this.getData(this.currentPage)
+        this.isLoading = false
+        this.httpMessageState(res, '刪除產品')
+        this.$refs.DelModal.hideModal()
+      })
+    }
   },
   created() {
-    this.getData();
-  },
-};
+    this.getData()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

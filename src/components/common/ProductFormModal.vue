@@ -3,21 +3,21 @@
     id="ProductFormModal"
     ref="modal"
     class="modal fade"
-    tabindex="-1"
-    aria-labelledby="ProductFormModalLabel"
     aria-hidden="true"
+    aria-labelledby="ProductFormModalLabel"
+    tabindex="-1"
   >
     <div class="modal-dialog fixed-bottom">
       <div class="modal-content border-0 rounded-0">
         <div class="modal-header border-0">
           <button
-            type="button"
             class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
+            type="button"
             aria-label="Close"
+            data-bs-dismiss="modal"
           ></button>
         </div>
-        <div class="modal-body ">
+        <div class="modal-body">
           <div class="container">
             <div class="product">
               <div class="product-text">
@@ -36,16 +36,16 @@
                     <label
                       v-for="(item, index) in product.colors"
                       :key="index"
-                      :for="'colors' + index"
-                      class="pointer"
                       :class="selected.color === item.name ? 'active' : ''"
+                      class="pointer"
+                      :for="'colors' + index"
                     >
                       <input
                         :id="'colors' + index"
+                        v-model="selected.color"
                         class="d-none"
                         type="radio"
                         :value="item.name"
-                        v-model="selected.color"
                       />
                       <div class="h-36 w-36 rounded selected-box">
                         <div
@@ -63,16 +63,16 @@
                     <label
                       v-for="(item, index) in product.clothSize"
                       :key="index"
-                      :for="'clothSize' + index"
-                      class="pointer"
                       :class="selected.size === item ? 'active' : ''"
+                      class="pointer"
+                      :for="'clothSize' + index"
                     >
                       <input
                         :id="'clothSize' + index"
+                        v-model="selected.size"
                         class="d-none"
                         type="radio"
                         :value="item"
-                        v-model="selected.size"
                       />
                       <div class="h-36 w-36 selected-box rounded">
                         {{ item }}
@@ -91,42 +91,38 @@
                   <button
                     class="qty-btn btn"
                     type="button"
-                    @mousedown="qty--"
                     :disabled="qty === 1"
+                    @mousedown="qty--"
                   >
                     <i class="material-icons md-dark">remove</i>
                   </button>
                 </div>
                 <input
-                  type="text"
-                  class="form-control border-0 text-center bg-light shadow-none"
-                  :min="min"
-                  :max="max"
-                  @input="handleInput"
-                  @blur="makeUp"
                   v-model.number="qty"
+                  class="form-control border-0 text-center bg-light shadow-none"
+                  type="text"
+                  :max="max"
+                  :min="min"
+                  @blur="makeUp"
+                  @input="handleInput"
                 />
                 <div>
                   <button
                     class="qty-btn btn"
                     type="button"
-                    @mousedown="qty++"
                     :disabled="qty === 99"
+                    @mousedown="qty++"
                   >
                     <i class="material-icons md-dark">add</i>
                   </button>
                 </div>
               </div>
-              <div v-if="!selected.color" class="btn cursor prompt d-block">
-                請選擇顏色
-              </div>
-              <div v-else-if="!selected.size" class="btn cursor prompt d-block">
-                請選擇尺寸
-              </div>
+              <div v-if="!selected.color" class="btn cursor prompt d-block">請選擇顏色</div>
+              <div v-else-if="!selected.size" class="btn cursor prompt d-block">請選擇尺寸</div>
               <a
                 v-else
-                href="#"
                 class="btn add-cart d-block"
+                href="#"
                 @click.prevent="$emit('addToCart', true)"
                 >加入購物車
               </a>
@@ -139,7 +135,7 @@
 </template>
 
 <script>
-import modalMixin from '@/mixins/modalMixin';
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   mixins: [modalMixin],
@@ -148,41 +144,41 @@ export default {
     return {
       selected: {
         color: '',
-        size: '',
+        size: ''
       },
       qty: 1,
       min: 0,
-      max: 99,
-    };
+      max: 99
+    }
   },
   watch: {
     tempQty() {
-      this.qty = this.tempQty;
+      this.qty = this.tempQty
     },
     qty() {
       if (this.qty > this.max) {
-        this.qty = this.max;
+        this.qty = this.max
       } else if (this.qty < this.min) {
-        this.qty = this.min;
+        this.qty = this.min
       }
-      this.$emit('getQty', this.qty);
-    },
+      this.$emit('getQty', this.qty)
+    }
   },
   methods: {
     handleInput(e) {
-      this.qty = e.target.value.replace(/[^\d]/g, '');
+      this.qty = e.target.value.replace(/[^\d]/g, '')
     },
     makeUp() {
       if (this.qty === '') {
-        this.qty = 1;
+        this.qty = 1
       }
-    },
+    }
   },
   mounted() {
-    this.selected = this.tempSelected;
-    this.qty = this.tempQty;
-  },
-};
+    this.selected = this.tempSelected
+    this.qty = this.tempQty
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -258,7 +254,9 @@ export default {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
+                    transition:
+                      border 150ms ease-in-out,
+                      box-shadow 150ms ease-in-out;
                     &:hover {
                       border: 1px solid $color-border-active;
                     }

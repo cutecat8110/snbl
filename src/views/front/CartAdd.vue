@@ -3,21 +3,21 @@
     <div class="order-information-wrapper">
       <a
         class="btn order-btn w-100"
-        data-bs-toggle="collapse"
         href="#order-information"
-        role="button"
-        aria-expanded="false"
         aria-controls="order-information"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        role="button"
         @click="orderInfor = !orderInfor"
       >
         <div>合計&nbsp;NT$&nbsp;{{ $filters.currency(cart.final_total + conveyanceCost) }}</div>
         <div>
           購物清單 ({{ qty }})
-          <i class="fas fa-caret-up" v-if="orderInfor"></i>
-          <i class="fas fa-caret-down" v-if="!orderInfor"></i>
+          <i v-if="orderInfor" class="fas fa-caret-up"></i>
+          <i v-if="!orderInfor" class="fas fa-caret-down"></i>
         </div>
       </a>
-      <div class="collapse" id="order-information">
+      <div id="order-information" class="collapse">
         <div class="web">
           <div class="list-head">
             <div>商品</div>
@@ -26,7 +26,7 @@
             <div>單價</div>
             <div>小計</div>
           </div>
-          <div class="list-card" v-for="item in showCart" :key="item.id">
+          <div v-for="item in showCart" :key="item.id" class="list-card">
             <!-- 商品資訊 -->
             <img class="img-fluid rounded" :src="item.product.imageUrl" />
             <div class="product-infor">
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="mobile">
-          <div class="list-card" v-for="item in showCart" :key="item.id">
+          <div v-for="item in showCart" :key="item.id" class="list-card">
             <!-- 商品圖 -->
             <div class="img-box">
               <img class="img-fluid rounded" :src="item.product.imageUrl" />
@@ -116,15 +116,15 @@
         </div>
         <a
           class="btn order-btn w-100"
-          data-bs-toggle="collapse"
           href="#order-information"
-          role="button"
-          aria-expanded="false"
           aria-controls="order-information"
+          aria-expanded="false"
+          data-bs-toggle="collapse"
+          role="button"
           @click="orderInfor = !orderInfor"
         >
-          <i class="fas fa-caret-up" v-if="orderInfor"></i>
-          <i class="fas fa-caret-down" v-if="!orderInfor"></i>
+          <i v-if="orderInfor" class="fas fa-caret-up"></i>
+          <i v-if="!orderInfor" class="fas fa-caret-down"></i>
         </a>
       </div>
     </div>
@@ -136,106 +136,114 @@
             <div class="item-body">
               <!-- 姓名 -->
               <div class="form-group">
-                <label for="name" class="form-label">姓名<span class="text-red">﹡</span></label>
-                <div class="form-input-group" :class="form.user.name ? 'inputClear' : ''">
+                <label class="form-label" for="name">姓名<span class="text-red">﹡</span></label>
+                <div :class="form.user.name ? 'inputClear' : ''" class="form-input-group">
                   <Field
                     id="name"
+                    v-model="form.user.name"
+                    :class="{ 'is-invalid': errors['姓名'] }"
+                    class="form-control"
                     name="姓名"
                     type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['姓名'] }"
                     placeholder=""
                     rules="required"
-                    v-model="form.user.name"
                   ></Field>
                   <button
                     v-if="form.user.name"
-                    type="button"
-                    class="btn-close"
                     v-on:click="
-                      form.user.name = '';
-                      clearFocus('name');
+                      () => {
+                        form.user.name = ''
+                        clearFocus('name')
+                      }
                     "
+                    class="btn-close"
+                    type="button"
                   ></button>
-                  <error-message name="姓名" class="invalid-feedback"></error-message>
+                  <error-message class="invalid-feedback" name="姓名"></error-message>
                 </div>
               </div>
               <!-- 電話 -->
               <div class="form-group">
-                <label for="tel" class="form-label">電話<span class="text-red">﹡</span></label>
-                <div class="form-input-group" :class="form.user.tel ? 'inputClear' : ''">
+                <label class="form-label" for="tel">電話<span class="text-red">﹡</span></label>
+                <div :class="form.user.tel ? 'inputClear' : ''" class="form-input-group">
                   <Field
                     id="tel"
+                    v-model="form.user.tel"
+                    :class="{ 'is-invalid': errors['電話'] }"
+                    class="form-control"
                     name="電話"
                     type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['電話'] }"
                     placeholder="ex. 0980123456"
                     rules="required|min:8"
-                    v-model="form.user.tel"
                   ></Field>
                   <button
                     v-if="form.user.tel"
-                    type="button"
-                    class="btn-close"
                     v-on:click="
-                      form.user.tel = '';
-                      clearFocus('tel');
+                      () => {
+                        form.user.tel = ''
+                        clearFocus('tel')
+                      }
                     "
+                    class="btn-close"
+                    type="button"
                   ></button>
-                  <error-message name="電話" class="invalid-feedback"></error-message>
+                  <error-message class="invalid-feedback" name="電話"></error-message>
                 </div>
               </div>
               <!-- Email -->
               <div class="form-group">
-                <label for="email" class="form-label">Email<span class="text-red">﹡</span></label>
-                <div class="form-input-group" :class="form.user.email ? 'inputClear' : ''">
+                <label class="form-label" for="email">Email<span class="text-red">﹡</span></label>
+                <div :class="form.user.email ? 'inputClear' : ''" class="form-input-group">
                   <Field
                     id="email"
+                    v-model="form.user.email"
+                    :class="{ 'is-invalid': errors['email'] }"
+                    class="form-control"
                     name="email"
                     type="email"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['email'] }"
                     placeholder="sample@snbl.com"
                     rules="email|required"
-                    v-model="form.user.email"
                   ></Field>
                   <button
                     v-if="form.user.email"
-                    type="button"
-                    class="btn-close"
                     v-on:click="
-                      form.user.email = '';
-                      clearFocus('email');
+                      () => {
+                        form.user.email = ''
+                        clearFocus('email')
+                      }
                     "
+                    class="btn-close"
+                    type="button"
                   ></button>
-                  <error-message name="email" class="invalid-feedback"></error-message>
+                  <error-message class="invalid-feedback" name="email"></error-message>
                 </div>
               </div>
               <!-- 地址 -->
               <div class="form-group">
-                <label for="address" class="form-label">地址<span class="text-red">﹡</span></label>
-                <div class="form-input-group" :class="form.user.address ? 'inputClear' : ''">
+                <label class="form-label" for="address">地址<span class="text-red">﹡</span></label>
+                <div :class="form.user.address ? 'inputClear' : ''" class="form-input-group">
                   <Field
                     id="address"
+                    v-model="form.user.address"
+                    :class="{ 'is-invalid': errors['地址'] }"
+                    class="form-control"
                     name="地址"
                     type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['地址'] }"
                     placeholder=""
                     rules="required"
-                    v-model="form.user.address"
                   ></Field>
                   <button
                     v-if="form.user.address"
-                    type="button"
-                    class="btn-close"
                     v-on:click="
-                      form.user.address = '';
-                      clearFocus('address');
+                      () => {
+                        form.user.address = ''
+                        clearFocus('address')
+                      }
                     "
+                    class="btn-close"
+                    type="button"
                   ></button>
-                  <error-message name="地址" class="invalid-feedback"></error-message>
+                  <error-message class="invalid-feedback" name="地址"></error-message>
                 </div>
               </div>
             </div>
@@ -248,11 +256,11 @@
                 <div class="form-input-group">
                   <textarea
                     id="message"
+                    v-model="form.message.message"
                     class="form-control"
+                    placeholder="有什麼想告訴我們嗎?"
                     cols="30"
                     rows="5"
-                    placeholder="有什麼想告訴我們嗎?"
-                    v-model="form.message.message"
                   ></textarea>
                 </div>
               </div>
@@ -268,10 +276,8 @@
               <!-- 同訂購人 -->
               <div class="form-group">
                 <label class="form-check-group">
-                  <input class="form-check-input" type="checkbox" v-model="userRecipient" />
-                  <span class="text-decoration-underline">
-                    收件人同訂購人
-                  </span>
+                  <input v-model="userRecipient" class="form-check-input" type="checkbox" />
+                  <span class="text-decoration-underline"> 收件人同訂購人 </span>
                 </label>
               </div>
               <!-- 運送方式 -->
@@ -281,73 +287,77 @@
                 }}</span>
               </div>
               <!-- 姓名 -->
-              <div class="form-group" :class="userRecipient ? 'disabled' : ''">
-                <label for="recipient-name" class="form-label"
+              <div :class="userRecipient ? 'disabled' : ''" class="form-group">
+                <label class="form-label" for="recipient-name"
                   >收件人姓名<span class="text-red">﹡</span></label
                 >
                 <div
-                  class="form-input-group"
                   :class="form.message.recipient.name ? 'inputClear' : ''"
+                  class="form-input-group"
                 >
                   <Field
                     id="recipient-name"
+                    v-model="form.message.recipient.name"
+                    :class="{ 'is-invalid': errors['收件人姓名'] }"
+                    class="form-control"
                     name="收件人姓名"
                     type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['收件人姓名'] }"
                     placeholder=""
-                    rules="required"
-                    v-model="form.message.recipient.name"
                     :readonly="userRecipient"
+                    rules="required"
                   ></Field>
                   <button
                     v-if="form.message.recipient.name"
-                    type="button"
-                    class="btn-close"
                     v-on:click="
-                      form.message.recipient.name = '';
-                      clearFocus('recipient-name');
+                      () => {
+                        form.message.recipient.name = ''
+                        clearFocus('recipient-name')
+                      }
                     "
+                    class="btn-close"
+                    type="button"
                   ></button>
-                  <error-message name="收件人姓名" class="invalid-feedback"></error-message>
+                  <error-message class="invalid-feedback" name="收件人姓名"></error-message>
                 </div>
               </div>
               <!-- 電話 -->
-              <div class="form-group" :class="userRecipient ? 'disabled' : ''">
-                <label for="recipient-tel" class="form-label"
+              <div :class="userRecipient ? 'disabled' : ''" class="form-group">
+                <label class="form-label" for="recipient-tel"
                   >收件人電話<span class="text-red">﹡</span></label
                 >
                 <div
-                  class="form-input-group"
                   :class="form.message.recipient.tel ? 'inputClear' : ''"
+                  class="form-input-group"
                 >
                   <Field
                     id="recipient-tel"
+                    v-model="form.message.recipient.tel"
+                    :class="{ 'is-invalid': errors['收件人電話'] }"
+                    class="form-control"
                     name="收件人電話"
                     type="text"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['收件人電話'] }"
                     placeholder=""
-                    rules="required"
-                    v-model="form.message.recipient.tel"
                     :readonly="userRecipient"
+                    rules="required"
                   ></Field>
                   <button
                     v-if="form.message.recipient.tel"
-                    type="button"
-                    class="btn-close"
                     v-on:click="
-                      form.message.recipient.tel = '';
-                      clearFocus('recipient-tel');
+                      () => {
+                        form.message.recipient.tel = ''
+                        clearFocus('recipient-tel')
+                      }
                     "
+                    class="btn-close"
+                    type="button"
                   ></button>
-                  <error-message name="收件人電話" class="invalid-feedback"></error-message>
+                  <error-message class="invalid-feedback" name="收件人電話"></error-message>
                 </div>
               </div>
               <template
                 v-if="
                   form.message.payment.conveyance == '新竹物流' ||
-                    form.message.payment.conveyance == '國際配送'
+                  form.message.payment.conveyance == '國際配送'
                 "
               >
                 <div class="form-group">
@@ -355,42 +365,42 @@
                 </div>
                 <!-- 地址 -->
                 <div class="form-group">
-                  <label for="recipient-address" class="form-label"
+                  <label class="form-label" for="recipient-address"
                     >運送地址<span class="text-red">﹡</span></label
                   >
                   <div
-                    class="form-input-group"
                     :class="form.message.recipient.address ? 'inputClear' : ''"
+                    class="form-input-group"
                   >
                     <Field
                       id="recipient-address"
+                      v-model="form.message.recipient.address"
+                      :class="{ 'is-invalid': errors['運送地址'] }"
+                      class="form-control"
                       name="運送地址"
                       type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': errors['運送地址'] }"
                       placeholder=""
                       rules="required"
-                      v-model="form.message.recipient.address"
                     ></Field>
                     <button
                       v-if="form.message.recipient.address"
-                      type="button"
-                      class="btn-close"
                       v-on:click="
-                        form.message.recipient.address = '';
-                        clearFocus('recipient-address');
+                        () => {
+                          form.message.recipient.address = ''
+                          clearFocus('recipient-address')
+                        }
                       "
+                      class="btn-close"
+                      type="button"
                     ></button>
-                    <error-message name="運送地址" class="invalid-feedback"></error-message>
+                    <error-message class="invalid-feedback" name="運送地址"></error-message>
                   </div>
                 </div>
                 <!-- 時段 -->
                 <div class="form-group">
-                  <label class="form-label">
-                    到貨時段
-                  </label>
+                  <label class="form-label"> 到貨時段 </label>
                   <div class="form-input-group">
-                    <select class="form-select" v-model="form.message.recipient.timePeriod">
+                    <select v-model="form.message.recipient.timePeriod" class="form-select">
                       <option value="" disabled>請選擇</option>
                       <option v-for="(item, index) in timePeriod" :key="index" :value="item">
                         {{ item }}
@@ -411,17 +421,15 @@
                     選擇門市
                   </div>
                 </div>
-                <div class="form-group" v-if="!conveyance">
-                  <a class="btn conveyance-btn w-100" @click.prevent="addConveyance">
-                    搜尋門市
-                  </a>
+                <div v-if="!conveyance" class="form-group">
+                  <a class="btn conveyance-btn w-100" @click.prevent="addConveyance"> 搜尋門市 </a>
                 </div>
                 <template v-else>
                   <template v-for="(item, index) in tempConveyance" :key="index">
                     <template
                       v-if="
                         (form.message.payment.conveyance == '7-11 超商取貨' && index == 0) ||
-                          (form.message.payment.conveyance == '全家 超商取貨' && index == 1)
+                        (form.message.payment.conveyance == '全家 超商取貨' && index == 1)
                       "
                     >
                       <div class="form-group">
@@ -436,9 +444,7 @@
                     </template>
                   </template>
                   <div class="form-group">
-                    <a class="btn conveyance-btn w-100" @click.prevent="addConveyance">
-                      修改
-                    </a>
+                    <a class="btn conveyance-btn w-100" @click.prevent="addConveyance"> 修改 </a>
                   </div>
                 </template>
               </template>
@@ -456,114 +462,122 @@
               >
                 <!-- 信用卡號碼-->
                 <div class="form-group disabled">
-                  <label for="card-number" class="form-label"
+                  <label class="form-label" for="card-number"
                     >信用卡號碼<span class="text-red">﹡</span></label
                   >
-                  <div class="form-input-group" :class="card.number ? 'inputClear' : ''">
+                  <div :class="card.number ? 'inputClear' : ''" class="form-input-group">
                     <Field
                       id="card-number"
+                      v-model="card.number"
+                      :class="{ 'is-invalid': errors['信用卡號碼'] }"
+                      class="form-control"
                       name="信用卡號碼"
                       type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': errors['信用卡號碼'] }"
-                      rules="required"
-                      v-model="card.number"
                       readonly
+                      rules="required"
                     ></Field>
                     <button
                       v-if="card.number"
-                      type="button"
-                      class="btn-close"
                       v-on:click="
-                        card.number = '';
-                        clearFocus('card-number');
+                        () => {
+                          card.number = ''
+                          clearFocus('card-number')
+                        }
                       "
+                      class="btn-close"
+                      type="button"
                     ></button>
-                    <error-message name="信用卡號碼" class="invalid-feedback"></error-message>
+                    <error-message class="invalid-feedback" name="信用卡號碼"></error-message>
                   </div>
                 </div>
                 <!-- 持卡人姓名-->
                 <div class="form-group disabled">
-                  <label for="card-name" class="form-label"
+                  <label class="form-label" for="card-name"
                     >持卡人姓名<span class="text-red">﹡</span></label
                   >
-                  <div class="form-input-group" :class="card.name ? 'inputClear' : ''">
+                  <div :class="card.name ? 'inputClear' : ''" class="form-input-group">
                     <Field
                       id="card-name"
+                      v-model="card.name"
+                      :class="{ 'is-invalid': errors['持卡人姓名'] }"
+                      class="form-control"
                       name="持卡人姓名"
                       type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': errors['持卡人姓名'] }"
-                      rules="required"
-                      v-model="card.name"
                       readonly
+                      rules="required"
                     ></Field>
                     <button
                       v-if="card.name"
-                      type="button"
-                      class="btn-close"
                       v-on:click="
-                        card.name = '';
-                        clearFocus('card-name');
+                        () => {
+                          card.name = ''
+                          clearFocus('card-name')
+                        }
                       "
+                      class="btn-close"
+                      type="button"
                     ></button>
-                    <error-message name="持卡人姓名" class="invalid-feedback"></error-message>
+                    <error-message class="invalid-feedback" name="持卡人姓名"></error-message>
                   </div>
                 </div>
                 <!-- 有效日期-->
                 <div class="form-group disabled">
-                  <label for="card-date" class="form-label"
+                  <label class="form-label" for="card-date"
                     >有效日期<span class="text-red">﹡</span></label
                   >
-                  <div class="form-input-group" :class="card.date ? 'inputClear' : ''">
+                  <div :class="card.date ? 'inputClear' : ''" class="form-input-group">
                     <Field
                       id="card-date"
+                      v-model="card.date"
+                      :class="{ 'is-invalid': errors['有效日期'] }"
+                      class="form-control"
                       name="有效日期"
                       type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': errors['有效日期'] }"
-                      rules="required"
-                      v-model="card.date"
                       readonly
+                      rules="required"
                     ></Field>
                     <button
                       v-if="card.date"
-                      type="button"
-                      class="btn-close"
                       v-on:click="
-                        card.date = '';
-                        clearFocus('card-date');
+                        () => {
+                          card.date = ''
+                          clearFocus('card-date')
+                        }
                       "
+                      class="btn-close"
+                      type="button"
                     ></button>
-                    <error-message name="有效日期" class="invalid-feedback"></error-message>
+                    <error-message class="invalid-feedback" name="有效日期"></error-message>
                   </div>
                 </div>
                 <!-- 安全碼(CVC)-->
                 <div class="form-group disabled">
-                  <label for="card-code" class="form-label"
+                  <label class="form-label" for="card-code"
                     >安全碼(CVC)<span class="text-red">﹡</span></label
                   >
-                  <div class="form-input-group" :class="card.code ? 'inputClear' : ''">
+                  <div :class="card.code ? 'inputClear' : ''" class="form-input-group">
                     <Field
                       id="card-code"
+                      v-model="card.code"
+                      :class="{ 'is-invalid': errors['安全碼(CVC)'] }"
+                      class="form-control"
                       name="安全碼(CVC)"
                       type="text"
-                      class="form-control"
-                      :class="{ 'is-invalid': errors['安全碼(CVC)'] }"
-                      rules="required"
-                      v-model="card.code"
                       readonly
+                      rules="required"
                     ></Field>
                     <button
                       v-if="card.code"
-                      type="button"
-                      class="btn-close"
                       v-on:click="
-                        card.code = '';
-                        clearFocus('card-code');
+                        () => {
+                          card.code = ''
+                          clearFocus('card-code')
+                        }
                       "
+                      class="btn-close"
+                      type="button"
                     ></button>
-                    <error-message name="安全碼(CVC)" class="invalid-feedback"></error-message>
+                    <error-message class="invalid-feedback" name="安全碼(CVC)"></error-message>
                   </div>
                 </div>
               </div>
@@ -578,68 +592,58 @@
             <div class="form-check-group">
               <Field
                 id="agree-term"
+                v-model="agree.term"
+                :class="{ 'is-invalid': errors['服務條款'] }"
+                class="form-check-input"
                 name="服務條款"
                 type="checkbox"
-                class="form-check-input"
-                :class="{ 'is-invalid': errors['服務條款'] }"
-                :rules="agreeTerm"
                 value="true"
-                v-model="agree.term"
+                :rules="agreeTerm"
               ></Field>
               <div class="text-gray">
                 我同意接受&nbsp;
-                <router-link to="/terms" class="text-decoration-underline" target="_blank">
+                <router-link class="text-decoration-underline" target="_blank" to="/terms">
                   服務條款</router-link
                 >
                 &nbsp;和&nbsp;
-                <router-link to="/terms" class="text-decoration-underline" target="_blank">
+                <router-link class="text-decoration-underline" target="_blank" to="/terms">
                   隱私政策</router-link
                 >
                 &nbsp;
               </div>
-              <error-message name="服務條款" class="invalid-feedback ms-4 mt-1"> </error-message>
+              <error-message class="invalid-feedback ms-4 mt-1" name="服務條款"> </error-message>
             </div>
             <div class="form-check-group">
-              <input class="form-check-input" type="checkbox" v-model="agree.member" />
-              <div class="text-gray">
-                成為 森女部落 的會員
-              </div>
+              <input v-model="agree.member" class="form-check-input" type="checkbox" />
+              <div class="text-gray">成為 森女部落 的會員</div>
             </div>
             <div class="form-check-group">
-              <input class="form-check-input" type="checkbox" v-model="agree.plan" />
-              <div class="text-gray">
-                我想收到最新資訊及優惠方案
-              </div>
+              <input v-model="agree.plan" class="form-check-input" type="checkbox" />
+              <div class="text-gray">我想收到最新資訊及優惠方案</div>
             </div>
           </div>
         </div>
         <div class="link-wrapper">
           <div class="d-flex align-items-center">
-            <a href="#" class="text-reset" @click.prevent="$router.go(-1)">
+            <a class="text-reset" href="#" @click.prevent="$router.go(-1)">
               <i class="fas fa-arrow-left"></i>
               返回購物清單
             </a>
           </div>
-          <button type="submit" class="btn w-100 checkout">確認購買</button>
+          <button class="btn w-100 checkout" type="submit">確認購買</button>
         </div>
       </div>
       <div class="remark-message">
         <ul>
-          <li>
-            賣場商品採現貨及預購，預購商品需等候7-14個工作天(不含假日)。
-          </li>
-          <li>
-            賣場無法合併訂單，若欲湊滿免運門檻，請在結帳前確認完畢。
-          </li>
+          <li>賣場商品採現貨及預購，預購商品需等候7-14個工作天(不含假日)。</li>
+          <li>賣場無法合併訂單，若欲湊滿免運門檻，請在結帳前確認完畢。</li>
           <li>
             若有折價券，請於結帳時點選【使用優惠代碼】輸入後點選【套用】，訂單成立後無法修改。
           </li>
           <li>
             請注意！訂單成立後無法修改/異動，若需修改訂單請聯繫【客服】取消訂單，再自行重新訂購，原訂單享有之活動優惠/庫存，需以再次訂購之當時活動為準。
           </li>
-          <li>
-            『本店支援 LINE Pay 付款，歡迎使用 LINE Pay 進行結帳』
-          </li>
+          <li>『本店支援 LINE Pay 付款，歡迎使用 LINE Pay 進行結帳』</li>
         </ul>
       </div>
     </Form>
@@ -654,20 +658,20 @@ export default {
       agree: {
         term: false,
         member: true,
-        plan: false,
+        plan: false
       },
       card: {
         number: '5632 8947 2519 6375',
         name: '森女',
         date: '12/08',
-        code: '518',
+        code: '518'
       },
       userRecipient: false,
       orderInfor: false,
       conveyance: false,
       tempConveyance: [
         { name: '民生門市', number: '186700', address: '台中市南區復興路三段322號324號326號' },
-        { name: '全家台中忠孝夜店', number: 'F010256', address: '台中市南區忠孝路102號' },
+        { name: '全家台中忠孝夜店', number: 'F010256', address: '台中市南區忠孝路102號' }
       ],
       country: [
         { value: 'AF', name: '阿富汗' },
@@ -915,7 +919,7 @@ export default {
         { value: 'YE', name: '也門' },
         { value: 'ZM', name: '贊比亞' },
         { value: 'ZW', name: '津巴布韋' },
-        { value: 'AX', name: '奧蘭群島' },
+        { value: 'AX', name: '奧蘭群島' }
       ],
       qty: 0,
       form: {
@@ -923,94 +927,94 @@ export default {
           name: '',
           email: '',
           tel: '',
-          address: '',
+          address: ''
         },
         message: {
           payment: {
             country: 'TW',
             conveyance: '7-11 超商取貨',
-            method: '超商取貨付款 (COD)',
+            method: '超商取貨付款 (COD)'
           },
           message: '',
           recipient: {
             name: '',
             tel: '',
             address: '',
-            timePeriod: '不指定',
-          },
-        },
+            timePeriod: '不指定'
+          }
+        }
       },
       cart: {},
       showCart: [],
       tempShowCart: [],
       conveyanceCost: 0,
-      timePeriod: ['09:00~13:00', '13:00~17:00', '17:00-20:00', '不指定'],
-    };
+      timePeriod: ['09:00~13:00', '13:00~17:00', '17:00-20:00', '不指定']
+    }
   },
   computed: {
     showCountry() {
       return this.country.filter((item) => item.value.match(this.form.message.payment.country))[0]
-        .name;
-    },
+        .name
+    }
   },
   watch: {
     userRecipient() {
       if (this.userRecipient) {
-        this.form.message.recipient.name = JSON.parse(JSON.stringify(this.form.user.name));
-        this.form.message.recipient.tel = JSON.parse(JSON.stringify(this.form.user.tel));
+        this.form.message.recipient.name = JSON.parse(JSON.stringify(this.form.user.name))
+        this.form.message.recipient.tel = JSON.parse(JSON.stringify(this.form.user.tel))
       }
     },
     form: {
       handler() {
         if (this.userRecipient) {
-          this.form.message.recipient.name = JSON.parse(JSON.stringify(this.form.user.name));
-          this.form.message.recipient.tel = JSON.parse(JSON.stringify(this.form.user.tel));
+          this.form.message.recipient.name = JSON.parse(JSON.stringify(this.form.user.name))
+          this.form.message.recipient.tel = JSON.parse(JSON.stringify(this.form.user.tel))
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
     createOrder() {
-      this.emitter.emit('emitCreateOrder', this.form);
+      this.emitter.emit('emitCreateOrder', this.form)
     },
     clearFocus(ref) {
-      document.getElementById(ref).focus();
+      document.getElementById(ref).focus()
     },
     addConveyance() {
       if (this.conveyance) {
-        this.conveyance = !this.conveyance;
+        this.conveyance = !this.conveyance
       } else {
-        this.emitter.emit('isLoading', true);
+        this.emitter.emit('isLoading', true)
         setTimeout(() => {
-          this.emitter.emit('isLoading', false);
-          this.conveyance = !this.conveyance;
-        }, 1500);
+          this.emitter.emit('isLoading', false)
+          this.conveyance = !this.conveyance
+        }, 1500)
       }
     },
     agreeTerm(value) {
-      return value ? true : '服務條款 和 隱私政策 須同意接受';
-    },
+      return value ? true : '服務條款 和 隱私政策 須同意接受'
+    }
   },
   activated() {
-    this.emitter.emit('upDatePayment');
+    this.emitter.emit('upDatePayment')
   },
   created() {
     this.emitter.on('emitToAdd', (item) => {
-      this.form.message.payment = JSON.parse(JSON.stringify(item[0]));
-      this.conveyanceCost = JSON.parse(JSON.stringify(item[1]));
-    });
-    this.emitter.emit('upDatePayment');
+      this.form.message.payment = JSON.parse(JSON.stringify(item[0]))
+      this.conveyanceCost = JSON.parse(JSON.stringify(item[1]))
+    })
+    this.emitter.emit('upDatePayment')
     this.emitter.on('upDateCart', (item) => {
-      this.cart = JSON.parse(JSON.stringify(item[0]));
-      this.showCart = JSON.parse(JSON.stringify(item[1]));
-      this.tempShowCart = JSON.parse(JSON.stringify(item[2]));
-    });
+      this.cart = JSON.parse(JSON.stringify(item[0]))
+      this.showCart = JSON.parse(JSON.stringify(item[1]))
+      this.tempShowCart = JSON.parse(JSON.stringify(item[2]))
+    })
     this.emitter.on('upDateQty', (qty) => {
-      this.qty = qty;
-    });
-  },
-};
+      this.qty = qty
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -1029,7 +1033,9 @@ export default {
       font-weight: 500;
       @include font-xl;
 
-      transition: box-shadow 150ms ease-in-out, color 150ms ease-in-out;
+      transition:
+        box-shadow 150ms ease-in-out,
+        color 150ms ease-in-out;
 
       &:focus {
         box-shadow: none;
@@ -1345,7 +1351,9 @@ export default {
 
                   opacity: 1;
 
-                  transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
+                  transition:
+                    visibility 150ms ease-in-out,
+                    opacity 150ms ease-in-out;
                 }
               }
 
@@ -1356,7 +1364,9 @@ export default {
                 font-weight: 500;
                 color: $gray-900;
 
-                transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
+                transition:
+                  border 150ms ease-in-out,
+                  box-shadow 150ms ease-in-out;
 
                 &::placeholder {
                   font-weight: 400;
@@ -1377,7 +1387,9 @@ export default {
 
                   opacity: 1;
 
-                  transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
+                  transition:
+                    visibility 150ms ease-in-out,
+                    opacity 150ms ease-in-out;
                 }
 
                 &.is-invalid {
@@ -1409,7 +1421,9 @@ export default {
                 opacity: 0;
                 transform: translateY(-50%);
 
-                transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out,
+                transition:
+                  visibility 150ms ease-in-out,
+                  opacity 150ms ease-in-out,
                   box-shadow 150ms ease-in-out;
 
                 &:active {
@@ -1434,7 +1448,9 @@ export default {
             color: #ffffff;
             background: $gray-500;
 
-            transition: opacity 150ms ease-in-out, box-shadow 150ms ease-in-out;
+            transition:
+              opacity 150ms ease-in-out,
+              box-shadow 150ms ease-in-out;
 
             &:focus {
               box-shadow: none;

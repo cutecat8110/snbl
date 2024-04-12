@@ -12,17 +12,17 @@
         <img class="img-fluid" :src="product.modelImageUrl" alt="形象封面.png" />
         <div ref="modelImagesUrl"></div>
         <img
-          class="img-fluid"
           v-for="(item, index) in product.modelImagesUrl"
           :key="index"
+          class="img-fluid"
           :src="item"
           :alt="'展示圖.png' + index"
         />
         <div ref="detalImagesUrl"></div>
         <img
-          class="img-fluid"
           v-for="(item, index) in product.detalImagesUrl"
           :key="index"
+          class="img-fluid"
           :src="item"
           :alt="'細節圖.png' + index"
         />
@@ -54,22 +54,22 @@
           </div>
           <div class="mb-4">
             <a
-              href="#"
               class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+              href="#"
               @click.prevent="subNav('modelImagesUrl')"
               >模特展示</a
             >
             <span>｜</span>
             <a
-              href="#"
               class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+              href="#"
               @click.prevent="subNav('detalImagesUrl')"
               >細節展示</a
             >
             <span>｜</span>
             <a
-              href="#"
               class="fs-6 btn p-0 shadow-none active-box-shadow text-decoration-underline"
+              href="#"
               @click.prevent="subNav('infolImageUrl')"
               >商品信息</a
             >
@@ -82,20 +82,19 @@
               <label
                 v-for="(item, index) in product.colors"
                 :key="index"
-                :for="'colors' + index"
-                class="pointer"
                 :class="selected.color.name === item.name ? 'active' : ''"
+                class="pointer"
+                :for="'colors' + index"
               >
                 <input
                   :id="'colors' + index"
+                  v-model="selected.color"
                   class="d-none"
                   type="radio"
                   :value="item"
-                  v-model="selected.color"
                 />
                 <div
-                  class="h-36 w-36 selected-size-box rounded active-box-shadow
-                    d-flex justify-content-center align-items-center"
+                  class="h-36 w-36 selected-size-box rounded active-box-shadow d-flex justify-content-center align-items-center"
                 >
                   <div
                     class="h-28 w-28 rounded"
@@ -112,20 +111,19 @@
               <label
                 v-for="(item, index) in product.clothSize"
                 :key="index"
-                :for="'clothSize' + index"
-                class="pointer"
                 :class="selected.name === item ? 'active' : ''"
+                class="pointer"
+                :for="'clothSize' + index"
               >
                 <input
                   :id="'clothSize' + index"
+                  v-model="selected.name"
                   class="d-none"
                   type="radio"
                   :value="item"
-                  v-model="selected.name"
                 />
                 <div
-                  class="h-36 w-36 selected-size-box rounded active-box-shadow
-                    d-flex justify-content-center align-items-center"
+                  class="h-36 w-36 selected-size-box rounded active-box-shadow d-flex justify-content-center align-items-center"
                 >
                   {{ item }}
                 </div>
@@ -138,31 +136,29 @@
               <div class="qty input-group bg-light border flex-nowrap rounded">
                 <div>
                   <button
-                    class="qty-btn btn h-36 w-36 active-box-shadow
-                    d-flex justify-content-center align-items-cente"
+                    class="qty-btn btn h-36 w-36 active-box-shadow d-flex justify-content-center align-items-cente"
                     type="button"
-                    @mousedown="qty--"
                     :disabled="qty === 1"
+                    @mousedown="qty--"
                   >
                     <i class="material-icons md-dark">remove</i>
                   </button>
                 </div>
                 <input
-                  type="text"
-                  class="form-control border-0 text-center bg-light shadow-none"
-                  :min="min"
-                  :max="max"
-                  @input="handleInput"
-                  @blur="makeUp"
                   v-model.number="qty"
+                  class="form-control border-0 text-center bg-light shadow-none"
+                  type="text"
+                  :max="max"
+                  :min="min"
+                  @blur="makeUp"
+                  @input="handleInput"
                 />
                 <div>
                   <button
-                    class="qty-btn btn h-36 w-36 active-box-shadow
-                    d-flex justify-content-center align-items-cente"
+                    class="qty-btn btn h-36 w-36 active-box-shadow d-flex justify-content-center align-items-cente"
                     type="button"
-                    @mousedown="qty++"
                     :disabled="qty === 99"
+                    @mousedown="qty++"
                   >
                     <i class="material-icons md-dark">add</i>
                   </button>
@@ -175,23 +171,20 @@
             <div class="col-12">
               <div
                 v-if="!selected.color"
-                class="text-nowrap text-center border cursor unselect rounded
-                  shadow-none w-100 py-2"
+                class="text-nowrap text-center border cursor unselect rounded shadow-none w-100 py-2"
               >
                 請選擇顏色
               </div>
               <div
                 v-else-if="!selected.name"
-                class="text-nowrap text-center border cursor unselect rounded
-                  shadow-none w-100 py-2"
+                class="text-nowrap text-center border cursor unselect rounded shadow-none w-100 py-2"
               >
                 請選擇尺寸
               </div>
               <a
                 v-else
+                class="add-cart text-white text-nowrap btn shadow-none active-box-shadow w-100 py-2"
                 href="#"
-                class="add-cart text-white text-nowrap btn
-                  shadow-none active-box-shadow w-100 py-2"
                 >加入購物車
               </a>
             </div>
@@ -203,8 +196,8 @@
 </template>
 
 <script>
-import ProductSwiper from '@/components/back/ProductSwiper.vue';
-import AsideNavbar from '@/components/back/AsideNavbar.vue';
+import AsideNavbar from '@/components/back/AsideNavbar.vue'
+import ProductSwiper from '@/components/back/ProductSwiper.vue'
 
 export default {
   components: { AsideNavbar, ProductSwiper },
@@ -215,55 +208,54 @@ export default {
       product: [],
       selected: {
         color: '',
-        size: '',
+        size: ''
       },
       qty: 1,
       min: 0,
-      max: 99,
-    };
+      max: 99
+    }
   },
   watch: {
     qty() {
       if (this.qty > this.max) {
-        this.qty = this.max;
+        this.qty = this.max
       } else if (this.qty < this.min) {
-        this.qty = this.min;
+        this.qty = this.min
       }
-    },
+    }
   },
   methods: {
     getProduct() {
-      this.isLoading = true;
-      const { id } = this.$route.params;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`;
+      this.isLoading = true
+      const { id } = this.$route.params
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`
       this.$http.get(url).then((res) => {
-        this.product = res.data.product;
-        this.isLoading = false;
-      });
+        this.product = res.data.product
+        this.isLoading = false
+      })
     },
     handleInput(e) {
-      this.qty = e.target.value.replace(/[^\d]/g, '');
+      this.qty = e.target.value.replace(/[^\d]/g, '')
     },
     makeUp() {
       if (this.qty === '') {
-        this.qty = 1;
+        this.qty = 1
       }
     },
     subNav(item) {
-      console.log(this.$refs[item].offsetTop);
-      window.scrollTo(0, this.$refs[item].offsetTop - 56);
-    },
+      window.scrollTo(0, this.$refs[item].offsetTop - 56)
+    }
   },
   created() {
-    this.getProduct();
+    this.getProduct()
   },
   mounted() {
-    document.querySelector('#dashboard').setAttribute('style', 'background:#FFFFFF');
+    document.querySelector('#dashboard').setAttribute('style', 'background:#FFFFFF')
   },
   beforeUnmount() {
-    document.querySelector('#dashboard').removeAttribute('style');
-  },
-};
+    document.querySelector('#dashboard').removeAttribute('style')
+  }
+}
 </script>
 
 <style lang="scss" scoped>

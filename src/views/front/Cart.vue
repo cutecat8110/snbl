@@ -14,41 +14,39 @@
       <div class="nothing">
         <i class="material-icons md-96">shopping_cart</i>
         <div class="nothing-text">購物車目前是空的</div>
-        <router-link to="/products" class="btn goshoping">
-          來去購物吧!
-        </router-link>
+        <router-link class="btn goshoping" to="/products"> 來去購物吧! </router-link>
       </div>
     </div>
   </div>
 </template>
 <script>
-import CartProcess from '@/components/common/CartProcess.vue';
+import CartProcess from '@/components/common/CartProcess.vue'
 
 export default {
   inject: ['emitter'],
   components: {
-    CartProcess,
+    CartProcess
   },
   data() {
     return {
-      qty: 0,
-    };
+      qty: 0
+    }
   },
   watch: {
     qty: {
       handler() {
         if (this.qty === 0 && this.$route.path !== '/cart') {
-          this.$router.push('/cart');
+          this.$router.push('/cart')
         }
-      },
-    },
+      }
+    }
   },
   created() {
     this.emitter.on('upDateQty', (qty) => {
-      this.qty = qty;
-    });
-  },
-};
+      this.qty = qty
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

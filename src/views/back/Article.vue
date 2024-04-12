@@ -32,11 +32,11 @@
                   <td>{{ item.description }}</td>
                   <td>{{ $filters.date(item.create_at) }}</td>
                   <td>
-                    <div class="text-success d-flex align-items-center" v-if="item.isPublic">
+                    <div v-if="item.isPublic" class="text-success d-flex align-items-center">
                       <div class="circle bg-success me-2"></div>
                       <span>已上架 </span>
                     </div>
-                    <span class="d-flex align-items-center" v-else>
+                    <span v-else class="d-flex align-items-center">
                       <div class="circle bg-gray-300 me-2"></div>
                       <span>關閉 </span>
                     </span>
@@ -69,31 +69,31 @@
     </div>
     <!-- 編輯 元件 -->
     <ArticleModal
-      :article="tempArticle"
       ref="articleModal"
+      :article="tempArticle"
       :is-new="isNew"
       @update-article="updateArticle"
     ></ArticleModal>
     <!-- 刪除 元件 -->
     <DelModal
-      :origin="pageName"
-      :delItem="tempArticle.title"
       ref="delModal"
+      :delItem="tempArticle.title"
+      :origin="pageName"
       @del-item="delArticle"
     ></DelModal>
   </div>
 </template>
 
 <script>
-import DelModal from '@/components/back/DelModal.vue';
-import ArticleModal from '@/components/back/ArticleModal.vue';
-import Pagination from '@/components/back/Pagination.vue';
+import ArticleModal from '@/components/back/ArticleModal.vue'
+import DelModal from '@/components/back/DelModal.vue'
+import Pagination from '@/components/back/Pagination.vue'
 
 export default {
   components: {
     DelModal,
     Pagination,
-    ArticleModal,
+    ArticleModal
   },
   inject: ['httpMessageState'],
   data() {
@@ -105,84 +105,84 @@ export default {
       isNew: false,
       articles: [],
       tempArticle: {
-        id: '',
-      },
-    };
+        id: ''
+      }
+    }
   },
   methods: {
     getArticles(page = 1) {
-      this.isLoading = true;
-      this.currentPage = page;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`;
+      this.isLoading = true
+      this.currentPage = page
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`
       this.$http.get(url).then((res) => {
-        this.articles = res.data.articles;
-        this.pagination = res.data.pagination;
-        this.isLoading = false;
-      });
+        this.articles = res.data.articles
+        this.pagination = res.data.pagination
+        this.isLoading = false
+      })
     },
     openModal(event, item) {
       if (event === 'new') {
-        this.isNew = true;
+        this.isNew = true
         this.tempArticle = {
           isPublic: false,
           create_at: new Date().getTime() / 1000,
-          tag: [],
-        };
-        this.$refs.articleModal.openModal();
+          tag: []
+        }
+        this.$refs.articleModal.openModal()
       } else if (event === 'edit') {
-        this.isNew = false;
-        this.isLoading = true;
-        const { id } = item;
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${id}`;
+        this.isNew = false
+        this.isLoading = true
+        const { id } = item
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${id}`
         this.$http.get(url).then((res) => {
-          this.tempArticle = res.data.article;
-          this.isLoading = false;
-          this.$refs.articleModal.openModal();
-        });
+          this.tempArticle = res.data.article
+          this.isLoading = false
+          this.$refs.articleModal.openModal()
+        })
       } else if (event === 'delete') {
-        this.tempArticle = { ...item };
-        this.$refs.delModal.openModal();
+        this.tempArticle = { ...item }
+        this.$refs.delModal.openModal()
       }
     },
     updateArticle(item) {
-      this.isLoading = true;
-      this.tempArticle = item;
-      this.tempArticle.articleImagesUrl = this.tempArticle.articleImagesUrl.filter(Boolean);
-      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article`;
-      let httpMethod = 'post';
-      let status = '新增文章';
+      this.isLoading = true
+      this.tempArticle = item
+      this.tempArticle.articleImagesUrl = this.tempArticle.articleImagesUrl.filter(Boolean)
+      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article`
+      let httpMethod = 'post'
+      let status = '新增文章'
       if (!this.isNew) {
-        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`;
-        httpMethod = 'put';
-        status = '更新文章';
+        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`
+        httpMethod = 'put'
+        status = '更新文章'
       }
       this.$http[httpMethod](api, { data: this.tempArticle }).then((res) => {
         if (res.data.success) {
-          this.getArticles(this.currentPage);
-          this.isLoading = false;
-          this.$refs.articleModal.hideModal();
-          this.httpMessageState(res, status);
+          this.getArticles(this.currentPage)
+          this.isLoading = false
+          this.$refs.articleModal.hideModal()
+          this.httpMessageState(res, status)
         } else {
-          this.isLoading = false;
-          this.httpMessageState(res, status);
+          this.isLoading = false
+          this.httpMessageState(res, status)
         }
-      });
+      })
     },
     delArticle() {
-      this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`;
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`
       this.$http.delete(url).then((res) => {
-        this.getArticles(this.currentPage);
-        this.isLoading = false;
-        this.httpMessageState(res, '刪除文章');
-        this.$refs.delModal.hideModal();
-      });
-    },
+        this.getArticles(this.currentPage)
+        this.isLoading = false
+        this.httpMessageState(res, '刪除文章')
+        this.$refs.delModal.hideModal()
+      })
+    }
   },
   created() {
-    this.getArticles();
-  },
-};
+    this.getArticles()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

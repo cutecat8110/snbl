@@ -10,7 +10,7 @@
           <div>小計</div>
           <div></div>
         </div>
-        <div class="list-card" v-for="(item, index) in showCart" :key="item.id">
+        <div v-for="(item, index) in showCart" :key="item.id" class="list-card">
           <!-- 商品資訊 -->
           <img class="img-fluid rounded" :src="item.product.imageUrl" />
           <div class="product-infor">
@@ -23,31 +23,31 @@
             <div class="qty input-group border rounded">
               <div>
                 <button
+                  :class="{ disabled: item.selected[0].qty <= 1 }"
                   class="qty-btn btn"
                   type="button"
-                  @mouseup="item.selected[0].qty--, this.upDate(index, item.id, item.selected[0])"
                   :disabled="item.selected[0].qty <= 1"
-                  :class="{ disabled: item.selected[0].qty <= 1 }"
+                  @mouseup="item.selected[0].qty--, this.upDate(index, item.id, item.selected[0])"
                 >
                   <i class="material-icons md-dark">remove</i>
                 </button>
               </div>
               <input
-                type="text"
-                class="form-control text-center shadow-none rounded"
-                :min="min"
-                :max="max"
-                @input="handleInput(index, $event)"
-                @blur="makeUp(index), this.upDate(index, item.id, item.selected[0])"
                 v-model="item.selected[0].qty"
+                class="form-control text-center shadow-none rounded"
+                type="text"
+                :max="max"
+                :min="min"
+                @blur="makeUp(index), this.upDate(index, item.id, item.selected[0])"
+                @input="handleInput(index, $event)"
               />
               <div>
                 <button
+                  :class="{ disabled: item.selected[0].qty >= 99 }"
                   class="qty-btn btn"
                   type="button"
-                  @mouseup="item.selected[0].qty++, this.upDate(index, item.id, item.selected[0])"
                   :disabled="item.selected[0].qty >= 99"
-                  :class="{ disabled: item.selected[0].qty >= 99 }"
+                  @mouseup="item.selected[0].qty++, this.upDate(index, item.id, item.selected[0])"
                 >
                   <i class="material-icons md-dark">add</i>
                 </button>
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="mobile">
-        <div class="list-card" v-for="(item, index) in showCart" :key="item.id">
+        <div v-for="(item, index) in showCart" :key="item.id" class="list-card">
           <!-- 商品圖 -->
           <div class="img-box">
             <img class="img-fluid rounded" :src="item.product.imageUrl" />
@@ -97,31 +97,31 @@
             <div class="qty input-group border rounded">
               <div>
                 <button
+                  :class="{ disabled: item.selected[0].qty <= 1 }"
                   class="qty-btn btn"
                   type="button"
-                  @mouseup="item.selected[0].qty--, this.upDate(index, item.id, item.selected[0])"
                   :disabled="item.selected[0].qty <= 1"
-                  :class="{ disabled: item.selected[0].qty <= 1 }"
+                  @mouseup="item.selected[0].qty--, this.upDate(index, item.id, item.selected[0])"
                 >
                   <i class="material-icons md-dark">remove</i>
                 </button>
               </div>
               <input
-                type="text"
-                class="form-control text-center shadow-none rounded border-0"
-                :min="min"
-                :max="max"
-                @input="handleInput(index, $event)"
-                @blur="makeUp(index), this.upDate(index, item.id, item.selected[0])"
                 v-model="item.selected[0].qty"
+                class="form-control text-center shadow-none rounded border-0"
+                type="text"
+                :max="max"
+                :min="min"
+                @blur="makeUp(index), this.upDate(index, item.id, item.selected[0])"
+                @input="handleInput(index, $event)"
               />
               <div>
                 <button
+                  :class="{ disabled: item.selected[0].qty >= 99 }"
                   class="qty-btn btn"
                   type="button"
-                  @mouseup="item.selected[0].qty++, this.upDate(index, item.id, item.selected[0])"
                   :disabled="item.selected[0].qty >= 99"
-                  :class="{ disabled: item.selected[0].qty >= 99 }"
+                  @mouseup="item.selected[0].qty++, this.upDate(index, item.id, item.selected[0])"
                 >
                   <i class="material-icons md-dark">add</i>
                 </button>
@@ -157,46 +157,46 @@ export default {
       min: 1,
       max: 99,
       showCart: [],
-      tempShowCart: [],
-    };
+      tempShowCart: []
+    }
   },
   methods: {
     delCart(id, selected) {
-      this.emitter.emit('emitDelCart', [id, selected]);
+      this.emitter.emit('emitDelCart', [id, selected])
     },
     handleInput(index, e) {
       if (e.target.value.replace(/[^\d]/g, '') !== '') {
-        const inputQty = e.target.value.replace(/[^\d]/g, '');
+        const inputQty = e.target.value.replace(/[^\d]/g, '')
         if (inputQty > this.max) {
-          this.showCart[index].selected[0].qty = this.max;
+          this.showCart[index].selected[0].qty = this.max
         } else if (inputQty < this.min) {
-          this.showCart[index].selected[0].qty.qty = this.min;
+          this.showCart[index].selected[0].qty.qty = this.min
         } else {
-          this.showCart[index].selected[0].qty = Number(e.target.value.replace(/[^\d]/g, ''));
+          this.showCart[index].selected[0].qty = Number(e.target.value.replace(/[^\d]/g, ''))
         }
       } else {
-        this.showCart[index].selected[0].qty = e.target.value.replace(/[^\d]/g, '');
+        this.showCart[index].selected[0].qty = e.target.value.replace(/[^\d]/g, '')
       }
     },
     makeUp(index) {
       if (this.showCart[index].selected[0].qty === '') {
-        this.showCart[index].selected[0].qty = 1;
+        this.showCart[index].selected[0].qty = 1
       }
     },
     upDate(index, id, selected) {
       if (this.showCart[index].selected[0].qty !== this.tempShowCart[index].selected[0].qty) {
-        this.emitter.emit('emitUpDate', [index, id, selected]);
+        this.emitter.emit('emitUpDate', [index, id, selected])
       }
-    },
+    }
   },
   created() {
     this.emitter.on('upDateCart', (item) => {
-      this.cart = JSON.parse(JSON.stringify(item[0]));
-      this.showCart = JSON.parse(JSON.stringify(item[1]));
-      this.tempShowCart = JSON.parse(JSON.stringify(item[2]));
-    });
-  },
-};
+      this.cart = JSON.parse(JSON.stringify(item[0]))
+      this.showCart = JSON.parse(JSON.stringify(item[1]))
+      this.tempShowCart = JSON.parse(JSON.stringify(item[2]))
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -338,8 +338,10 @@ section {
         opacity: 0;
         transform: translateX(0.125rem);
 
-        transition: opacity 300ms ease-in-out, transform 300ms ease-in-out,
-        box-shadow 150ms ease-in-out;
+        transition:
+          opacity 300ms ease-in-out,
+          transform 300ms ease-in-out,
+          box-shadow 150ms ease-in-out;
 
         .material-icons {
           color: rgba(0, 0, 0, 0.54);

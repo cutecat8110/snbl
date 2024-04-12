@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <Loading :active="isLoading" :z-index="1060" :opacity="1"></Loading>
+    <Loading :active="isLoading" :opacity="1" :z-index="1060"></Loading>
     <div class="container shadow-sm">
       <div class="logo">
         <img class="img-fluid" src="@/assets/logo2.png" alt="logo2.png" />
@@ -10,30 +10,28 @@
         <form id="form" class="form-signin" @submit.prevent="login">
           <div class="form-floating mb-3">
             <input
-              type="email"
-              class="form-control"
               id="username"
-              placeholder="name@example.com"
-              required
-              autofocus
               v-model="user.username"
+              class="form-control"
+              type="email"
+              placeholder="name@example.com"
+              autofocus
+              required
             />
             <label for="username">Email address</label>
           </div>
           <div class="form-floating">
             <input
-              type="password"
-              class="form-control"
               id="password"
+              v-model="user.password"
+              class="form-control"
+              type="password"
               placeholder="Password"
               required
-              v-model="user.password"
             />
             <label for="password">Password</label>
           </div>
-          <button class="btn btn-lg btn-primary w-100" type="submit">
-            登入
-          </button>
+          <button class="btn btn-lg btn-primary w-100" type="submit">登入</button>
         </form>
       </div>
     </div>
@@ -47,45 +45,43 @@ export default {
     return {
       user: {
         username: '',
-        password: '',
+        password: ''
       },
       loginImage: [],
       isLoading: false,
-      fullPage: true,
-    };
+      fullPage: true
+    }
   },
   methods: {
     render() {
-      this.isLoading = true;
-      const id = '-MoNVFrUSDDA2ZXh9gFh';
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`;
+      this.isLoading = true
+      const id = '-MoNVFrUSDDA2ZXh9gFh'
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
       this.$http.get(url).then((res) => {
-        this.loginImage = res.data.article.articleImagesUrl;
-        this.isLoading = false;
-      });
+        this.loginImage = res.data.article.articleImagesUrl
+        this.isLoading = false
+      })
     },
     login() {
       this.$http.post(`${process.env.VUE_APP_API}admin/signin`, this.user).then((res) => {
         if (res.data.success === true) {
-          console.log(res.data.message, this.user);
-          const { token } = res.data;
-          const { expired } = res.data;
-          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
-          this.$router.push('/admin/products');
+          const { token } = res.data
+          const { expired } = res.data
+          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+          this.$router.push('/admin/products')
         } else {
-          console.log(res.data.message, this.user);
-          this.user.username = '';
-          this.user.password = '';
+          this.user.username = ''
+          this.user.password = ''
           // eslint-disable-next-line no-alert
-          alert('帳號或密碼錯誤');
+          alert('帳號或密碼錯誤')
         }
-      });
-    },
+      })
+    }
   },
   created() {
-    this.render();
-  },
-};
+    this.render()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -3,22 +3,22 @@
     id="oderModal"
     ref="modal"
     class="modal fade"
-    tabindex="-1"
-    aria-labelledby="oderModalLabel"
     aria-hidden="true"
+    aria-labelledby="oderModalLabel"
     data-bs-backdrop="static"
+    tabindex="-1"
   >
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content  border-0">
+      <div class="modal-content border-0">
         <div class="modal-header">
           <h3 id="exampleModalLabel" class="modal-title">
             <span>編輯訂單</span>
           </h3>
           <button
-            type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            type="button"
             aria-label="Close"
+            data-bs-dismiss="modal"
           ></button>
         </div>
         <div class="modal-body">
@@ -92,7 +92,7 @@
               <table class="table m-0">
                 <tbody>
                   <tr v-for="item in tempOrder.products" :key="item.id">
-                    <th style="white-space: normal; ">
+                    <th style="white-space: normal">
                       {{ item.product.title }}
                     </th>
                     <td class="col-1">{{ item.qty }} / {{ item.product.unit }}</td>
@@ -109,40 +109,36 @@
             <div class="row g-3 p-2">
               <div class="col">
                 <!-- 開啟 -->
-                <label for="isEnabled1" class="d-inline-block py-2 me-2">
+                <label class="d-inline-block py-2 me-2" for="isEnabled1">
                   <input
                     id="isEnabled1"
+                    v-model="tempOrder.is_paid"
                     class="form-check-input"
                     type="radio"
-                    v-model="tempOrder.is_paid"
                     value="true"
                   />
-                  <span class="px-2">
-                    開啟
-                  </span>
+                  <span class="px-2"> 開啟 </span>
                 </label>
                 <!-- 關閉 -->
-                <label for="isEnabled0" class="d-inline-block py-2 me-2">
+                <label class="d-inline-block py-2 me-2" for="isEnabled0">
                   <input
                     id="isEnabled0"
+                    v-model="tempOrder.is_paid"
                     class="form-check-input"
                     type="radio"
-                    v-model="tempOrder.is_paid"
                     value="false"
                   />
-                  <span class="px-2">
-                    關閉
-                  </span>
+                  <span class="px-2"> 關閉 </span>
                 </label>
               </div>
             </div>
           </section>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary me-3" data-bs-dismiss="modal">
+          <button class="btn btn-outline-secondary me-3" type="button" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-primary" @click="$emit('update-paid', tempOrder)">
+          <button class="btn btn-primary" type="button" @click="$emit('update-paid', tempOrder)">
             確認
           </button>
         </div>
@@ -151,7 +147,7 @@
   </div>
 </template>
 <script>
-import modalMixin from '@/mixins/modalMixin';
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   mixins: [modalMixin],
@@ -160,36 +156,36 @@ export default {
     order: {
       type: Object,
       default() {
-        return {};
-      },
-    },
+        return {}
+      }
+    }
   },
   data() {
     return {
       status: {},
       modal: '',
       tempOrder: {
-        is_paid: '',
+        is_paid: ''
       },
-      isPaid: false,
-    };
+      isPaid: false
+    }
   },
   watch: {
     order() {
-      this.tempOrder = { ...this.order };
+      this.tempOrder = { ...this.order }
     },
     'tempOrder.is_paid': {
       handler() {
         if (this.tempOrder.is_paid === 'true') {
-          this.tempOrder.is_paid = true;
+          this.tempOrder.is_paid = true
         } else if (this.tempOrder.is_paid === 'false') {
-          this.tempOrder.is_paid = false;
+          this.tempOrder.is_paid = false
         }
       },
-      deep: true,
-    },
-  },
-};
+      deep: true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

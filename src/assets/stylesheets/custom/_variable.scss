@@ -1,41 +1,41 @@
-$color-main : #DB4D6D;
-$color-main-hover : #C9385A;
-$color-main-light-hover : #E07B93;
-$color-main-active : #BD2B4D;
-$color-aside : #4BB7BF;
-$color-border-active : #656565;
-$aside-navbar-width : 168px;
-$product-form-width : 272px;
-$height-width : (
+$color-main: #db4d6d;
+$color-main-hover: #c9385a;
+$color-main-light-hover: #e07b93;
+$color-main-active: #bd2b4d;
+$color-aside: #4bb7bf;
+$color-border-active: #656565;
+$aside-navbar-width: 168px;
+$product-form-width: 272px;
+$height-width: (
   '16': 16px,
   '28': 28px,
   '36': 36px,
-  '24': 24px,
+  '24': 24px
 );
 
 @each $key, $value in $height-width {
   .h-#{$key} {
-    height : $value;
+    height: $value;
   }
   .w-#{$key} {
-    width : $value;
+    width: $value;
   }
 }
 
 @mixin font-sm {
-  font-size : .875rem; // 14
+  font-size: 0.875rem; // 14
 }
 @mixin font-md {
-  font-size : 1rem; // 16
+  font-size: 1rem; // 16
 }
 @mixin font-lg {
-  font-size : 1.25rem; // 20
+  font-size: 1.25rem; // 20
 }
 @mixin font-xl {
-  font-size : 1.5rem; // 24
+  font-size: 1.5rem; // 24
 }
 @mixin font-xxl {
-  font-size : 1.875rem; // 30
+  font-size: 1.875rem; // 30
 }
 
 @mixin xs {
@@ -65,25 +65,25 @@ $height-width : (
 }
 
 // scss-docs-start gray-color-variables
-$white : #FFFFFF;
-$gray-000 : #FAFAFA;
-$gray-100 : #F8F9FA;
-$gray-150 : #F5F5F5;
-$gray-200 : #E9ECEF;
-$gray-250 : #F0F0F0;
-$gray-300 : #DEE2E6;
-$gray-400 : #CCCCCC; // #ced4da
-$gray-500 : #ADB5BD;
-$gray-600 : #6F7275; // #6c757d
-$gray-700 : #495057;
-$gray-800 : #343A40;
-$gray-900 : #292B2C; // #212529
-$black : #000000;
+$white: #ffffff;
+$gray-000: #fafafa;
+$gray-100: #f8f9fa;
+$gray-150: #f5f5f5;
+$gray-200: #e9ecef;
+$gray-250: #f0f0f0;
+$gray-300: #dee2e6;
+$gray-400: #cccccc; // #ced4da
+$gray-500: #adb5bd;
+$gray-600: #6f7275; // #6c757d
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #292b2c; // #212529
+$black: #000000;
 // scss-docs-end gray-color-variables
 
 // fusv-disable
 // scss-docs-start gray-colors-map
-$grays : (
+$grays: (
   '100': $gray-100,
   '200': $gray-200,
   '300': $gray-300,
@@ -92,26 +92,26 @@ $grays : (
   '600': $gray-600,
   '700': $gray-700,
   '800': $gray-800,
-  '900': $gray-900,
+  '900': $gray-900
 );
 // scss-docs-end gray-colors-map
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue : #0D6EFD;
-$indigo : #6610F2;
-$purple : #6F42C1;
-$pink : #D63384;
-$red : #DC3545;
-$orange : #FD7E14;
-$yellow : #FFC107;
-$green : #198754;
-$teal : #20C997;
-$cyan : #0DCAF0;
+$blue: #0d6efd;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #d63384;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #198754;
+$teal: #20c997;
+$cyan: #0dcaf0;
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
-$colors : (
+$colors: (
   'blue': $blue,
   'indigo': $indigo,
   'purple': $purple,
@@ -124,23 +124,23 @@ $colors : (
   'cyan': $cyan,
   'white': $white,
   'gray': $gray-600,
-  'gray-dark': $gray-800,
+  'gray-dark': $gray-800
 );
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary : $blue;
-$secondary : $gray-600;
-$success : $green;
-$info : $cyan;
-$warning : $yellow;
-$danger : $red;
-$light : $gray-100;
-$dark : $gray-900;
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-900;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
-$theme-colors : (
+$theme-colors: (
   'primary': $primary,
   'secondary': $secondary,
   'success': $success,
@@ -148,7 +148,7 @@ $theme-colors : (
   'warning': $warning,
   'danger': $danger,
   'light': $light,
-  'dark': $dark,
+  'dark': $dark
 );
 
 // scss-docs-end theme-colors-map
@@ -162,110 +162,115 @@ $theme-colors : (
 // 將顏色地圖轉換成 RGB 格式
 $theme-colors-rgb: ();
 @each $key, $value in $theme-colors {
-  $theme-colors-rgb: map-merge($theme-colors-rgb, ($key: to-rgb($value)));
+  $theme-colors-rgb: map-merge(
+    $theme-colors-rgb,
+    (
+      $key: to-rgb($value)
+    )
+  );
 }
 // scss-docs-end theme-colors-rgb
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
-$min-contrast-ratio : 4.5;
+$min-contrast-ratio: 4.5;
 
 // Customize the light and dark text colors for use in our color contrast function.
-$color-contrast-dark : $black;
-$color-contrast-light : $white;
+$color-contrast-dark: $black;
+$color-contrast-light: $white;
 
 // fusv-disable
-$blue-100 : tint-color($blue, 80%);
-$blue-200 : tint-color($blue, 60%);
-$blue-300 : tint-color($blue, 40%);
-$blue-400 : tint-color($blue, 20%);
-$blue-500 : $blue;
-$blue-600 : shade-color($blue, 20%);
-$blue-700 : shade-color($blue, 40%);
-$blue-800 : shade-color($blue, 60%);
-$blue-900 : shade-color($blue, 80%);
-$indigo-100 : tint-color($indigo, 80%);
-$indigo-200 : tint-color($indigo, 60%);
-$indigo-300 : tint-color($indigo, 40%);
-$indigo-400 : tint-color($indigo, 20%);
-$indigo-500 : $indigo;
-$indigo-600 : shade-color($indigo, 20%);
-$indigo-700 : shade-color($indigo, 40%);
-$indigo-800 : shade-color($indigo, 60%);
-$indigo-900 : shade-color($indigo, 80%);
-$purple-100 : tint-color($purple, 80%);
-$purple-200 : tint-color($purple, 60%);
-$purple-300 : tint-color($purple, 40%);
-$purple-400 : tint-color($purple, 20%);
-$purple-500 : $purple;
-$purple-600 : shade-color($purple, 20%);
-$purple-700 : shade-color($purple, 40%);
-$purple-800 : shade-color($purple, 60%);
-$purple-900 : shade-color($purple, 80%);
-$pink-100 : tint-color($pink, 80%);
-$pink-200 : tint-color($pink, 60%);
-$pink-300 : tint-color($pink, 40%);
-$pink-400 : tint-color($pink, 20%);
-$pink-500 : $pink;
-$pink-600 : shade-color($pink, 20%);
-$pink-700 : shade-color($pink, 40%);
-$pink-800 : shade-color($pink, 60%);
-$pink-900 : shade-color($pink, 80%);
-$red-100 : tint-color($red, 80%);
-$red-200 : tint-color($red, 60%);
-$red-300 : tint-color($red, 40%);
-$red-400 : tint-color($red, 20%);
-$red-500 : $red;
-$red-600 : shade-color($red, 20%);
-$red-700 : shade-color($red, 40%);
-$red-800 : shade-color($red, 60%);
-$red-900 : shade-color($red, 80%);
-$orange-100 : tint-color($orange, 80%);
-$orange-200 : tint-color($orange, 60%);
-$orange-300 : tint-color($orange, 40%);
-$orange-400 : tint-color($orange, 20%);
-$orange-500 : $orange;
-$orange-600 : shade-color($orange, 20%);
-$orange-700 : shade-color($orange, 40%);
-$orange-800 : shade-color($orange, 60%);
-$orange-900 : shade-color($orange, 80%);
-$yellow-100 : tint-color($yellow, 80%);
-$yellow-200 : tint-color($yellow, 60%);
-$yellow-300 : tint-color($yellow, 40%);
-$yellow-400 : tint-color($yellow, 20%);
-$yellow-500 : $yellow;
-$yellow-600 : shade-color($yellow, 20%);
-$yellow-700 : shade-color($yellow, 40%);
-$yellow-800 : shade-color($yellow, 60%);
-$yellow-900 : shade-color($yellow, 80%);
-$green-100 : tint-color($green, 80%);
-$green-200 : tint-color($green, 60%);
-$green-300 : tint-color($green, 40%);
-$green-400 : tint-color($green, 20%);
-$green-500 : $green;
-$green-600 : shade-color($green, 20%);
-$green-700 : shade-color($green, 40%);
-$green-800 : shade-color($green, 60%);
-$green-900 : shade-color($green, 80%);
-$teal-100 : tint-color($teal, 80%);
-$teal-200 : tint-color($teal, 60%);
-$teal-300 : tint-color($teal, 40%);
-$teal-400 : tint-color($teal, 20%);
-$teal-500 : $teal;
-$teal-600 : shade-color($teal, 20%);
-$teal-700 : shade-color($teal, 40%);
-$teal-800 : shade-color($teal, 60%);
-$teal-900 : shade-color($teal, 80%);
-$cyan-100 : tint-color($cyan, 80%);
-$cyan-200 : tint-color($cyan, 60%);
-$cyan-300 : tint-color($cyan, 40%);
-$cyan-400 : tint-color($cyan, 20%);
-$cyan-500 : $cyan;
-$cyan-600 : shade-color($cyan, 20%);
-$cyan-700 : shade-color($cyan, 40%);
-$cyan-800 : shade-color($cyan, 60%);
-$cyan-900 : shade-color($cyan, 80%);
-$blues : (
+$blue-100: tint-color($blue, 80%);
+$blue-200: tint-color($blue, 60%);
+$blue-300: tint-color($blue, 40%);
+$blue-400: tint-color($blue, 20%);
+$blue-500: $blue;
+$blue-600: shade-color($blue, 20%);
+$blue-700: shade-color($blue, 40%);
+$blue-800: shade-color($blue, 60%);
+$blue-900: shade-color($blue, 80%);
+$indigo-100: tint-color($indigo, 80%);
+$indigo-200: tint-color($indigo, 60%);
+$indigo-300: tint-color($indigo, 40%);
+$indigo-400: tint-color($indigo, 20%);
+$indigo-500: $indigo;
+$indigo-600: shade-color($indigo, 20%);
+$indigo-700: shade-color($indigo, 40%);
+$indigo-800: shade-color($indigo, 60%);
+$indigo-900: shade-color($indigo, 80%);
+$purple-100: tint-color($purple, 80%);
+$purple-200: tint-color($purple, 60%);
+$purple-300: tint-color($purple, 40%);
+$purple-400: tint-color($purple, 20%);
+$purple-500: $purple;
+$purple-600: shade-color($purple, 20%);
+$purple-700: shade-color($purple, 40%);
+$purple-800: shade-color($purple, 60%);
+$purple-900: shade-color($purple, 80%);
+$pink-100: tint-color($pink, 80%);
+$pink-200: tint-color($pink, 60%);
+$pink-300: tint-color($pink, 40%);
+$pink-400: tint-color($pink, 20%);
+$pink-500: $pink;
+$pink-600: shade-color($pink, 20%);
+$pink-700: shade-color($pink, 40%);
+$pink-800: shade-color($pink, 60%);
+$pink-900: shade-color($pink, 80%);
+$red-100: tint-color($red, 80%);
+$red-200: tint-color($red, 60%);
+$red-300: tint-color($red, 40%);
+$red-400: tint-color($red, 20%);
+$red-500: $red;
+$red-600: shade-color($red, 20%);
+$red-700: shade-color($red, 40%);
+$red-800: shade-color($red, 60%);
+$red-900: shade-color($red, 80%);
+$orange-100: tint-color($orange, 80%);
+$orange-200: tint-color($orange, 60%);
+$orange-300: tint-color($orange, 40%);
+$orange-400: tint-color($orange, 20%);
+$orange-500: $orange;
+$orange-600: shade-color($orange, 20%);
+$orange-700: shade-color($orange, 40%);
+$orange-800: shade-color($orange, 60%);
+$orange-900: shade-color($orange, 80%);
+$yellow-100: tint-color($yellow, 80%);
+$yellow-200: tint-color($yellow, 60%);
+$yellow-300: tint-color($yellow, 40%);
+$yellow-400: tint-color($yellow, 20%);
+$yellow-500: $yellow;
+$yellow-600: shade-color($yellow, 20%);
+$yellow-700: shade-color($yellow, 40%);
+$yellow-800: shade-color($yellow, 60%);
+$yellow-900: shade-color($yellow, 80%);
+$green-100: tint-color($green, 80%);
+$green-200: tint-color($green, 60%);
+$green-300: tint-color($green, 40%);
+$green-400: tint-color($green, 20%);
+$green-500: $green;
+$green-600: shade-color($green, 20%);
+$green-700: shade-color($green, 40%);
+$green-800: shade-color($green, 60%);
+$green-900: shade-color($green, 80%);
+$teal-100: tint-color($teal, 80%);
+$teal-200: tint-color($teal, 60%);
+$teal-300: tint-color($teal, 40%);
+$teal-400: tint-color($teal, 20%);
+$teal-500: $teal;
+$teal-600: shade-color($teal, 20%);
+$teal-700: shade-color($teal, 40%);
+$teal-800: shade-color($teal, 60%);
+$teal-900: shade-color($teal, 80%);
+$cyan-100: tint-color($cyan, 80%);
+$cyan-200: tint-color($cyan, 60%);
+$cyan-300: tint-color($cyan, 40%);
+$cyan-400: tint-color($cyan, 20%);
+$cyan-500: $cyan;
+$cyan-600: shade-color($cyan, 20%);
+$cyan-700: shade-color($cyan, 40%);
+$cyan-800: shade-color($cyan, 60%);
+$cyan-900: shade-color($cyan, 80%);
+$blues: (
   'blue-100': $blue-100,
   'blue-200': $blue-200,
   'blue-300': $blue-300,
@@ -274,9 +279,9 @@ $blues : (
   'blue-600': $blue-600,
   'blue-700': $blue-700,
   'blue-800': $blue-800,
-  'blue-900': $blue-900,
+  'blue-900': $blue-900
 );
-$indigos : (
+$indigos: (
   'indigo-100': $indigo-100,
   'indigo-200': $indigo-200,
   'indigo-300': $indigo-300,
@@ -285,9 +290,9 @@ $indigos : (
   'indigo-600': $indigo-600,
   'indigo-700': $indigo-700,
   'indigo-800': $indigo-800,
-  'indigo-900': $indigo-900,
+  'indigo-900': $indigo-900
 );
-$purples : (
+$purples: (
   'purple-100': $purple-200,
   'purple-200': $purple-100,
   'purple-300': $purple-300,
@@ -296,9 +301,9 @@ $purples : (
   'purple-600': $purple-600,
   'purple-700': $purple-700,
   'purple-800': $purple-800,
-  'purple-900': $purple-900,
+  'purple-900': $purple-900
 );
-$pinks : (
+$pinks: (
   'pink-100': $pink-100,
   'pink-200': $pink-200,
   'pink-300': $pink-300,
@@ -307,9 +312,9 @@ $pinks : (
   'pink-600': $pink-600,
   'pink-700': $pink-700,
   'pink-800': $pink-800,
-  'pink-900': $pink-900,
+  'pink-900': $pink-900
 );
-$reds : (
+$reds: (
   'red-100': $red-100,
   'red-200': $red-200,
   'red-300': $red-300,
@@ -318,9 +323,9 @@ $reds : (
   'red-600': $red-600,
   'red-700': $red-700,
   'red-800': $red-800,
-  'red-900': $red-900,
+  'red-900': $red-900
 );
-$oranges : (
+$oranges: (
   'orange-100': $orange-100,
   'orange-200': $orange-200,
   'orange-300': $orange-300,
@@ -329,9 +334,9 @@ $oranges : (
   'orange-600': $orange-600,
   'orange-700': $orange-700,
   'orange-800': $orange-800,
-  'orange-900': $orange-900,
+  'orange-900': $orange-900
 );
-$yellows : (
+$yellows: (
   'yellow-100': $yellow-100,
   'yellow-200': $yellow-200,
   'yellow-300': $yellow-300,
@@ -340,9 +345,9 @@ $yellows : (
   'yellow-600': $yellow-600,
   'yellow-700': $yellow-700,
   'yellow-800': $yellow-800,
-  'yellow-900': $yellow-900,
+  'yellow-900': $yellow-900
 );
-$greens : (
+$greens: (
   'green-100': $green-100,
   'green-200': $green-200,
   'green-300': $green-300,
@@ -351,9 +356,9 @@ $greens : (
   'green-600': $green-600,
   'green-700': $green-700,
   'green-800': $green-800,
-  'green-900': $green-900,
+  'green-900': $green-900
 );
-$teals : (
+$teals: (
   'teal-100': $teal-100,
   'teal-200': $teal-200,
   'teal-300': $teal-300,
@@ -362,9 +367,9 @@ $teals : (
   'teal-600': $teal-600,
   'teal-700': $teal-700,
   'teal-800': $teal-800,
-  'teal-900': $teal-900,
+  'teal-900': $teal-900
 );
-$cyans : (
+$cyans: (
   'cyan-100': $cyan-100,
   'cyan-200': $cyan-200,
   'cyan-300': $cyan-300,
@@ -373,8 +378,8 @@ $cyans : (
   'cyan-600': $cyan-600,
   'cyan-700': $cyan-700,
   'cyan-800': $cyan-800,
-  'cyan-900': $cyan-900,
+  'cyan-900': $cyan-900
 );
-$body-bg : $white;
-$body-color : $gray-900;
-$body-text-align : null;
+$body-bg: $white;
+$body-color: $gray-900;
+$body-text-align: null;

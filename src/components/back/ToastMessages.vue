@@ -4,21 +4,21 @@
       <div
         v-for="(msg, key) in messages"
         :key="key"
-        class="toast show"
         :class="`toast${key}`"
+        class="toast show"
         role="alert"
       >
         <div class="toast-header">
           <span :class="`bg-${msg.style}`" class="p-2 rounded me-2 d-inline-block"></span>
           <strong class="me-auto">{{ msg.title }}</strong>
           <button
-            type="button"
             class="btn-close"
-            @click="clearToast(key)"
+            type="button"
             aria-label="Close"
+            @click="clearToast(key)"
           ></button>
         </div>
-        <div class="toast-body" v-if="msg.content">
+        <div v-if="msg.content" class="toast-body">
           {{ msg.content }}
         </div>
       </div>
@@ -30,26 +30,26 @@
 export default {
   data() {
     return {
-      messages: [],
-    };
+      messages: []
+    }
   },
   inject: ['emitter'],
   methods: {
     toastShow() {
       setTimeout(() => {
-        this.messages.shift();
-      }, 4500);
+        this.messages.shift()
+      }, 4500)
     },
     clearToast(index) {
-      this.messages.splice(index, 1);
-    },
+      this.messages.splice(index, 1)
+    }
   },
   mounted() {
     this.emitter.on('push-message', (message) => {
-      const { style = 'success', title, content } = message;
-      this.messages.push({ style, title, content });
-      this.toastShow();
-    });
-  },
-};
+      const { style = 'success', title, content } = message
+      this.messages.push({ style, title, content })
+      this.toastShow()
+    })
+  }
+}
 </script>

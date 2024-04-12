@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="web">
-      <router-link to="/cart" class="process-wrapper">
+      <router-link class="process-wrapper" to="/cart">
         <div class="process">
           <i class="material-icons md-36">local_atm</i>
           <div class="text">
@@ -10,7 +10,7 @@
           </div>
         </div>
       </router-link>
-      <router-link to="/cart/add" class="process-wrapper">
+      <router-link class="process-wrapper" to="/cart/add">
         <div class="process">
           <i class="material-icons md-36">edit</i>
           <div class="text">
@@ -19,7 +19,7 @@
           </div>
         </div>
       </router-link>
-      <div class="process-wrapper" :class="order ? 'active' : ''">
+      <div :class="order ? 'active' : ''" class="process-wrapper">
         <div class="process">
           <i class="material-icons md-36">local_shipping</i>
           <div class="text">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="mobile">
-      <router-link to="/cart" class="process-wrapper">
+      <router-link class="process-wrapper" to="/cart">
         <div class="text">
           <div class="order">1.</div>
           <div class="text-group">
@@ -40,7 +40,7 @@
         </div>
         <i class="material-icons md-24">local_atm</i>
       </router-link>
-      <router-link to="/cart/add" class="process-wrapper">
+      <router-link class="process-wrapper" to="/cart/add">
         <div class="text">
           <div class="order">2.</div>
           <div class="text-group">
@@ -50,7 +50,7 @@
         </div>
         <i class="material-icons md-24">edit</i>
       </router-link>
-      <div class="process-wrapper" :class="order ? 'active' : ''">
+      <div :class="order ? 'active' : ''" class="process-wrapper">
         <div class="text">
           <div class="order">3.</div>
           <div class="text-group">
@@ -67,20 +67,20 @@
 export default {
   data() {
     return {
-      order: false,
-    };
+      order: false
+    }
   },
   watch: {
     $route: {
       handler() {
         if (this.$route.name === 'cart-completed') {
-          this.order = true;
+          this.order = true
         }
       },
-      immediate: true,
-    },
-  },
-};
+      immediate: true
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';

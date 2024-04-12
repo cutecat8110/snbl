@@ -1,10 +1,10 @@
 <template>
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
-      <li class="page-item" :class="{ disabled: pages.current_page === 1 }">
+      <li :class="{ disabled: pages.current_page === 1 }" class="page-item">
         <a
-          href="#"
           class="page-link"
+          href="#"
           aria-label="Previous"
           @click.prevent="emitPage(pages.current_page - 1)"
         >
@@ -16,17 +16,17 @@
       <li
         v-for="(item, index) in pages.total_pages"
         :key="index"
-        class="page-item"
         :class="{ active: item === pages.current_page }"
+        class="page-item"
       >
-        <span class="page-link" v-if="item === pages.current_page">{{ item }}</span>
-        <a href="#" class="page-link" v-else @click.prevent="emitPage(item)">{{ item }}</a>
+        <span v-if="item === pages.current_page" class="page-link">{{ item }}</span>
+        <a v-else class="page-link" href="#" @click.prevent="emitPage(item)">{{ item }}</a>
       </li>
 
-      <li class="page-item" :class="{ disabled: pages.current_page === pages.total_pages }">
+      <li :class="{ disabled: pages.current_page === pages.total_pages }" class="page-item">
         <a
-          href="#"
           class="page-link"
+          href="#"
           aria-label="Next"
           @click.prevent="emitPage(pages.current_page + 1)"
         >
@@ -43,10 +43,10 @@ export default {
   props: ['pages'],
   methods: {
     emitPage(item) {
-      this.$emit('emit-page', item);
-    },
-  },
-};
+      this.$emit('emit-page', item)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

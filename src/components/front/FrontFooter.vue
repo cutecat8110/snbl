@@ -39,38 +39,30 @@
         </section>
         <section>
           <h6>CONTACT US</h6>
-          <div class="tel">
-            +886-980-353064
-          </div>
+          <div class="tel">+886-980-353064</div>
           <div class="time">
-            <span>
-              MON - FRI
-            </span>
-            <span>
-              9:00 am - 12:00 pm
-            </span>
-            <span>
-              13:00 pm - 18:00 pm
-            </span>
+            <span> MON - FRI </span>
+            <span> 9:00 am - 12:00 pm </span>
+            <span> 13:00 pm - 18:00 pm </span>
           </div>
           <div class="share-link-container">
             <div class="share-link">
-              <a href="#" @click.prevent="" class="facebook">
+              <a class="facebook" href="#" @click.prevent="">
                 <i class="fab fa-facebook-square"></i>
               </a>
             </div>
             <div class="share-link">
-              <a href="#" @click.prevent="" class="line">
+              <a class="line" href="#" @click.prevent="">
                 <i class="fab fa-line"></i>
               </a>
             </div>
             <div class="share-link">
-              <a href="#" @click.prevent="" class="twitter">
+              <a class="twitter" href="#" @click.prevent="">
                 <i class="fab fa-twitter"></i>
               </a>
             </div>
             <div class="share-link">
-              <a href="#" @click.prevent="" class="weibo">
+              <a class="weibo" href="#" @click.prevent="">
                 <i class="fab fa-weibo"></i>
               </a>
             </div>
@@ -78,7 +70,7 @@
         </section>
       </div>
       <div class="external-link">
-        <router-link to="/login" target="_blank">
+        <router-link target="_blank" to="/login">
           <i class="material-icons md-18">settings</i>
           管理後台
         </router-link>
@@ -87,9 +79,7 @@
           <i class="fab fa-github"></i>GitHub
         </a>
       </div>
-      <div class="copy-right">
-        Copyright © 2021 by Hao / 素材取自網路，僅作學習用途
-      </div>
+      <div class="copy-right">Copyright © 2021 by Hao / 素材取自網路，僅作學習用途</div>
     </div>
   </footer>
 </template>

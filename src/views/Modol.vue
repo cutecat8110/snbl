@@ -9,17 +9,17 @@ export default {
   mixins: [], // 引入
   // 深層傳遞
   provide() {
-    return {}; // 傳遞
+    return {} // 傳遞
   },
   inject: [], // 接收
   // 淺層傳遞
   props: {},
   emits: [],
   data() {
-    return {};
+    return {}
   },
   watch: {},
   methods: {},
-  created() {},
-};
+  created() {}
+}
 </script>

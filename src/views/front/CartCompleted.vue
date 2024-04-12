@@ -6,10 +6,8 @@
         <div class="scenery" :style="{ backgroundImage: 'url(' + scenery + ')' }"></div>
         <div class="completed-container">
           <div class="order-header">
-            <h1>
-              訂單明細
-            </h1>
-            <div class="state" :class="{ active: order.is_paid }">
+            <h1>訂單明細</h1>
+            <div :class="{ active: order.is_paid }" class="state">
               <span class="number">編號 : &nbsp;{{ orderId.substr(1) }}</span>
               <div class="gap"></div>
               {{ order.is_paid ? '付款完成' : '待付款' }}
@@ -88,7 +86,7 @@
                 </template>
               </div>
             </div>
-            <div class="item-wrapper" v-if="order.message.message">
+            <div v-if="order.message.message" class="item-wrapper">
               <h2>備註</h2>
               <div class="item-body">
                 <div class="item-group">
@@ -106,20 +104,20 @@
             </div>
             <div class="order-foot">
               <div class="d-flex align-items-center">
-                <router-link to="/products" class="text-reset">
+                <router-link class="text-reset" to="/products">
                   <i class="fas fa-arrow-left"></i>
                   繼續購物
                 </router-link>
               </div>
               <button
-                type="button"
-                class="btn w-100 checkout"
                 :class="{
                   active:
                     order.is_paid ||
                     order.message.payment.method == '超商取貨付款 (COD)' ||
-                    order.message.payment.method == '貨到付款(COD)(+NT$30)',
+                    order.message.payment.method == '貨到付款(COD)(+NT$30)'
                 }"
+                class="btn w-100 checkout"
+                type="button"
                 @click.prevent="payment"
               >
                 {{
@@ -139,99 +137,99 @@
 </template>
 
 <script>
-import CartProcess from '@/components/common/CartProcess.vue';
+import CartProcess from '@/components/common/CartProcess.vue'
 
 export default {
   inject: ['emitter'],
   components: {
-    CartProcess,
+    CartProcess
   },
   data() {
     return {
       orderId: '',
       order: {},
-      productsAll: {},
-    };
+      productsAll: {}
+    }
   },
   computed: {
     products() {
-      const show = [];
+      const show = []
       const products = Object.keys(this.order.products).map((key) => ({
-        [key]: this.order.products[key],
-      }));
+        [key]: this.order.products[key]
+      }))
       products.forEach((tempItem) => {
-        const item = Object.entries(tempItem)[0][1];
+        const item = Object.entries(tempItem)[0][1]
         if (item.selected.length === 1) {
-          show.push(item);
+          show.push(item)
         } else {
           for (let i = 0; i < item.selected.length; i += 1) {
-            const tempProduct = JSON.parse(JSON.stringify(item));
-            const singleSelected = [tempProduct.selected[i]];
-            delete tempProduct.selected;
-            tempProduct.selected = singleSelected;
-            show.push(tempProduct);
+            const tempProduct = JSON.parse(JSON.stringify(item))
+            const singleSelected = [tempProduct.selected[i]]
+            delete tempProduct.selected
+            tempProduct.selected = singleSelected
+            show.push(tempProduct)
           }
         }
-      });
-      return show;
+      })
+      return show
     },
     qty() {
-      let qty = 0;
+      let qty = 0
       this.products.forEach((item) => {
-        qty += item.selected[0].qty;
-      });
-      return qty;
+        qty += item.selected[0].qty
+      })
+      return qty
     },
     scenery() {
       function getRandomInt(max) {
-        return Math.floor(Math.random() * max);
+        return Math.floor(Math.random() * max)
       }
-      const num = getRandomInt(this.productsAll.length);
-      const scenery = this.productsAll[num].imageUrl;
-      return scenery;
-    },
+      const num = getRandomInt(this.productsAll.length)
+      const scenery = this.productsAll[num].imageUrl
+      return scenery
+    }
   },
   methods: {
     getOrder() {
-      this.emitter.emit('isLoading', true);
-      const { id } = this.$route.params;
-      this.orderId = id;
+      this.emitter.emit('isLoading', true)
+      const { id } = this.$route.params
+      this.orderId = id
 
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${id}`;
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${id}`
       this.$http.get(url).then((res) => {
-        this.order = res.data.order;
-        this.emitter.emit('isLoading', false);
-      });
+        this.order = res.data.order
+        this.emitter.emit('isLoading', false)
+      })
     },
     getAll() {
-      this.emitter.emit('isLoading', true);
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.emitter.emit('isLoading', true)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.$http.get(url).then((res) => {
-        this.productsAll = res.data.products;
-        this.emitter.emit('isLoading', false);
-      });
+        this.productsAll = res.data.products
+        this.emitter.emit('isLoading', false)
+      })
     },
     payment() {
-      this.emitter.emit('isLoading', true);
-      const { id } = this.$route.params;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${id}`;
+      this.emitter.emit('isLoading', true)
+      const { id } = this.$route.params
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${id}`
       this.$http.post(url).then(() => {
-        this.getOrder();
-        this.emitter.emit('isLoading', false);
+        this.getOrder()
+        this.emitter.emit('isLoading', false)
         this.$swal({
           icon: 'success',
           title: '付款成功',
           timer: 1500,
-          showConfirmButton: false,
-        });
-      });
-    },
+          showConfirmButton: false
+        })
+      })
+    }
   },
   created() {
-    this.getOrder();
-    this.getAll();
-  },
-};
+    this.getOrder()
+    this.getAll()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

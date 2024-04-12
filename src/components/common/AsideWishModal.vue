@@ -3,29 +3,27 @@
     id="CartModal"
     ref="modal"
     class="modal fade"
-    tabindex="-1"
-    aria-labelledby="CartModalLabel"
     aria-hidden="true"
+    aria-labelledby="CartModalLabel"
+    tabindex="-1"
   >
     <div class="modal-dialog modal-sm">
       <div class="modal-content border-0 rounded-0">
         <div class="modal-header border-0">
-          <h5 class="modal-title">
-            願望清單
-          </h5>
+          <h5 class="modal-title">願望清單</h5>
           <button
-            type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            type="button"
             aria-label="Close"
+            data-bs-dismiss="modal"
           ></button>
         </div>
         <div class="modal-body">
           <template v-if="myFavoriteProducts.length > 0">
             <div v-for="item in myFavoriteProducts" :key="item.id" class="cart-card">
               <router-link
-                :to="{ path: `/product/${item.id}` }"
                 class="text-reset"
+                :to="{ path: `/product/${item.id}` }"
                 @click="hideModal"
               >
                 <img class="img-fluid rounded" :src="item.imageUrl" />
@@ -33,13 +31,13 @@
               <div class="text-container cursor">
                 <h4
                   class="product-title"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
                   :title="item.title"
+                  data-bs-placement="top"
+                  data-bs-toggle="tooltip"
                 >
                   <router-link
-                    :to="{ path: `/product/${item.id}` }"
                     class="text-reset"
+                    :to="{ path: `/product/${item.id}` }"
                     @click="hideModal"
                   >
                     {{ item.title }}
@@ -57,8 +55,8 @@
                   <i class="material-icons md-dark">close</i>
                 </button>
                 <router-link
-                  :to="{ path: `/product/${item.id}` }"
                   class="btn shopping-link"
+                  :to="{ path: `/product/${item.id}` }"
                   @click.prevent="hideModal"
                 >
                   <i class="material-icons md-dark">shopping_cart</i>
@@ -69,7 +67,7 @@
           <div v-else class="nothing">
             <i class="material-icons md-48">bookmark</i>
             <div class="nothing-text">願望清單目前是空的</div>
-            <router-link to="/products" class="btn goshoping" @click="hideModal">
+            <router-link class="btn goshoping" to="/products" @click="hideModal">
               來去許願吧!
             </router-link>
           </div>
@@ -92,8 +90,8 @@ import TooltipMixin from '@/mixins/TooltipMixin';
 export default {
   mixins: [modalMixin, TooltipMixin],
   inject: ['emitter'],
-  props: ['myFavoriteProducts'],
-};
+  props: ['myFavoriteProducts']
+}
 </script>
 
 <style lang="scss" scoped>
@@ -151,7 +149,9 @@ export default {
           border-radius: 0.25rem;
           border: 1px solid transparent;
 
-          transition: background 150ms ease-in-out, border 150ms ease-in-out;
+          transition:
+            background 150ms ease-in-out,
+            border 150ms ease-in-out;
           &:hover {
             background: $gray-100;
             border: 1px solid $gray-250;
@@ -206,7 +206,9 @@ export default {
               line-height: 0;
               transform: translateX(0.125rem);
 
-              transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+              transition:
+                opacity 300ms ease-in-out,
+                transform 300ms ease-in-out;
               .material-icons {
                 color: $gray-500;
                 transition: color 150ms ease-in-out;
@@ -229,7 +231,9 @@ export default {
               opacity: 1;
               line-height: 0;
 
-              transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+              transition:
+                opacity 300ms ease-in-out,
+                transform 300ms ease-in-out;
               .material-icons {
                 color: $gray-500;
                 transition: color 150ms ease-in-out;

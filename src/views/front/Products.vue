@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import AsideNavbar from '@/components/common/AsideNavbar.vue';
-import SubNavbar from '@/components/common/SubNavbar.vue';
-import Pagination from '@/components/front/Pagination.vue';
-import ProductCard from '@/components/common/ProductCard.vue';
+import AsideNavbar from '@/components/common/AsideNavbar.vue'
+import ProductCard from '@/components/common/ProductCard.vue'
+import SubNavbar from '@/components/common/SubNavbar.vue'
+import Pagination from '@/components/front/Pagination.vue'
 
 export default {
   inject: ['emitter'],
@@ -27,7 +27,7 @@ export default {
     AsideNavbar,
     SubNavbar,
     Pagination,
-    ProductCard,
+    ProductCard
   },
   data() {
     return {
@@ -35,62 +35,62 @@ export default {
       productsAll: [],
       pagination: [],
       currentPage: 1,
-      selectCategory: '',
-    };
+      selectCategory: ''
+    }
   },
   methods: {
     getData(page = 1) {
-      this.emitter.emit('isLoading', true);
-      this.currentPage = page;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`;
+      this.emitter.emit('isLoading', true)
+      this.currentPage = page
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
       this.$http.get(url).then((res) => {
-        this.products = res.data.products;
-        this.pagination = res.data.pagination;
+        this.products = res.data.products
+        this.pagination = res.data.pagination
         window.scrollTo({
-          top: 0,
-        });
-        this.emitter.emit('isLoading', false);
-      });
+          top: 0
+        })
+        this.emitter.emit('isLoading', false)
+      })
     },
     getAll() {
-      this.emitter.emit('isLoading', true);
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.emitter.emit('isLoading', true)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.$http.get(url).then((res) => {
-        this.productsAll = res.data.products;
-        this.emitter.emit('isLoading', false);
-      });
-    },
+        this.productsAll = res.data.products
+        this.emitter.emit('isLoading', false)
+      })
+    }
   },
   computed: {
     filterproducts() {
-      return this.productsAll.filter((item) => item.category.match(this.selectCategory));
-    },
+      return this.productsAll.filter((item) => item.category.match(this.selectCategory))
+    }
   },
   watch: {
     $route() {
       if (this.$route.params.id) {
         if (!this.productsAll.length) {
-          this.getAll();
+          this.getAll()
         }
       } else if (!this.$route.params.id) {
         if (!this.products.length) {
-          this.getData();
+          this.getData()
         }
       }
-      const { id } = this.$route.params;
-      this.selectCategory = id;
-    },
-  },
-  created() {
-    const { id } = this.$route.params;
-    this.selectCategory = id;
-    if (this.$route.params.id) {
-      this.getAll();
-    } else {
-      this.getData();
+      const { id } = this.$route.params
+      this.selectCategory = id
     }
   },
-};
+  created() {
+    const { id } = this.$route.params
+    this.selectCategory = id
+    if (this.$route.params.id) {
+      this.getAll()
+    } else {
+      this.getData()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

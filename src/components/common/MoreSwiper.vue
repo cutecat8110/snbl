@@ -5,11 +5,11 @@
       相似商品
     </div>
     <swiper
-      :slidesPerView="3"
-      :loop="true"
-      :spaceBetween="16"
-      :navigation="true"
       class="mySwiperMore"
+      :loop="true"
+      :navigation="true"
+      :slidesPerView="3"
+      :spaceBetween="16"
     >
       <swiper-slide v-for="item in tempProduct" :key="item" class="img-wrapper">
         <router-link :to="{ path: `/product/${item.id}` }">
@@ -22,54 +22,54 @@
 
 <script>
 // Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
 // swiper bundle styles
-import 'swiper/swiper.min.css';
+import 'swiper/swiper.min.css'
 // swiper core styles
-import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper-bundle.min.css'
 
 // modules styles
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/components/navigation/navigation.min.css'
+import 'swiper/components/pagination/pagination.min.css'
 
 // import Swiper core and required modules
-import SwiperCore, { Autoplay, Navigation, Thumbs } from 'swiper';
+import SwiperCore, { Autoplay, Navigation, Thumbs } from 'swiper'
 
 // install Swiper modules
-SwiperCore.use([Autoplay, Navigation, Thumbs]);
+SwiperCore.use([Autoplay, Navigation, Thumbs])
 
 export default {
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
   props: ['tempProduct'],
   data() {
     return {
       thumbsSwiper: null,
-      product: [],
-    };
+      product: []
+    }
   },
   methods: {
     setThumbsSwiper(swiper) {
-      this.thumbsSwiper = swiper;
-    },
+      this.thumbsSwiper = swiper
+    }
   },
   watch: {
     tempProduct() {
-      this.product = JSON.parse(JSON.stringify(this.tempProduct));
-    },
+      this.product = JSON.parse(JSON.stringify(this.tempProduct))
+    }
   },
   setup() {
     const onSlideChange = (swiper) => {
-      swiper.update();
-    };
+      swiper.update()
+    }
     return {
-      onSlideChange,
-    };
-  },
-};
+      onSlideChange
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -146,7 +146,9 @@ export default {
     color: rgba(255, 255, 255, 0.74);
     opacity: 0.7;
 
-    transition: color 150ms ease-in-out, opacity 150ms ease-in-out;
+    transition:
+      color 150ms ease-in-out,
+      opacity 150ms ease-in-out;
 
     &:hover {
       opacity: 1;

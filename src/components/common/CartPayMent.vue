@@ -7,48 +7,44 @@
           <!-- 優惠碼-->
           <div class="form-group">
             <a
-              href="#"
-              class="coupons-toogle"
               v-if="!couponToogle"
+              class="coupons-toogle"
+              href="#"
               @click.prevent="couponToogle = true"
             >
               使用優惠代碼
             </a>
             <template v-else>
-              <label class="form-label">
-                優惠碼
-              </label>
+              <label class="form-label"> 優惠碼 </label>
               <div class="form-input-group-wrapper">
-                <div class="form-input-group" :class="couponCode ? 'inputClear' : ''">
+                <div :class="couponCode ? 'inputClear' : ''" class="form-input-group">
                   <input
                     ref="coupons"
-                    type="text"
-                    class="form-control"
                     v-model="couponCode"
+                    class="form-control"
+                    type="text"
                     placeholder="請輸入"
                   />
                   <button
                     v-if="couponCode"
-                    type="button"
-                    class="btn-close position-absolute top-50 end-0 translate-middle-y"
                     v-on:click="
-                      couponCode = '';
-                      clearFocus('coupons');
+                      () => {
+                        couponCode = ''
+                        clearFocus('coupons')
+                      }
                     "
+                    class="btn-close position-absolute top-50 end-0 translate-middle-y"
+                    type="button"
                   ></button>
                 </div>
-                <button class="btn coupons-btn" type="button" @click="addCouponCode">
-                  使用
-                </button>
+                <button class="btn coupons-btn" type="button" @click="addCouponCode">使用</button>
               </div>
             </template>
           </div>
           <!-- 運送區域 -->
           <div class="form-group">
-            <label class="form-label">
-              運送區域
-            </label>
-            <select class="form-select" v-model="payment.country">
+            <label class="form-label"> 運送區域 </label>
+            <select v-model="payment.country" class="form-select">
               <option value="" disabled>請選擇</option>
               <option v-for="(item, index) in country" :key="index" :value="item.value">
                 {{ item.name }}
@@ -57,10 +53,8 @@
           </div>
           <!-- 運送方式 -->
           <div class="form-group">
-            <label class="form-label">
-              運送方式
-            </label>
-            <select class="form-select" v-model="payment.conveyance">
+            <label class="form-label"> 運送方式 </label>
+            <select v-model="payment.conveyance" class="form-select">
               <option value="" disabled>請選擇</option>
               <option v-for="(item, index) in showConveyance" :key="index" :value="item.value">
                 {{ item.value }}
@@ -75,10 +69,8 @@
           </ul>
           <!-- 付款方式 -->
           <div class="form-group">
-            <label class="form-label">
-              付款方式
-            </label>
-            <select class="form-select" v-model="payment.method">
+            <label class="form-label"> 付款方式 </label>
+            <select v-model="payment.method" class="form-select">
               <option value="" disabled>請選擇</option>
               <option v-for="(item, index) in showMethod" :key="index" :value="item.value">
                 {{ item.value }}
@@ -130,9 +122,7 @@
               </span>
             </div>
           </div>
-          <router-link to="/cart/add" class="btn w-100 checkout">
-            下一步
-          </router-link>
+          <router-link class="btn w-100 checkout" to="/cart/add"> 下一步 </router-link>
         </div>
       </div>
     </section>
@@ -392,7 +382,7 @@ export default {
         { value: 'YE', name: '也門' },
         { value: 'ZM', name: '贊比亞' },
         { value: 'ZW', name: '津巴布韋' },
-        { value: 'AX', name: '奧蘭群島' },
+        { value: 'AX', name: '奧蘭群島' }
       ],
       conveyance: [
         {
@@ -405,148 +395,148 @@ export default {
             '國際配送 森女部落使用【順豐速運】寄送服務( http://www.sf-express.com/tw/tc/ )',
             '實際運費多寡無法事先確定，視包裹實際的大小、重量而定，依順豐速運的收費為準，待商品貨齊包裝完畢後會請順豐速運報價，並MAIL通知您付款運費喔！',
             '請注意！若因國際運送產生之手續費、關稅費用則是商品配送時由收件方自行支付，物流人員會提供單據另外收取。',
-            '溫馨提醒：訂單送出前，請再次確認收件資料(收件人、聯絡電話、收件地址需包含國家)是否填寫正確完整唷！',
-          ],
+            '溫馨提醒：訂單送出前，請再次確認收件資料(收件人、聯絡電話、收件地址需包含國家)是否填寫正確完整唷！'
+          ]
         },
         {
           value: '7-11 超商取貨',
           text: [
             '訂單金額上限$20,000，若超過請選擇【宅配】。',
             '提醒您！包裹若為『取貨不付款』，取貨時請出示與包裹姓名相同的身分證件，給店員檢核後才可取貨。',
-            '出貨完成配送至超商約2-3天',
-          ],
+            '出貨完成配送至超商約2-3天'
+          ]
         },
         {
           value: '全家 超商取貨',
           text: [
             '訂單金額上限$20,000，若超過請選擇【宅配】。',
             '提醒您！包裹若為『取貨不付款』，取貨時請出示與包裹姓名相同的身分證件，給店員檢核後才可取貨。',
-            '出貨完成配送至超商約2-3天',
-          ],
+            '出貨完成配送至超商約2-3天'
+          ]
         },
         {
           value: '新竹物流',
           text: [
             '單筆訂單(折扣後、不含運費)未滿兩千元運費70元，滿兩千免運。',
             '此選項限定台灣地區配送(不含外島)',
-            '出貨完成物流配送時間約1-2個工作天(不含假日)',
-          ],
-        },
+            '出貨完成物流配送時間約1-2個工作天(不含假日)'
+          ]
+        }
       ],
       method: [
         {
           value: '超商取貨付款 (COD)',
-          text: [''],
+          text: ['']
         },
         {
           value: '貨到付款(COD)(+NT$30)',
           text: [
-            '單筆訂單(折扣後、不含運費)未滿兩千元運費共100元，滿兩千以上僅需負擔宅配收取的30元代收手續費。',
-          ],
+            '單筆訂單(折扣後、不含運費)未滿兩千元運費共100元，滿兩千以上僅需負擔宅配收取的30元代收手續費。'
+          ]
         },
         { value: 'LINE Pay', text: ['請於結帳時立即完成付款，若未完成訂單即失效，請重新訂購。'] },
         {
           value: '信用卡（Visa, Master, JCB付款）',
           text: [
             '支援國內外Visa, Master, JCB',
-            '請於結帳時填寫正確的信用卡【付款資料】，若無立即完成付款或輸入錯誤訂單即失效，請重新訂購。',
-          ],
+            '請於結帳時填寫正確的信用卡【付款資料】，若無立即完成付款或輸入錯誤訂單即失效，請重新訂購。'
+          ]
         },
         {
           value: '信用卡分期（3期）',
           text: [
             '僅支援台灣部分銀行發行之信用卡；不支援簽帳金融卡',
             '目前支援的分期刷卡銀行：台新, 玉山, 台北富邦, 遠東, 永豐, 國泰世華, 華南, 日盛國際商銀, 台灣樂天, 安泰, 聯邦, 兆豐商銀, 台中商銀, 上海, 凱基, 匯豐, 星展, 臺灣新光, 合作金庫, 彰化, 第一, 元大, 陽信, 臺灣企銀, 華泰, 三信',
-            '請於結帳時填寫正確的信用卡【付款資料】，若無立即完成付款或輸入錯誤訂單即失效，請重新訂購。',
-          ],
+            '請於結帳時填寫正確的信用卡【付款資料】，若無立即完成付款或輸入錯誤訂單即失效，請重新訂購。'
+          ]
         },
         {
           value: 'ATM 轉帳',
           text: [
             '需持虛擬代碼至實體ATM或網路銀行進行繳費',
             '當完成訂單時，系統會依您的訂單產生出您專屬的『轉帳帳號』。',
-            '請於 『3 』日內完成匯款，若未完成訂單即失效，請重新訂購。',
-          ],
-        },
+            '請於 『3 』日內完成匯款，若未完成訂單即失效，請重新訂購。'
+          ]
+        }
       ],
       payment: {
         country: 'TW',
         conveyance: '7-11 超商取貨',
-        method: '超商取貨付款 (COD)',
+        method: '超商取貨付款 (COD)'
       },
       couponCode: '',
       couponToogle: false,
-      conveyanceCost: '',
-    };
+      conveyanceCost: ''
+    }
   },
   computed: {
     showConveyance() {
-      const conveyance = JSON.parse(JSON.stringify(this.conveyance));
+      const conveyance = JSON.parse(JSON.stringify(this.conveyance))
       if (this.payment.country !== 'TW') {
-        conveyance.splice(1, 3);
+        conveyance.splice(1, 3)
       } else {
-        conveyance.splice(0, 1);
+        conveyance.splice(0, 1)
       }
-      return conveyance;
+      return conveyance
     },
     showConveyanceText() {
       const conveyanceText = this.conveyance.filter(
-        (item) => item.value === this.payment.conveyance,
-      )[0].text;
-      return conveyanceText;
+        (item) => item.value === this.payment.conveyance
+      )[0].text
+      return conveyanceText
     },
     showMethod() {
-      const method = JSON.parse(JSON.stringify(this.method));
+      const method = JSON.parse(JSON.stringify(this.method))
       if (this.payment.conveyance === '新竹物流') {
-        method.splice(0, 1);
+        method.splice(0, 1)
       } else if (this.payment.conveyance === '國際配送') {
-        method.splice(0, 2);
-        method.pop();
+        method.splice(0, 2)
+        method.pop()
       } else {
-        method.splice(1, 1);
+        method.splice(1, 1)
       }
-      return method;
+      return method
     },
     showMethoText() {
-      const MethoText = this.method.filter((item) => item.value === this.payment.method)[0].text;
-      return MethoText;
-    },
+      const MethoText = this.method.filter((item) => item.value === this.payment.method)[0].text
+      return MethoText
+    }
   },
   watch: {
     showConveyance() {
-      this.payment.conveyance = this.showConveyance[0].value;
+      this.payment.conveyance = this.showConveyance[0].value
     },
     showMethod() {
-      this.payment.method = this.showMethod[0].value;
+      this.payment.method = this.showMethod[0].value
     },
     payment: {
       handler() {
-        this.conveyanceCost = 0;
+        this.conveyanceCost = 0
         if (this.payment.conveyance === '新竹物流') {
           if (this.cart.final_total < 2000) {
-            this.conveyanceCost += 70;
+            this.conveyanceCost += 70
           }
           if (this.payment.method === '貨到付款(COD)(+NT$30)') {
-            this.conveyanceCost += 30;
+            this.conveyanceCost += 30
           }
         } else if (this.payment.conveyance === '國際配送') {
-          this.conveyanceCost = '未包含';
+          this.conveyanceCost = '未包含'
         } else {
-          this.conveyanceCost = 0;
+          this.conveyanceCost = 0
         }
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
     addCouponCode() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
       const couponCode = {
-        code: this.couponCode,
-      };
+        code: this.couponCode
+      }
       if (this.couponCode === '' && this.cart.total - this.cart.final_total !== 0) {
-        couponCode.code = 'reset';
+        couponCode.code = 'reset'
       }
       this.$http.post(url, { data: couponCode }).then((res) => {
         if (res.data.success) {
@@ -554,32 +544,32 @@ export default {
             icon: 'success',
             title: '優惠碼已成功套用',
             timer: 1500,
-            showConfirmButton: false,
-          });
+            showConfirmButton: false
+          })
         } else {
           this.$swal({
             icon: 'question',
             title: '優惠碼不存在',
-            text: '請檢查代碼是否有誤及字母大小寫是否相符。',
-          });
+            text: '請檢查代碼是否有誤及字母大小寫是否相符。'
+          })
         }
-        this.emitter.emit('emitToCart');
-      });
+        this.emitter.emit('emitToCart')
+      })
     },
     clearFocus(ref) {
-      this.$refs[ref].focus();
-    },
+      this.$refs[ref].focus()
+    }
   },
   created() {
     this.emitter.on('upDateCart', (item) => {
-      this.cart = JSON.parse(JSON.stringify(item[0]));
-    });
-    this.emitter.emit('emitToCart');
+      this.cart = JSON.parse(JSON.stringify(item[0]))
+    })
+    this.emitter.emit('emitToCart')
     this.emitter.on('upDatePayment', () => {
-      this.emitter.emit('emitToAdd', [this.payment, this.conveyanceCost]);
-    });
-  },
-};
+      this.emitter.emit('emitToAdd', [this.payment, this.conveyanceCost])
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -658,7 +648,9 @@ aside {
               margin-right: 4px;
               opacity: 0;
 
-              transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out,
+              transition:
+                visibility 150ms ease-in-out,
+                opacity 150ms ease-in-out,
                 box-shadow 150ms ease-in-out;
 
               &:active {
@@ -672,7 +664,9 @@ aside {
 
                 opacity: 1;
 
-                transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
+                transition:
+                  visibility 150ms ease-in-out,
+                  opacity 150ms ease-in-out;
               }
             }
 
@@ -690,7 +684,9 @@ aside {
 
                 opacity: 1;
 
-                transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
+                transition:
+                  visibility 150ms ease-in-out,
+                  opacity 150ms ease-in-out;
               }
             }
           }
@@ -699,7 +695,9 @@ aside {
             color: #ffffff;
             background: $gray-500;
 
-            transition: opacity 150ms ease-in-out, box-shadow 150ms ease-in-out;
+            transition:
+              opacity 150ms ease-in-out,
+              box-shadow 150ms ease-in-out;
 
             &:focus {
               box-shadow: none;
@@ -721,7 +719,9 @@ aside {
           border-color: $gray-250;
           font-weight: 500;
 
-          transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
+          transition:
+            border 150ms ease-in-out,
+            box-shadow 150ms ease-in-out;
 
           &:hover {
             border-color: $color-border-active;

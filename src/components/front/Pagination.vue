@@ -1,14 +1,16 @@
 <template>
   <nav>
     <a
-      href="#"
+      :class="{ disabled: pages.current_page === 1 }"
       class="page-btn raquo"
+      href="#"
       @click.prevent="
-        if (!(pages.current_page === 1)) {
-          emitPage(pages.current_page - 1);
+        () => {
+          if (!(pages.current_page === 1)) {
+            emitPage(pages.current_page - 1)
+          }
         }
       "
-      :class="{ disabled: pages.current_page === 1 }"
     >
       <i class="material-icons md-18 md-dark">chevron_left</i>
     </a>
@@ -17,20 +19,22 @@
       <div v-if="item === pages.current_page" class="page-btn cursor active">
         {{ item }}
       </div>
-      <a v-else href="#" class="page-btn" @click.prevent="emitPage(item)">
+      <a v-else class="page-btn" href="#" @click.prevent="emitPage(item)">
         {{ item }}
       </a>
     </template>
 
     <a
-      href="#"
+      :class="{ disabled: pages.current_page === pages.total_pages }"
       class="page-btn raquo"
+      href="#"
       @click.prevent="
-        if (!(pages.current_page === pages.total_pages)) {
-          emitPage(pages.current_page + 1);
+        () => {
+          if (!(pages.current_page === pages.total_pages)) {
+            emitPage(pages.current_page + 1)
+          }
         }
       "
-      :class="{ disabled: pages.current_page === pages.total_pages }"
     >
       <i class="material-icons md-18 md-dark">chevron_right</i>
     </a>
@@ -42,10 +46,10 @@ export default {
   props: ['pages'],
   methods: {
     emitPage(item) {
-      this.$emit('emit-page', item);
-    },
-  },
-};
+      this.$emit('emit-page', item)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -66,7 +70,10 @@ nav {
     justify-content: center;
     align-items: center;
 
-    transition: box-shadow 150ms ease-in-out, color 150ms ease-in-out, border 150ms ease-in-out;
+    transition:
+      box-shadow 150ms ease-in-out,
+      color 150ms ease-in-out,
+      border 150ms ease-in-out;
 
     &.raquo {
       width: 28px;

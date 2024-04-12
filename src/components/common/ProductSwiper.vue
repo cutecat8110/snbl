@@ -1,13 +1,13 @@
 <template>
   <template v-if="product.imagesUrl">
     <swiper
-      :navigation="true"
+      class="mySwiperTop"
       :loop="true"
+      :navigation="true"
+      :observeParents="true"
       :observer="true"
       :observeSlideChildren="true"
-      :observeParents="true"
       :thumbs="{ swiper: thumbsSwiper }"
-      class="mySwiperTop"
       @slideChange="onSlideChange"
     >
       <swiper-slide>
@@ -18,14 +18,14 @@
       </swiper-slide>
     </swiper>
     <swiper
-      @swiper="setThumbsSwiper"
+      class="mySwiperBottom"
       :allowTouchMove="false"
-      :spaceBetween="8"
-      :slidesPerView="4"
+      :observeParents="true"
       :observer="true"
       :observeSlideChildren="true"
-      :observeParents="true"
-      class="mySwiperBottom"
+      :slidesPerView="4"
+      :spaceBetween="8"
+      @swiper="setThumbsSwiper"
     >
       <swiper-slide>
         <img class="img-fluid" :src="product.imageUrl" />
@@ -39,54 +39,54 @@
 
 <script>
 // Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
 // swiper bundle styles
-import 'swiper/swiper.min.css';
+import 'swiper/swiper.min.css'
 // swiper core styles
-import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper-bundle.min.css'
 
 // modules styles
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/components/navigation/navigation.min.css'
+import 'swiper/components/pagination/pagination.min.css'
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation, Thumbs } from 'swiper';
+import SwiperCore, { Navigation, Thumbs } from 'swiper'
 
 // install Swiper modules
-SwiperCore.use([Navigation, Thumbs]);
+SwiperCore.use([Navigation, Thumbs])
 
 export default {
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
   props: ['tempProduct'],
   data() {
     return {
       thumbsSwiper: null,
-      product: [],
-    };
+      product: []
+    }
   },
   methods: {
     setThumbsSwiper(swiper) {
-      this.thumbsSwiper = swiper;
-    },
+      this.thumbsSwiper = swiper
+    }
   },
   watch: {
     tempProduct() {
-      this.product = JSON.parse(JSON.stringify(this.tempProduct));
-    },
+      this.product = JSON.parse(JSON.stringify(this.tempProduct))
+    }
   },
   setup() {
     const onSlideChange = (swiper) => {
-      swiper.update();
-    };
+      swiper.update()
+    }
     return {
-      onSlideChange,
-    };
-  },
-};
+      onSlideChange
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -105,7 +105,9 @@ export default {
   .swiper-button-prev {
     color: rgba(0, 0, 0, 0.54);
     opacity: 0.38;
-    transition: color 150ms ease-in-out, opacity 150ms ease-in-out;
+    transition:
+      color 150ms ease-in-out,
+      opacity 150ms ease-in-out;
     &:hover {
       opacity: 1;
     }
@@ -121,7 +123,9 @@ export default {
   margin: 0 -0.5rem -0.5rem -0.5rem;
   .swiper-slide {
     cursor: pointer;
-    transition: opacity 150ms ease-in-out, box-shadow 150ms ease-in-out;
+    transition:
+      opacity 150ms ease-in-out,
+      box-shadow 150ms ease-in-out;
     border-radius: 0.25rem;
     overflow: hidden;
     opacity: 0.7;

@@ -3,21 +3,19 @@
     id="CartModal"
     ref="modal"
     class="modal fade"
-    tabindex="-1"
-    aria-labelledby="CartModalLabel"
     aria-hidden="true"
+    aria-labelledby="CartModalLabel"
+    tabindex="-1"
   >
     <div class="modal-dialog modal-sm">
       <div class="modal-content border-0 rounded-0">
         <div class="modal-header border-0">
-          <h5 class="modal-title">
-            購物車
-          </h5>
+          <h5 class="modal-title">購物車</h5>
           <button
-            type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            type="button"
             aria-label="Close"
+            data-bs-dismiss="modal"
           ></button>
         </div>
         <template v-if="cart.carts">
@@ -25,8 +23,8 @@
             <template v-if="cart.carts.length != 0">
               <div v-for="item in showCart" :key="item.id" class="cart-card">
                 <router-link
-                  :to="{ path: `/product/${item.product_id}` }"
                   class="text-reset"
+                  :to="{ path: `/product/${item.product_id}` }"
                   @click="hideModal"
                 >
                   <img class="img-fluid rounded" :src="item.product.imageUrl" />
@@ -34,13 +32,13 @@
                 <div class="text-container cursor">
                   <h4
                     class="product-title"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
                     :title="item.product.title"
+                    data-bs-placement="top"
+                    data-bs-toggle="tooltip"
                   >
                     <router-link
-                      :to="{ path: `/product/${item.product_id}` }"
                       class="text-reset"
+                      :to="{ path: `/product/${item.product_id}` }"
                       @click="hideModal"
                     >
                       {{ item.product.title }}
@@ -66,7 +64,7 @@
             <div v-else class="nothing">
               <i class="material-icons md-48">shopping_cart</i>
               <div class="nothing-text">購物車目前是空的</div>
-              <router-link to="/products" class="btn goshoping" @click="hideModal">
+              <router-link class="btn goshoping" to="/products" @click="hideModal">
                 來去購物吧!
               </router-link>
             </div>
@@ -76,7 +74,7 @@
               <span>商品總數&nbsp;{{ qty }}</span>
               <span>總額&nbsp;NT$&nbsp;{{ $filters.currency(cart.total) }}</span>
             </div>
-            <router-link to="/cart" class="btn w-100 checkout" @click="hideModal">
+            <router-link class="btn w-100 checkout" to="/cart" @click="hideModal">
               訂單結帳
             </router-link>
           </div>
@@ -93,8 +91,8 @@ import TooltipMixin from '@/mixins/TooltipMixin';
 export default {
   mixins: [modalMixin, TooltipMixin],
   inject: ['emitter'],
-  props: ['cart', 'showCart', 'qty'],
-};
+  props: ['cart', 'showCart', 'qty']
+}
 </script>
 
 <style lang="scss" scoped>
@@ -152,7 +150,9 @@ export default {
           border-radius: 0.25rem;
           border: 1px solid transparent;
 
-          transition: background 150ms ease-in-out, border 150ms ease-in-out;
+          transition:
+            background 150ms ease-in-out,
+            border 150ms ease-in-out;
           &:hover {
             background: $gray-100;
             border: 1px solid $gray-250;
@@ -195,7 +195,9 @@ export default {
               line-height: 0;
               transform: translateX(0.125rem);
 
-              transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+              transition:
+                opacity 300ms ease-in-out,
+                transform 300ms ease-in-out;
               .material-icons {
                 color: $gray-500;
                 transition: color 150ms ease-in-out;

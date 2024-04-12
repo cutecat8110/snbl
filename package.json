@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^26.0.0",
@@ -18,6 +18,10 @@
     "core-js": "^3.6.5",
     "material-design-icons": "^3.0.1",
     "mitt": "^3.0.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-packagejson": "^2.5.0",
     "sweetalert2": "^11.1.5",
     "swiper": "^6.8.4",
     "vee-validate": "^4.4.10",
@@ -36,6 +40,7 @@
     "@vue/eslint-config-airbnb": "^5.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0",
     "sass": "^1.26.5",

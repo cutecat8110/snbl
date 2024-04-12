@@ -25,58 +25,58 @@
 </template>
 
 <script>
-import HomeSwiper from '@/components/front/HomeSwiper.vue';
+import HomeSwiper from '@/components/front/HomeSwiper.vue'
 
 function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max)
 }
 
 export default {
   inject: ['emitter'],
   components: {
-    HomeSwiper,
+    HomeSwiper
   },
   data() {
     return {
       image: [],
       image2: [],
       productsAll: {},
-      randomProducts: [],
-    };
+      randomProducts: []
+    }
   },
   methods: {
     render() {
-      this.emitter.emit('isLoading', true);
-      const id = '-MntdJ6iOSdc64gJi26G';
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`;
+      this.emitter.emit('isLoading', true)
+      const id = '-MntdJ6iOSdc64gJi26G'
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
 
       this.$http.get(url).then((res) => {
-        this.image = res.data.article.articleImagesUrl;
-      });
+        this.image = res.data.article.articleImagesUrl
+      })
 
-      this.getAll();
+      this.getAll()
     },
     getAll() {
-      this.emitter.emit('isLoading', true);
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.emitter.emit('isLoading', true)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.$http.get(url).then((res) => {
-        this.productsAll = res.data.products;
-        const arrSet = new Set([]);
+        this.productsAll = res.data.products
+        const arrSet = new Set([])
         for (let index = 0; arrSet.size < 30; index + 1) {
-          const num = getRandomInt(this.productsAll.length);
-          arrSet.add(num);
+          const num = getRandomInt(this.productsAll.length)
+          arrSet.add(num)
         }
         arrSet.forEach((i) => {
-          this.randomProducts.push(this.productsAll[i]);
-        });
-        this.emitter.emit('isLoading', false);
-      });
-    },
+          this.randomProducts.push(this.productsAll[i])
+        })
+        this.emitter.emit('isLoading', false)
+      })
+    }
   },
   created() {
-    this.render();
-  },
-};
+    this.render()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

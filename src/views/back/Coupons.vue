@@ -20,7 +20,7 @@
             <thead class="bg-gray-000">
               <tr>
                 <th class="position-relative" width="128">有效期限</th>
-                <th class="position-relative ">名稱</th>
+                <th class="position-relative">名稱</th>
                 <th class="position-relative">優惠碼</th>
                 <th class="position-relative">折扣</th>
                 <th class="position-relative" width="128">狀態</th>
@@ -34,11 +34,11 @@
                 <td>{{ item.code }}</td>
                 <td>{{ item.percent / 10 }} 折</td>
                 <td>
-                  <div class="text-success d-flex align-items-center" v-if="item.is_enabled === 1">
+                  <div v-if="item.is_enabled === 1" class="text-success d-flex align-items-center">
                     <div class="circle bg-success me-2"></div>
                     <span>啟用 </span>
                   </div>
-                  <span class="d-flex align-items-center" v-else>
+                  <span v-else class="d-flex align-items-center">
                     <div class="circle bg-gray-300 me-2"></div>
                     <span>關閉 </span>
                   </span>
@@ -65,25 +65,25 @@
     </div>
     <!-- 新增/編輯 元件 -->
     <CouponModal
+      ref="couponModal"
       :coupon="tempCoupon"
       :is-new="isNew"
-      ref="couponModal"
       @update-coupon="updateCoupon"
     ></CouponModal>
     <!-- 刪除 元件 -->
     <DelModal
-      :origin="pageName"
-      :delItem="tempCoupon.title"
       ref="delModal"
+      :delItem="tempCoupon.title"
+      :origin="pageName"
       @del-item="delCoupon"
     ></DelModal>
   </div>
 </template>
 
 <script>
-import CouponModal from '@/components/back/CouponModal.vue';
-import DelModal from '@/components/back/DelModal.vue';
-import Pagination from '@/components/back/Pagination.vue';
+import CouponModal from '@/components/back/CouponModal.vue'
+import DelModal from '@/components/back/DelModal.vue'
+import Pagination from '@/components/back/Pagination.vue'
 
 export default {
   components: { CouponModal, DelModal, Pagination },
@@ -97,80 +97,80 @@ export default {
         title: '',
         is_enabled: 0,
         percent: 100,
-        code: '',
+        code: ''
       },
       isLoading: false,
       isNew: false,
-      currentPage: 1,
-    };
+      currentPage: 1
+    }
   },
   methods: {
     openCouponModal(isNew, item) {
-      this.isNew = isNew;
+      this.isNew = isNew
       if (this.isNew) {
         this.tempCoupon = {
-          due_date: new Date().getTime() / 1000,
-        };
+          due_date: new Date().getTime() / 1000
+        }
       } else {
-        this.tempCoupon = { ...item };
+        this.tempCoupon = { ...item }
       }
-      this.$refs.couponModal.openModal();
+      this.$refs.couponModal.openModal()
     },
     openDelCouponModal(item) {
-      this.tempCoupon = { ...item };
-      this.$refs.delModal.openModal();
+      this.tempCoupon = { ...item }
+      this.$refs.delModal.openModal()
     },
     getCoupons(page = 1) {
-      this.isLoading = true;
-      this.currentPage = page;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons`;
+      this.isLoading = true
+      this.currentPage = page
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons`
       this.$http.get(url, this.tempProduct).then((res) => {
-        this.pagination = res.data.pagination;
-        this.coupons = res.data.coupons;
-        this.isLoading = false;
-      });
+        this.pagination = res.data.pagination
+        this.coupons = res.data.coupons
+        this.isLoading = false
+      })
     },
     updateCoupon(item) {
-      this.isLoading = true;
-      this.tempCoupon = item;
-      this.tempCoupon.is_enabled = Number(this.tempCoupon.is_enabled);
+      this.isLoading = true
+      this.tempCoupon = item
+      this.tempCoupon.is_enabled = Number(this.tempCoupon.is_enabled)
 
-      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
-      let httpMethod = 'post';
-      let status = '新增優惠';
+      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`
+      let httpMethod = 'post'
+      let status = '新增優惠'
       if (!this.isNew) {
-        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
-        httpMethod = 'put';
-        status = '更新優惠';
+        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
+        httpMethod = 'put'
+        status = '更新優惠'
       }
 
       this.$http[httpMethod](api, { data: this.tempCoupon }).then((res) => {
         if (res.data.success) {
-          this.getCoupons(this.currentPage);
-          this.isLoading = false;
-          this.$refs.couponModal.hideModal();
-          this.httpMessageState(res, status);
+          this.getCoupons(this.currentPage)
+          this.isLoading = false
+          this.$refs.couponModal.hideModal()
+          this.httpMessageState(res, status)
         } else {
-          this.isLoading = false;
-          this.httpMessageState(res, status);
+          this.isLoading = false
+          this.httpMessageState(res, status)
         }
-      });
+      })
     },
     delCoupon() {
-      this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
       this.$http.delete(url).then((res) => {
-        this.getCoupons(this.currentPage);
-        this.isLoading = false;
-        this.httpMessageState(res, '刪除優惠');
-        this.$refs.delModal.hideModal();
-      });
-    },
+        this.getCoupons(this.currentPage)
+        this.isLoading = false
+        this.httpMessageState(res, '刪除優惠')
+        this.$refs.delModal.hideModal()
+      })
+    }
   },
   created() {
-    this.getCoupons();
-  },
-};
+    this.getCoupons()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

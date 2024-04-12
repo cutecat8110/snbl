@@ -6,44 +6,38 @@
       <CartPayMent :qty="qty"></CartPayMent>
       <div class="remark-message">
         <ul>
-          <li>
-            賣場商品採現貨及預購，預購商品需等候7-14個工作天(不含假日)。
-          </li>
-          <li>
-            賣場無法合併訂單，若欲湊滿免運門檻，請在結帳前確認完畢。
-          </li>
+          <li>賣場商品採現貨及預購，預購商品需等候7-14個工作天(不含假日)。</li>
+          <li>賣場無法合併訂單，若欲湊滿免運門檻，請在結帳前確認完畢。</li>
           <li>
             若有折價券，請於結帳時點選【使用優惠代碼】輸入後點選【套用】，訂單成立後無法修改。
           </li>
           <li>
             請注意！訂單成立後無法修改/異動，若需修改訂單請聯繫【客服】取消訂單，再自行重新訂購，原訂單享有之活動優惠/庫存，需以再次訂購之當時活動為準。
           </li>
-          <li>
-            『本店支援 LINE Pay 付款，歡迎使用 LINE Pay 進行結帳』
-          </li>
+          <li>『本店支援 LINE Pay 付款，歡迎使用 LINE Pay 進行結帳』</li>
         </ul>
       </div>
     </div>
   </div>
 </template>
 <script>
-import CartList from '@/components/common/CartList.vue';
-import CartPayMent from '@/components/common/CartPayMent.vue';
+import CartList from '@/components/common/CartList.vue'
+import CartPayMent from '@/components/common/CartPayMent.vue'
 
 export default {
   inject: ['emitter'],
   components: { CartList, CartPayMent },
   data() {
     return {
-      qty: 0,
-    };
+      qty: 0
+    }
   },
   created() {
     this.emitter.on('upDateQty', (qty) => {
-      this.qty = qty;
-    });
-  },
-};
+      this.qty = qty
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

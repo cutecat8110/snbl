@@ -1,10 +1,8 @@
 <template>
   <nav>
-    <router-link to="/" class="sub-navbar-link">
-      HOME
-    </router-link>
+    <router-link class="sub-navbar-link" to="/"> HOME </router-link>
     <i class="material-icons md-18 md-dark">chevron_right</i>
-    <router-link v-if="product || selectCategory" to="/products" class="sub-navbar-link">
+    <router-link v-if="product || selectCategory" class="sub-navbar-link" to="/products">
       所有商品
     </router-link>
     <div v-else class="sub-navbar-link cursor">所有商品</div>
@@ -15,7 +13,7 @@
     </template>
     <template v-else-if="product">
       <i class="material-icons md-18 md-dark">chevron_right</i>
-      <router-link :to="'/products/' + product.category" class="sub-navbar-link">
+      <router-link class="sub-navbar-link" :to="'/products/' + product.category">
         {{ product.category }}
       </router-link>
     </template>
@@ -24,8 +22,8 @@
 
 <script>
 export default {
-  props: ['product', 'selectCategory'],
-};
+  props: ['product', 'selectCategory']
+}
 </script>
 
 <style lang="scss" scoped>

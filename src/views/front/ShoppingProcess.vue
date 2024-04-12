@@ -2,19 +2,13 @@
   <div class="qa-container container">
     <h1>購物流程</h1>
     <section>
-      <h2>
-        訂購流程說明
-      </h2>
+      <h2>訂購流程說明</h2>
       <div class="text-box">
         <div class="black">
           1.&nbsp;選擇商品&nbsp;>&nbsp;點選尺寸、顏色、數量
-          <span class="main">
-            【&nbsp;加入購物車&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;加入購物車&nbsp;】 </span>
           ，選購完畢後點選購物車
-          <span class="main">
-            【&nbsp;訂單結帳&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;訂單結帳&nbsp;】 </span>
           ，前往結帳。
         </div>
       </div>
@@ -26,17 +20,13 @@
       <div class="text-box">
         <div class="black">
           3.&nbsp;點選
-          <span class="main">
-            【&nbsp;前往結帳&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;前往結帳&nbsp;】 </span>
           填寫顧客資料&nbsp;/&nbsp;送貨資料&nbsp;/&nbsp;付款資料，提交訂單，下一步會顯示訂單號碼，才算完成訂購唷。
         </div>
       </div>
     </section>
     <section>
-      <h2>
-        電話訂購說明
-      </h2>
+      <h2>電話訂購說明</h2>
       <div class="text-box">
         <div class="black"><i class="fas fa-heart"></i>&nbsp;電話訂購說明 Order by phone</div>
         為提供更便利的購物選擇，特別為國內買家提供電話訂購服務，服務專線『&nbsp;+886-980-353064&nbsp;』
@@ -57,16 +47,12 @@
           3.&nbsp;
           確認訂單內容後，需再提供收件人相關資訊，收件人姓名、收件人電話、付款方式、寄送方式、其他備註事項。
         </div>
-        <div class="part">
-          ※&nbsp;因個資問題，電話訂購不提供線上刷卡服務唷。
-        </div>
+        <div class="part">※&nbsp;因個資問題，電話訂購不提供線上刷卡服務唷。</div>
         4.&nbsp;與客服人員完成核對，即完成訂購，若想確認訂單可登入官網會員中心查詢。
       </div>
     </section>
     <section>
-      <h2>
-        預購商品說明
-      </h2>
+      <h2>預購商品說明</h2>
       <div class="text-box">
         <div class="black">
           因每個商家的運作模式都不太相同，不論您是否為網路購物的新使用者，為避免誤會或不必要的糾紛，都請看一下說明喔!
@@ -88,9 +74,7 @@
         現貨出貨的順序是以「完成所有結帳流程&匯款」的先後順序來排的喔～並非按照點選加入購物車順序，因此有可能您是前幾名訂購，但因為較晚才完成結帳或匯款，而遇到現貨已經寄完須等預購追加的情形。
       </div>
       <div class="text-box">
-        <div class="black">
-          3.&nbsp;預購商品大約需要等多久呢?
-        </div>
+        <div class="black">3.&nbsp;預購商品大約需要等多久呢?</div>
         <div class="part">
           Ans&nbsp;:&nbsp;賣場的現貨若已全數寄完，需等待廠商製作並寄送過來賣場，約&nbsp;7-20&nbsp;個工作天&nbsp;(&nbsp;不含例假日&nbsp;)，
           鞋靴類商品由於製作費時，大約到&nbsp;20&nbsp;個工作天&nbsp;(&nbsp;不含例假日&nbsp;)&nbsp;呦。
@@ -101,9 +85,7 @@
         因此若您匯款後沒有排到現貨，最晚會在您匯款後的&nbsp;7-20&nbsp;個工作天內收到商品!所以無法等待此商品追加時間的買家，請斟酌下標，以免久候而造成誤會～
       </div>
       <div class="text-box">
-        <div class="black">
-          4.&nbsp;如果預購商品超過我匯款日後14天還沒到怎麼辦?
-        </div>
+        <div class="black">4.&nbsp;如果預購商品超過我匯款日後14天還沒到怎麼辦?</div>
         <div class="part">
           Ans&nbsp;:&nbsp;若因突發狀況&nbsp;(&nbsp;例如&nbsp;:&nbsp;工廠忙不過來，特殊布料須等上游布行訂作，
           遇上海關查驗&nbsp;)，造成商品無法於&nbsp;7-20&nbsp;個工作天&nbsp;(&nbsp;不含例假日&nbsp;)&nbsp;內到貨。
@@ -114,9 +96,7 @@
         只購買單件者，因為沒有辦法分批寄出，要是水水表示不願意繼續等待，都可以選擇換色或是退款處理。
       </div>
       <div class="text-box">
-        <div class="black">
-          5.&nbsp;預購商品為什麼會斷貨呢?追加失敗的話要怎麼處理呢?
-        </div>
+        <div class="black">5.&nbsp;預購商品為什麼會斷貨呢?追加失敗的話要怎麼處理呢?</div>
         <div class="part">
           Ans&nbsp;:&nbsp;由於&nbsp;Snbl&nbsp;跟廠商訂貨時，少數時候會因為上游布行工廠已經不再生產該布料，若沒有布料也沒有辦法製作成品，
           也只能跟&nbsp;Snbl&nbsp;說無法追加，因此才會有所謂的缺布斷貨問題。

@@ -23,13 +23,9 @@
       <div class="text-box">
         <div class="part">
           因系統需等候物流回檔取件資料後自動開啟
-          <span class="main">
-            【&nbsp;申請退貨&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;申請退貨&nbsp;】 </span>
           的按鍵，請於收到商品
-          <span class="main">
-            【&nbsp;隔日中午後&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;隔日中午後&nbsp;】 </span>
           線上申請退貨&nbsp;(&nbsp;申請方式請參看下方說明&nbsp;)，
           完成退貨申請後，系統將自動發送「&nbsp;退貨便代碼&nbsp;」至您的信箱，辦理退貨請填妥退換貨申請單並與退貨商品一同包裝完整附回喔！
         </div>
@@ -43,26 +39,18 @@
       <div class="text-box">
         <div class="black"><i class="fas fa-heart"></i>&nbsp;退貨流程</div>
         1.&nbsp;收到商品請立即檢查，若有問題，請收到商品的隔天起
-        <span class="main">
-          &nbsp;7&nbsp;天內
-        </span>
+        <span class="main"> &nbsp;7&nbsp;天內 </span>
         &nbsp;(&nbsp;包含例假日&nbsp;)&nbsp;線上申請退貨。<br />
         ※&nbsp;請務必先檢查過再下水使用，避免下水後無法退換貨的情況。
       </div>
       <div class="text-box">
         2.&nbsp;登入會員&nbsp;<i class="fas fa-arrow-right"></i>&nbsp;
         點選【&nbsp;人頭圖像&nbsp;】&nbsp;<i class="fas fa-arrow-right"></i>&nbsp;
-        <span class="main">
-          【&nbsp;訂單&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;訂單&nbsp;】 </span>
         &nbsp;<i class="fas fa-arrow-right"></i>&nbsp;在欲退貨的訂單點選
-        <span class="main">
-          【&nbsp;查閱&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;查閱&nbsp;】 </span>
         &nbsp;<i class="fas fa-arrow-right"></i>&nbsp;
-        <span class="main">
-          【&nbsp;申請退貨&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;申請退貨&nbsp;】 </span>
         。<br />
         ※&nbsp;請注意:&nbsp;只有在訂單送貨狀態為
         <span class="main">「&nbsp;已取貨&nbsp;」</span>
@@ -89,9 +77,7 @@
         4.&nbsp;系統收到申請將自動發送【&nbsp;退貨便代碼&nbsp;】至您的信箱
         &nbsp;(&nbsp;如&nbsp;24&nbsp;小時內未收到信件，請與客服聯繫&nbsp;)&nbsp; ，也可於訂單
         <span class="main">【&nbsp;退貨進度&nbsp;】</span>內查詢退貨便代碼。<br />
-        <span class="main">
-          ※&nbsp;如不符合退貨規範，客服會通知您並取消退貨申請。
-        </span>
+        <span class="main"> ※&nbsp;如不符合退貨規範，客服會通知您並取消退貨申請。 </span>
       </div>
       <div class="text-box">
         <div class="part">
@@ -129,15 +115,11 @@
         </div>
         <div class="part">
           若同筆訂單中第二次申請
-          <span class="main">
-            退貨
-          </span>
+          <span class="main"> 退貨 </span>
           ，則需自行負擔運費將商品寄回，若直接用退貨便寄回，將於退款中扣除運費&nbsp;60&nbsp;元。
         </div>
         若同筆訂單中第二次申請
-        <span class="main">
-          換貨
-        </span>
+        <span class="main"> 換貨 </span>
         ，則需自行負擔運費將商品寄回並隨貨附上回郵運費&nbsp;70&nbsp;元，
         <span class="main">換貨一律宅配寄出</span>。
       </div>
@@ -149,9 +131,7 @@
         ※&nbsp;請務必先申請退貨，若自行寄回恕無法處理。
       </div>
       <div class="text-box">
-        <div class="part">
-          3.&nbsp;退貨便包裝尺寸限制&nbsp;(&nbsp;單位:&nbsp;公分&nbsp;)
-        </div>
+        <div class="part">3.&nbsp;退貨便包裝尺寸限制&nbsp;(&nbsp;單位:&nbsp;公分&nbsp;)</div>
         <div class="part">
           材積&nbsp;:&nbsp;≦&nbsp;45&nbsp;x&nbsp;30&nbsp;x&nbsp;30&nbsp;
           (&nbsp;最長邊&nbsp;≦&nbsp;45，其它兩邊則需均&nbsp;≦&nbsp;30內&nbsp;)
@@ -164,9 +144,7 @@
       </div>
       <div class="text-box">
         6.&nbsp;海外買家若需退貨，請先與客服聯繫，商品需自費寄回，若
-        <span class="main">
-          運送產生稅金也需由買家負擔並從退款扣除
-        </span>
+        <span class="main"> 運送產生稅金也需由買家負擔並從退款扣除 </span>
         。
       </div>
     </section>
@@ -177,9 +155,7 @@
           >&nbsp;換貨&nbsp;–&nbsp;瑕疵&nbsp;/&nbsp;錯誤商品&nbsp;/&nbsp;更換顏色尺寸
         </div>
         <div class="part">
-          <span class="main">
-            ※&nbsp;換貨一律宅配寄出
-          </span>
+          <span class="main"> ※&nbsp;換貨一律宅配寄出 </span>
         </div>
       </div>
       <div class="text-box">
@@ -193,9 +169,7 @@
           同筆訂單僅限一次免運費退換貨服務，若同時有退貨與換貨需求請一併包裝由宅配收回，
           如辦理換貨後仍需辦理退貨請自行負擔運費將商品寄回。
         </div>
-        <div class="part">
-          ※瑕疪品請您幫我們在瑕疪處貼上透明膠帶，以方便做確認作業。
-        </div>
+        <div class="part">※瑕疪品請您幫我們在瑕疪處貼上透明膠帶，以方便做確認作業。</div>
         <div class="part">
           ※&nbsp;若因瑕疵欲更換商品賣場卻售完無貨可換，而需辦理退貨，退款金額將不影響原訂單免運優惠
           ，但若不更換同款商品而選擇退貨，退貨後未達免運則仍需扣除運費喔！

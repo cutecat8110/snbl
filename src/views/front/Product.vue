@@ -15,16 +15,16 @@
         <img class="img-fluid" :src="product.modelImageUrl" />
         <div ref="modelImagesUrl"></div>
         <img
-          class="img-fluid"
           v-for="(item, index) in product.modelImagesUrl"
           :key="index"
+          class="img-fluid"
           :src="item"
         />
         <div ref="detalImagesUrl"></div>
         <img
-          class="img-fluid"
           v-for="(item, index) in product.detalImagesUrl"
           :key="index"
+          class="img-fluid"
           :src="item"
         />
         <img class="img-fluid" :src="product.tabricImageUrl" />
@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import AsideNavbar from '@/components/common/AsideNavbar.vue';
-import ProductForm from '@/components/common/ProductForm.vue';
-import ProductSwiper from '@/components/common/ProductSwiper.vue';
-import SubNavbar from '@/components/common/SubNavbar.vue';
-import MoreSwiper from '@/components/common/MoreSwiper.vue';
+import AsideNavbar from '@/components/common/AsideNavbar.vue'
+import MoreSwiper from '@/components/common/MoreSwiper.vue'
+import ProductForm from '@/components/common/ProductForm.vue'
+import ProductSwiper from '@/components/common/ProductSwiper.vue'
+import SubNavbar from '@/components/common/SubNavbar.vue'
 
 function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max)
 }
 
 export default {
@@ -59,64 +59,63 @@ export default {
     ProductForm,
     ProductSwiper,
     SubNavbar,
-    MoreSwiper,
+    MoreSwiper
   },
   data() {
     return {
       product: [],
       productsAll: [],
-      randomProducts: [],
-    };
+      randomProducts: []
+    }
   },
   watch: {
     $route() {
-      this.getProduct();
-    },
+      this.getProduct()
+    }
   },
   methods: {
     getProduct() {
-      this.emitter.emit('isLoading', true);
-      const { id } = this.$route.params;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`;
+      this.emitter.emit('isLoading', true)
+      const { id } = this.$route.params
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`
       this.$http.get(url).then((res) => {
-        this.product = res.data.product;
-        this.emitter.emit('isLoading', false);
-        this.getAll();
-      });
+        this.product = res.data.product
+        this.emitter.emit('isLoading', false)
+        this.getAll()
+      })
     },
     subNav(item) {
-      window.scrollTo(0, this.$refs[item].offsetTop - 56);
+      window.scrollTo(0, this.$refs[item].offsetTop - 56)
     },
     getAll() {
-      this.emitter.emit('isLoading', true);
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.emitter.emit('isLoading', true)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.$http.get(url).then((res) => {
-        this.productsAll = res.data.products;
-        this.emitter.emit('isLoading', false);
-        this.getLookAlick();
-      });
+        this.productsAll = res.data.products
+        this.emitter.emit('isLoading', false)
+        this.getLookAlick()
+      })
     },
     getLookAlick() {
       const filterProducts = this.productsAll.filter(
-        (product) => product.category === this.product.category,
-      );
-      console.log(filterProducts);
+        (product) => product.category === this.product.category
+      )
 
-      const arrSet = new Set([]);
+      const arrSet = new Set([])
       for (let index = 0; arrSet.size < filterProducts.length; index + 1) {
-        const num = getRandomInt(filterProducts.length);
-        arrSet.add(num);
+        const num = getRandomInt(filterProducts.length)
+        arrSet.add(num)
       }
-      this.randomProducts = [];
+      this.randomProducts = []
       arrSet.forEach((i) => {
-        this.randomProducts.push(filterProducts[i]);
-      });
-    },
+        this.randomProducts.push(filterProducts[i])
+      })
+    }
   },
   created() {
-    this.getProduct();
-  },
-};
+    this.getProduct()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

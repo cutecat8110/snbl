@@ -1,9 +1,7 @@
 <template>
   <nav>
     <div class="aside-navbar-link">
-      <router-link to="/products">
-        ALL ITEMS
-      </router-link>
+      <router-link to="/products"> ALL ITEMS </router-link>
     </div>
     <div v-for="(item, index) in category" :key="index" class="aside-navbar-link">
       <router-link :to="'/products/' + item">
@@ -17,10 +15,10 @@
 export default {
   data() {
     return {
-      category: ['NEW 新品', '上衣', '裙裝', '褲裝', '配飾', '套裝專區'],
-    };
-  },
-};
+      category: ['NEW 新品', '上衣', '裙裝', '褲裝', '配飾', '套裝專區']
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

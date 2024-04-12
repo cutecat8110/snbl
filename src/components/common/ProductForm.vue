@@ -5,9 +5,9 @@
       <div class="product-title">
         <h1>{{ product.title }}</h1>
         <a
+          :class="{ active: myFavorite.includes(product.id) }"
           class="pointer"
           @click.prevent="emitUpDateMyFavorite(product.id)"
-          :class="{ active: myFavorite.includes(product.id) }"
         >
           <i class="material-icons">
             {{ myFavorite.includes(product.id) ? 'bookmark' : 'bookmark_border' }}
@@ -22,29 +22,27 @@
         </span>
       </div>
       <!-- 新品/特價 -->
-      <div v-if="product.origin_price == product.price" class="new-sale">
-        NEW
-      </div>
+      <div v-if="product.origin_price == product.price" class="new-sale">NEW</div>
       <div v-else class="new-sale">SALE</div>
       <!-- 導航-->
       <nav>
         <a
-          href="#"
           class="product-form-navbar-link"
+          href="#"
           @click.prevent="$emit('subNav', 'modelImagesUrl')"
           >模特展示</a
         >
         <div class="vertical"></div>
         <a
-          href="#"
           class="product-form-navbar-link"
+          href="#"
           @click.prevent="$emit('subNav', 'detalImagesUrl')"
           >細節展示</a
         >
         <div class="vertical"></div>
         <a
-          href="#"
           class="product-form-navbar-link"
+          href="#"
           @click.prevent="$emit('subNav', 'infolImageUrl')"
           >商品信息</a
         >
@@ -56,16 +54,16 @@
           <label
             v-for="(item, index) in product.colors"
             :key="index"
-            :for="'colors' + index"
-            class="pointer"
             :class="selected.color === item.name ? 'active' : ''"
+            class="pointer"
+            :for="'colors' + index"
           >
             <input
               :id="'colors' + index"
+              v-model="selected.color"
               class="d-none"
               type="radio"
               :value="item.name"
-              v-model="selected.color"
             />
             <div class="h-36 w-36 rounded selected-box">
               <div class="h-28 w-28 rounded" :style="{ backgroundColor: item.colorChart }"></div>
@@ -80,16 +78,16 @@
           <label
             v-for="(item, index) in product.clothSize"
             :key="index"
-            :for="'clothSize' + index"
-            class="pointer"
             :class="selected.size === item ? 'active' : ''"
+            class="pointer"
+            :for="'clothSize' + index"
           >
             <input
               :id="'clothSize' + index"
+              v-model="selected.size"
               class="d-none"
               type="radio"
               :value="item"
-              v-model="selected.size"
             />
             <div class="h-36 w-36 selected-box rounded">
               {{ item }}
@@ -100,93 +98,85 @@
       <!-- 數量 -->
       <div class="qty input-group bg-light border flex-nowrap rounded">
         <div>
-          <button class="qty-btn btn" type="button" @mousedown="qty--" :disabled="qty <= 1">
+          <button class="qty-btn btn" type="button" :disabled="qty <= 1" @mousedown="qty--">
             <i class="material-icons md-dark">remove</i>
           </button>
         </div>
         <input
-          type="text"
-          class="form-control border-0 text-center bg-light shadow-none"
-          :min="min"
-          :max="max"
-          @input="handleInput"
-          @blur="makeUp(index)"
           v-model.number="qty"
+          class="form-control border-0 text-center bg-light shadow-none"
+          type="text"
+          :max="max"
+          :min="min"
+          @blur="makeUp(index)"
+          @input="handleInput"
         />
         <div>
-          <button class="qty-btn btn" type="button" @mousedown="qty++" :disabled="qty >= 99">
+          <button class="qty-btn btn" type="button" :disabled="qty >= 99" @mousedown="qty++">
             <i class="material-icons md-dark">add</i>
           </button>
         </div>
       </div>
       <!-- 加入購物車/立即購買 -->
-      <div v-if="!selected.color" class="btn cursor prompt d-block">
-        請選擇顏色
-      </div>
-      <div v-else-if="!selected.size" class="btn cursor prompt d-block">
-        請選擇尺寸
-      </div>
-      <a v-else href="#" class="btn add-cart d-block" @click.prevent="addToCart">加入購物車 </a>
+      <div v-if="!selected.color" class="btn cursor prompt d-block">請選擇顏色</div>
+      <div v-else-if="!selected.size" class="btn cursor prompt d-block">請選擇尺寸</div>
+      <a v-else class="btn add-cart d-block" href="#" @click.prevent="addToCart">加入購物車 </a>
       <!-- 分享 -->
       <div class="share-container">
-        <div class="share-title">
-          Show Us Your Style
-        </div>
-        <div class="share-text">
-          標籤 #snbl 在你的 IG 貼文上，和我們分享你的森女穿搭吧！
-        </div>
+        <div class="share-title">Show Us Your Style</div>
+        <div class="share-text">標籤 #snbl 在你的 IG 貼文上，和我們分享你的森女穿搭吧！</div>
         <div class="share-link-container">
           <div class="share-link">
-            <a href="#" @click.prevent="" class="facebook">
+            <a class="facebook" href="#" @click.prevent="">
               <i class="fab fa-facebook-square"></i>
             </a>
           </div>
           <div class="share-link">
-            <a href="#" @click.prevent="" class="line">
+            <a class="line" href="#" @click.prevent="">
               <i class="fab fa-line"></i>
             </a>
           </div>
           <div class="share-link">
-            <a href="#" @click.prevent="" class="twitter">
+            <a class="twitter" href="#" @click.prevent="">
               <i class="fab fa-twitter"></i>
             </a>
           </div>
           <div class="share-link">
-            <a href="#" @click.prevent="" class="weibo">
+            <a class="weibo" href="#" @click.prevent="">
               <i class="fab fa-weibo"></i>
             </a>
           </div>
         </div>
       </div>
     </div>
-    <a href="#" class="btn mobile rounded-0" @click.prevent="openModal">加入購物車 </a>
+    <a class="btn mobile rounded-0" href="#" @click.prevent="openModal">加入購物車 </a>
   </section>
   <ProductFormModal
     ref="ProductFormModal"
     :product="product"
-    :tempSelected="selected"
     :tempQty="qty"
+    :tempSelected="selected"
     @addToCart="addToCart"
     @getQty="getQty"
   ></ProductFormModal>
 </template>
 
 <script>
-import ProductFormModal from '@/components/common/ProductFormModal.vue';
+import ProductFormModal from '@/components/common/ProductFormModal.vue'
 
 const sotrageMethods = {
   save(favorite) {
-    const favoriteString = JSON.stringify(favorite);
-    localStorage.setItem('Snblfavorite', favoriteString);
+    const favoriteString = JSON.stringify(favorite)
+    localStorage.setItem('Snblfavorite', favoriteString)
   },
   get() {
-    return JSON.parse(localStorage.getItem('Snblfavorite'));
-  },
-};
+    return JSON.parse(localStorage.getItem('Snblfavorite'))
+  }
+}
 
 export default {
   components: {
-    ProductFormModal,
+    ProductFormModal
   },
   inject: ['emitter'],
   props: ['product'],
@@ -195,57 +185,57 @@ export default {
     return {
       selected: {
         color: '',
-        size: '',
+        size: ''
       },
       qty: 1,
       min: 0,
       max: 99,
       modal: false,
-      myFavorite: sotrageMethods.get() || [],
-    };
+      myFavorite: sotrageMethods.get() || []
+    }
   },
   watch: {
     qty() {
       if (this.qty > this.max) {
-        this.qty = this.max;
+        this.qty = this.max
       } else if (this.qty < this.min) {
-        this.qty = this.min;
+        this.qty = this.min
       }
-    },
+    }
   },
   methods: {
     emitUpDateMyFavorite(id) {
-      this.emitter.emit('emitUpDateMyFavorite', id);
+      this.emitter.emit('emitUpDateMyFavorite', id)
     },
     handleInput(e) {
-      this.qty = e.target.value.replace(/[^\d]/g, '');
+      this.qty = e.target.value.replace(/[^\d]/g, '')
     },
     makeUp() {
       if (this.qty === '') {
-        this.qty = 1;
+        this.qty = 1
       }
     },
     getQty(qty) {
-      this.qty = qty;
+      this.qty = qty
     },
     openModal() {
-      this.$refs.ProductFormModal.openModal();
+      this.$refs.ProductFormModal.openModal()
     },
     addToCart(modal = false) {
-      this.modal = modal;
+      this.modal = modal
       this.emitter.emit('emitToCart', {
         id: this.product.id,
         selected: this.selected,
-        qty: this.qty,
-      });
-    },
+        qty: this.qty
+      })
+    }
   },
   created() {
     this.emitter.on('getMyFavorite', () => {
-      this.myFavorite = sotrageMethods.get();
-    });
-  },
-};
+      this.myFavorite = sotrageMethods.get()
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -358,7 +348,9 @@ section {
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
+            transition:
+              border 150ms ease-in-out,
+              box-shadow 150ms ease-in-out;
             &:hover {
               border: 1px solid $color-border-active;
             }

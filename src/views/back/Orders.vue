@@ -37,10 +37,10 @@
                   <td>
                     <div class="form-check form-switch">
                       <input
-                        class="form-check-input"
-                        type="checkbox"
                         :id="`paidSwitch${item.id}`"
                         v-model="item.is_paid"
+                        class="form-check-input"
+                        type="checkbox"
                         @change="updatePaid(item)"
                       />
                       <label class="form-check-label" :for="`paidSwitch${item.id}`">
@@ -76,27 +76,27 @@
       </div>
     </div>
     <!-- 編輯 元件 -->
-    <OrderModal :order="tempOrder" ref="orderModal" @update-paid="updatePaid"></OrderModal>
+    <OrderModal ref="orderModal" :order="tempOrder" @update-paid="updatePaid"></OrderModal>
     <!-- 刪除 元件 -->
     <DelModal
-      :origin="pageName"
-      :delItem="tempOrder.id"
       ref="delModal"
+      :delItem="tempOrder.id"
+      :origin="pageName"
       @del-item="delOrder"
     ></DelModal>
   </div>
 </template>
 
 <script>
-import DelModal from '@/components/back/DelModal.vue';
-import OrderModal from '@/components/back/OrderModal.vue';
-import Pagination from '@/components/back/Pagination.vue';
+import DelModal from '@/components/back/DelModal.vue'
+import OrderModal from '@/components/back/OrderModal.vue'
+import Pagination from '@/components/back/Pagination.vue'
 
 export default {
   components: {
     DelModal,
     Pagination,
-    OrderModal,
+    OrderModal
   },
   inject: ['httpMessageState'],
   data() {
@@ -107,58 +107,58 @@ export default {
       currentPage: 1,
       orders: [],
       tempOrder: {
-        id: '',
-      },
-    };
+        id: ''
+      }
+    }
   },
   methods: {
     getOrders(page = 1) {
-      this.isLoading = true;
-      this.currentPage = page;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
+      this.isLoading = true
+      this.currentPage = page
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`
       this.$http.get(url, this.tempProduct).then((res) => {
-        this.orders = res.data.orders;
-        this.pagination = res.data.pagination;
-        this.isLoading = false;
-      });
+        this.orders = res.data.orders
+        this.pagination = res.data.pagination
+        this.isLoading = false
+      })
     },
     openModal(event, item) {
-      this.tempOrder = { ...item };
+      this.tempOrder = { ...item }
       if (event === 'edit') {
-        this.$refs.orderModal.openModal();
+        this.$refs.orderModal.openModal()
       } else if (event === 'delete') {
-        this.$refs.delModal.openModal();
+        this.$refs.delModal.openModal()
       }
     },
     updatePaid(item) {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`
       const paid = {
-        is_paid: item.is_paid,
-      };
-      const status = '更新付款狀態';
+        is_paid: item.is_paid
+      }
+      const status = '更新付款狀態'
       this.$http.put(api, { data: paid }).then((res) => {
-        this.getOrders(this.currentPage);
-        this.isLoading = false;
-        this.$refs.orderModal.hideModal();
-        this.httpMessageState(res, status);
-      });
+        this.getOrders(this.currentPage)
+        this.isLoading = false
+        this.$refs.orderModal.hideModal()
+        this.httpMessageState(res, status)
+      })
     },
     delOrder() {
-      this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`;
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`
       this.$http.delete(url).then((res) => {
-        this.getOrders(this.currentPage);
-        this.isLoading = false;
-        this.httpMessageState(res, '刪除訂單');
-        this.$refs.delModal.hideModal();
-      });
-    },
+        this.getOrders(this.currentPage)
+        this.isLoading = false
+        this.httpMessageState(res, '刪除訂單')
+        this.$refs.delModal.hideModal()
+      })
+    }
   },
   created() {
-    this.getOrders();
-  },
-};
+    this.getOrders()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

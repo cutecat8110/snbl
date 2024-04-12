@@ -4,9 +4,7 @@
     <section>
       <h2>森女部落&nbsp;–&nbsp;隱私權政策</h2>
       <div class="text-box">
-        <div class="black">
-          隱私權政策聲明&nbsp;:
-        </div>
+        <div class="black">隱私權政策聲明&nbsp;:</div>
         <div class="part">
           森女部落事業股份有限公司&nbsp;(&nbsp;以下稱「&nbsp;本公司&nbsp;」&nbsp;)&nbsp;經營森女部落官方網站，包含但不限於&nbsp;:<br />
         </div>
@@ -20,9 +18,7 @@
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          一、隱私權保護政策的適用範圍
-        </div>
+        <div class="black">一、隱私權保護政策的適用範圍</div>
         本隱私權政策僅適用於本網站對您個人資料所為蒐集、處理與利用，不涉及其他非本公司所有或控制之其他公司或個人。<br />
         本網站可能包含許多外部連結、或其他合作夥伴所提供的商品或服務，關於該等外部連結或合作夥伴網站之資料蒐集，
         請參考該連結網站之隱私權政策。
@@ -30,9 +26,7 @@
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          二、個人資料的蒐集、類別及利用方式
-        </div>
+        <div class="black">二、個人資料的蒐集、類別及利用方式</div>
         <div class="part">
           為了提供電子商務服務、售後服務、履行合約義務、保護相關利害關係人之權益、行銷、客戶管理與經營等目的，
           會依照各服務之性質，當您造訪本網站或使用本網站所提供之功能服務時，我們將視該服務功能性質，
@@ -55,36 +49,26 @@
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          三、與第三人共用個人資料之政策
-        </div>
+        <div class="black">三、與第三人共用個人資料之政策</div>
         <div class="part">
           本網站絕不會提供、交換、出租或出售任何您的個人資料給其他個人、團體、私人企業或公務機關，但有法律依據或合約義務者，不在此限。
         </div>
-        <div class="part">
-          前項但書之情形包括不限於&nbsp;:
-        </div>
+        <div class="part">前項但書之情形包括不限於&nbsp;:</div>
         <ul>
-          <li>
-            法律明文規定。
-          </li>
+          <li>法律明文規定。</li>
           <li>
             基於公共利益為統計或學術研究而有必要，且資料經過提供者處理或蒐集著依其揭露方式無從識別特定之當事人。
           </li>
           <li>
             當您在網站的行為，違反服務條款或可能損害或妨礙網站與其他使用者權益或導致任何人遭受損害時，經網站管理單位研析揭露您的個人資料是為了辨識、聯絡或採取法律行動所必要者。
           </li>
-          <li>
-            與本公司協力廠商為執行相關活動必要範圍之利用。
-          </li>
+          <li>與本公司協力廠商為執行相關活動必要範圍之利用。</li>
         </ul>
       </div>
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          四、資料保密及安全性
-        </div>
+        <div class="black">四、資料保密及安全性</div>
         <div class="part">
           只由經過授權的人員才能接觸您的個人資料，如因業務需要有必要委託其他單位提供服務時，本網站亦會嚴格要求其遵守保密義務，並且採取必要檢查程序以確定其將確實遵守。
         </div>
@@ -97,9 +81,7 @@
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          五、資料當事人之權利
-        </div>
+        <div class="black">五、資料當事人之權利</div>
         <div class="part">
           資料當事人可以請求查詢、閱覽本人的個人資料或要求給予複本。<br />
           若您的個人資料有變更、或發現您的個人資料不正確，可以向本公司要求修改或更正；如您所提供之資料錯誤或缺漏，則不受本隱私權聲明之保護。
@@ -111,9 +93,7 @@
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          六、Cookie之使用
-        </div>
+        <div class="black">六、Cookie之使用</div>
         <div class="part">
           為了提供您良好的服務，本網站會在您的電腦中放置並取用我們的&nbsp;Cookie，
           若您不願接受&nbsp;Cookie&nbsp;的寫入，您可在您使用的瀏覽器功能項中設定隱私權等級為高，
@@ -123,9 +103,7 @@
     </section>
     <section>
       <div class="text-box">
-        <div class="black">
-          七、隱私權保護政策之修訂
-        </div>
+        <div class="black">七、隱私權保護政策之修訂</div>
         <div class="part">
           本網站隱私權保護政策將因應需求隨時進行修訂，修正後的條款將刊登於網站上，
           不另行個別通知，如您在修訂後繼續使用我們的網站或服務即表示您完全接受這些修訂或變更。

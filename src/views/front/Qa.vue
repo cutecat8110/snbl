@@ -2,9 +2,7 @@
   <div class="qa-container container">
     <h1>常見問題</h1>
     <section>
-      <h2>
-        搬新官網常見問題
-      </h2>
+      <h2>搬新官網常見問題</h2>
       <div class="text-box">
         <div class="black">
           <i class="fas fa-heart"></i
@@ -49,41 +47,27 @@
       </div>
     </section>
     <section>
-      <h2>
-        會員常見問題
-      </h2>
+      <h2>會員常見問題</h2>
       <div class="text-box">
         <div class="black"><i class="fas fa-heart"></i>&nbsp;如何『&nbsp;加入會員&nbsp;』</div>
         <div class="part">
           請點選網頁上方
-          <span class="main">
-            【&nbsp;人頭圖像&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;人頭圖像&nbsp;】 </span>
           ，點選
-          <span class="main">
-            【&nbsp;註冊會員&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;註冊會員&nbsp;】 </span>
           ，填寫欄位資料點選立即加入，
-          <span class="main">
-            【&nbsp;寄發驗證碼&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;寄發驗證碼&nbsp;】 </span>
           輸入
-          <span class="main">
-            【&nbsp;輸入驗證碼&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;輸入驗證碼&nbsp;】 </span>
           點選
-          <span class="main">
-            【&nbsp;送出&nbsp;】
-          </span>
+          <span class="main"> 【&nbsp;送出&nbsp;】 </span>
           ，即可成為森女會員！
         </div>
         <div class="part">
           ※&nbsp;也可以選擇&nbsp;LINE&nbsp;或是&nbsp;FACEBOOK&nbsp;快速註冊唷!!<br />
           ※&nbsp;提醒大家若是已經選擇
         </div>
-        <span class="main">
-          手動輸入
-        </span>
+        <span class="main"> 手動輸入 </span>
         資料註冊，後來再用&nbsp;LINE&nbsp;/&nbsp;FACEBOOK&nbsp;註冊，
         則可能會發生&nbsp;LINE&nbsp;/&nbsp;FACEBOOK&nbsp;註冊的會帳號無法再使用同一支手機進行認證，
         系統也無法自動將兩個會員帳號合併，會員如果發生這個狀況請和客服聯繫再做會員整併。
@@ -98,17 +82,11 @@
       <div class="text-box">
         <div class="black"><i class="fas fa-heart"></i>&nbsp;『&nbsp;忘記密碼&nbsp;』怎麼辦?</div>
         請點選網頁上方
-        <span class="main">
-          【&nbsp;人頭圖像&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;人頭圖像&nbsp;】 </span>
         ，點選
-        <span class="main">
-          【&nbsp;忘記密碼&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;忘記密碼&nbsp;】 </span>
         欄位輸入註冊填寫的
-        <span class="main">
-          【&nbsp;手機號碼&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;手機號碼&nbsp;】 </span>
         ，系統會發送一組驗證碼簡訊至手機，輸入後即可重設新的密碼。
       </div>
       <div class="text-box">
@@ -120,21 +98,13 @@
       <div class="text-box">
         <div class="black"><i class="fas fa-heart"></i>&nbsp;舊會員如何登入新官網?</div>
         請點選網頁上方
-        <span class="main">
-          【&nbsp;人頭圖像&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;人頭圖像&nbsp;】 </span>
         ，帳號為
-        <span class="main">
-          【&nbsp;手機號碼&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;手機號碼&nbsp;】 </span>
         點選
-        <span class="main">
-          【&nbsp;忘記密碼&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;忘記密碼&nbsp;】 </span>
         欄位輸入註冊填寫的
-        <span class="main">
-          【&nbsp;手機號碼&nbsp;】
-        </span>
+        <span class="main"> 【&nbsp;手機號碼&nbsp;】 </span>
         ，系統會發送一組驗證碼簡訊至手機，輸入後即可重設新的密碼。
       </div>
     </section>

@@ -3,10 +3,10 @@
     id="delProductModal"
     ref="modal"
     class="modal fade"
-    tabindex="-1"
-    aria-labelledby="delProductModalLabel"
     aria-hidden="true"
+    aria-labelledby="delProductModalLabel"
     data-bs-backdrop="static"
+    tabindex="-1"
   >
     <div class="modal-dialog">
       <div class="modal-content border-0">
@@ -15,10 +15,10 @@
             <span>刪除{{ origin }}</span>
           </h3>
           <button
-            type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            type="button"
             aria-label="Close"
+            data-bs-dismiss="modal"
           ></button>
         </div>
         <div class="modal-body">
@@ -26,12 +26,10 @@
           <strong class="text-danger">&nbsp;{{ delItem }}&nbsp;</strong> 】?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary me-3" data-bs-dismiss="modal">
+          <button class="btn btn-outline-secondary me-3" type="button" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-danger" @click="$emit('del-item')">
-            刪除
-          </button>
+          <button class="btn btn-danger" type="button" @click="$emit('del-item')">刪除</button>
         </div>
       </div>
     </div>
@@ -44,8 +42,8 @@ import modalMixin from '@/mixins/modalMixin';
 export default {
   mixins: [modalMixin],
   props: ['origin', 'delItem'],
-  emits: ['del-item'],
-};
+  emits: ['del-item']
+}
 </script>
 
 <style lang="scss" scoped>

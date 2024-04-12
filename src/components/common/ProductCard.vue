@@ -1,14 +1,14 @@
 <template>
-  <div class="product-card" v-for="product in productcard" :key="product.id">
+  <div v-for="product in productcard" :key="product.id" class="product-card">
     <div class="img-wrapper">
       <router-link :to="{ path: `/product/${product.id}` }">
-        <img :src="product.imageUrl" class="img-fluid pointer" alt="..." />
+        <img class="img-fluid pointer" :src="product.imageUrl" alt="..." />
       </router-link>
     </div>
     <div class="product-card-body">
       <div class="unselect card-text">
         <h4 class="title pointer">
-          <router-link :to="{ path: `/product/${product.id}` }" class="text-reset">
+          <router-link class="text-reset" :to="{ path: `/product/${product.id}` }">
             {{ product.title }}
           </router-link>
         </h4>
@@ -20,9 +20,9 @@
         </div>
       </div>
       <a
+        :class="{ active: myFavorite.includes(product.id) }"
         class="pointer"
         @click.prevent="emitUpDateMyFavorite(product.id)"
-        :class="{ active: myFavorite.includes(product.id) }"
       >
         <i class="material-icons">
           {{ myFavorite.includes(product.id) ? 'bookmark' : 'bookmark_border' }}
@@ -35,13 +35,13 @@
 <script>
 const sotrageMethods = {
   save(favorite) {
-    const favoriteString = JSON.stringify(favorite);
-    localStorage.setItem('Snblfavorite', favoriteString);
+    const favoriteString = JSON.stringify(favorite)
+    localStorage.setItem('Snblfavorite', favoriteString)
   },
   get() {
-    return JSON.parse(localStorage.getItem('Snblfavorite'));
-  },
-};
+    return JSON.parse(localStorage.getItem('Snblfavorite'))
+  }
+}
 
 export default {
   props: ['filterproducts', 'products'],
@@ -49,28 +49,28 @@ export default {
 
   data() {
     return {
-      myFavorite: sotrageMethods.get() || [],
-    };
+      myFavorite: sotrageMethods.get() || []
+    }
   },
   computed: {
     productcard() {
       if (this.$route.params.id) {
-        return this.filterproducts;
+        return this.filterproducts
       }
-      return this.products;
-    },
+      return this.products
+    }
   },
   methods: {
     emitUpDateMyFavorite(id) {
-      this.emitter.emit('emitUpDateMyFavorite', id);
-    },
+      this.emitter.emit('emitUpDateMyFavorite', id)
+    }
   },
   created() {
     this.emitter.on('getMyFavorite', () => {
-      this.myFavorite = sotrageMethods.get();
-    });
-  },
-};
+      this.myFavorite = sotrageMethods.get()
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

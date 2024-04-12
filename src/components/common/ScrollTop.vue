@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollTop pointer unselect" @click="scrollToTop" :class="toTop ? 'show' : ''">
+  <div :class="toTop ? 'show' : ''" class="scrollTop pointer unselect" @click="scrollToTop">
     <i class="fas fa-caret-up scrollTop-icon"></i>
     <span>TOP</span>
     <div class="box">
@@ -12,33 +12,33 @@
 export default {
   data() {
     return {
-      toTop: false,
-    };
+      toTop: false
+    }
   },
   methods: {
     scrollToTop() {
       window.scrollTo({
-        top: 0,
-      });
+        top: 0
+      })
     },
     onScroll() {
       if (
-        window.top.scrollY > document.body.offsetHeight / 2
-        || document.body.scrollHeight - document.body.clientHeight - window.top.scrollY < 56
+        window.top.scrollY > document.body.offsetHeight / 2 ||
+        document.body.scrollHeight - document.body.clientHeight - window.top.scrollY < 56
       ) {
-        this.toTop = true;
+        this.toTop = true
       } else {
-        this.toTop = false;
+        this.toTop = false
       }
-    },
+    }
   },
   mounted() {
-    window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('scroll', this.onScroll)
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
-  },
-};
+    window.removeEventListener('scroll', this.onScroll)
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -65,7 +65,10 @@ export default {
   opacity: 0;
   visibility: hidden;
 
-  transition: opacity 300ms ease-in-out, visibility 300ms ease-in-out, color 150ms ease-in-out;
+  transition:
+    opacity 300ms ease-in-out,
+    visibility 300ms ease-in-out,
+    color 150ms ease-in-out;
   &:hover {
     color: rgba(0, 0, 0, 0.65);
   }
