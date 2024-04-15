@@ -2,7 +2,7 @@
 
 > 這是一個 Vue2 練習的電商網站，包含前後台設計商品上下架訂單等功能。
 
-![](https://cutecat8110.github.io/snbl/dist/demo.png)
+![](https://cutecat8110.github.io/snbl/demo.png)
 
 </div>
 
