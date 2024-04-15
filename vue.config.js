@@ -1,3 +1,4 @@
 module.exports = {
-  publicPath: '/snbl/dist/'
+  outputDir: 'docs',
+  publicPath: '/snbl/'
 }
