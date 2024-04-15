@@ -1,6 +1,6 @@
-# TS Todo
+# snbl
 
-> 這是一個 Vue2 練習的電商網站，包含前後台設計商品上下架訂單等功能。
+> 這是一個練習 Vue2 的電商網站，包含前後台 RWD 設計切版與 API 串接。
 
 ![](https://cutecat8110.github.io/snbl/demo.png)
 
@@ -8,9 +8,9 @@
 
 ## 🌸 Demo
 
-[API 文件](https://todolist-api.hexschool.io/doc/)
+[API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
 
-[GitHub Page](https://cutecat8110.github.io/ts-todo/)
+[GitHub Page](https://cutecat8110.github.io/snbl/)
 
 <br />
 
@@ -23,15 +23,7 @@
 ### 取得專案
 
 ```sh
-git clone https://github.com/cutecat8110/ts-todo.git
-```
-
-### 設定環境
-
-複製 .env.example 改為 .env
-
-```sh
-cp .env.example .env
+git clone https://github.com/cutecat8110/snbl.git
 ```
 
 ### 安裝依賴
@@ -43,7 +35,7 @@ npm install
 ### 啟動開發環境
 
 ```sh
-npm run dev
+npm run serve
 ```
 
 <br />
@@ -52,22 +44,25 @@ npm run dev
 
 - [**Vue.js 3**](https://vuejs.org/)**:** `JavaScript 框架`
 
-- [**TypeScript**](https://www.typescriptlang.org/)**:** `JavaScript 的超集`
+- [**Vue Axios**](https://www.npmjs.com/package/vue-axios)**:** `HTTP 請求工具`
 
-- [**Pinia**](https://pinia.vuejs.org/)**:** `Vue.js 的狀態管理庫`
-
-- [**Tailwind CSS**](https://tailwindcss.com/)**:** `CSS 框架`
+- [**Bootstrap**](https://getbootstrap.com/)**:** `CSS/HTML 框架`
 
 <br />
 
 ## 🛠️ 擴展套件
 
+- [**mitt**](https://www.npmjs.com/package/mitt/)**:** `事件處理工具，進行組件間的交互`
+
 - [**SweetAlert2**](https://sweetalert2.github.io/)**:** `美觀且可定製的訊息彈框`
+
+- [**Vue Loading Overlay**](https://www.npmjs.com/package/vue-loading-overlay)**:** `loading 狀態管理工具，可輕鬆添加 loading 效果`
+
+- [**Swiper**](https://swiperjs.com/)**:** `樣式豐富的輪播和滑動`
 
 - [**VeeValidate**](https://vee-validate.logaretm.com/v4/)**:** `表單驗證庫`
 
-- [**Day.js**](https://day.js.org/)**:** `輕量級日期和時間處理庫`
+- [**Font Awesome**](https://fontawesome.com/)**:** `大量的向量開源圖標`
 
-- [**VueUse**](https://vueuse.org/)**:** `針對 Vue 3 Composition API 的實用函數庫`
+- [**Material Design Icons**](https://fonts.google.com/icons)**:** `Google 提供的開源圖標集`
 
-- [**Iconify**](https://iconify.design/)**:** `開源的圖標集合`
