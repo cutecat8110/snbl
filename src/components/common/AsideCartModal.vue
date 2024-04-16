@@ -85,8 +85,8 @@
 </template>
 
 <script>
-import modalMixin from '@/mixins/modalMixin';
-import TooltipMixin from '@/mixins/TooltipMixin';
+import modalMixin from '@/mixins/modalMixin'
+import TooltipMixin from '@/mixins/TooltipMixin'
 
 export default {
   mixins: [modalMixin, TooltipMixin],

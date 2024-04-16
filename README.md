@@ -4,17 +4,22 @@
 ![Vue](https://img.shields.io/badge/Vue.js-v3-blue.svg)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-v5-purple.svg)
 
-> 這是一個練習 Vue2 的電商網站，包含前後台 RWD 設計切版與 API 串接。
+> 這是一個以「少女時尚」為主題的電商平台，提供多元服飾選擇與便捷購物體驗，主要功能有商品瀏覽、下單、後台管理及訂單追蹤等。
 
 ![](https://cutecat8110.github.io/snbl/demo.png)
 
-## 專案說明
 
-[API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
+## 📋 專案概述
 
-[Demo](https://cutecat8110.github.io/snbl/)
+此專案旨在提升 Vue Options API 技術熟練度，從企劃、設計到前端皆獨立開發。<br />執行流程涵蓋網站架構、流程功能規劃、RWD 網頁設計、切版與動效實現，以及 API 串接與整合等。
 
-## 🚀 快速入門
+* [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
+* [Demo](https://cutecat8110.github.io/snbl/) 
+
+
+## 🚀 操作手冊
+
+### 開發
 
 ```bash
 # 取得專案
@@ -23,8 +28,15 @@ git clone https://github.com/cutecat8110/snbl.git
 # 安裝依賴
 npm install
 
-# 啟動開發環境
+# 啟動開發伺服器
 npm run serve
+```
+
+### 部署
+
+```bash
+# 打包專案
+npm run build
 ```
 
 ## 🔨 核心技術
