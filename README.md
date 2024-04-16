@@ -1,68 +1,122 @@
-# snbl
+# Snbl - 電商網站
+
+![Node](https://img.shields.io/badge/Node.js-v16.20.2-brightgreen.svg)
+![Vue](https://img.shields.io/badge/Vue.js-v3-blue.svg)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-v5-purple.svg)
 
 > 這是一個練習 Vue2 的電商網站，包含前後台 RWD 設計切版與 API 串接。
 
 ![](https://cutecat8110.github.io/snbl/demo.png)
 
-</div>
-
-## 🌸 Demo
+## 專案說明
 
 [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
 
-[GitHub Page](https://cutecat8110.github.io/snbl/)
+[Demo](https://cutecat8110.github.io/snbl/)
 
-<br />
+## 🚀 快速入門
 
-## 🚀 安裝和使用
-
-### 系統需求
-
-建議 Node.js 16.20.2
-
-### 取得專案
-
-```sh
+```bash
+# 取得專案
 git clone https://github.com/cutecat8110/snbl.git
-```
 
-### 安裝依賴
-
-```sh
+# 安裝依賴
 npm install
-```
 
-### 啟動開發環境
-
-```sh
+# 啟動開發環境
 npm run serve
 ```
 
-<br />
-
 ## 🔨 核心技術
 
-- [**Vue.js 3**](https://vuejs.org/)**:** `JavaScript 框架`
-
-- [**Vue Axios**](https://www.npmjs.com/package/vue-axios)**:** `HTTP 請求工具`
-
-- [**Bootstrap**](https://getbootstrap.com/)**:** `CSS/HTML 框架`
-
-<br />
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://vuejs.org/" >
+          Vue 3
+        </a>
+      </td>
+      <td>JavaScript 框架</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://www.npmjs.com/package/vue-axios" >
+          Vue Axios
+        </a>
+      </td>
+      <td>HTTP 請求工具</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://getbootstrap.com/" >
+          Bootstrap 5
+        </a>
+      </td>
+      <td>CSS/HTML 框架</td>
+    </tr>
+  </tbody>
+</table>
 
 ## 🛠️ 擴展套件
 
-- [**mitt**](https://www.npmjs.com/package/mitt/)**:** `事件處理工具，進行組件間的交互`
-
-- [**SweetAlert2**](https://sweetalert2.github.io/)**:** `美觀且可定製的訊息彈框`
-
-- [**Vue Loading Overlay**](https://www.npmjs.com/package/vue-loading-overlay)**:** `loading 狀態管理工具，可輕鬆添加 loading 效果`
-
-- [**Swiper**](https://swiperjs.com/)**:** `樣式豐富的輪播和滑動`
-
-- [**VeeValidate**](https://vee-validate.logaretm.com/v4/)**:** `表單驗證庫`
-
-- [**Font Awesome**](https://fontawesome.com/)**:** `大量的向量開源圖標`
-
-- [**Material Design Icons**](https://fonts.google.com/icons)**:** `Google 提供的開源圖標集`
-
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://www.npmjs.com/package/mitt/">
+          mitt
+        </a>
+      </td>
+      <td>處理組件間事件交互</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://sweetalert2.github.io/">
+          SweetAlert 2
+        </a>
+      </td>
+      <td>可定製訊息彈框</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://www.npmjs.com/package/vue-loading-overlay">
+          Vue Loading Overlay
+        </a>
+      </td>
+      <td>loading 效果組件</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://swiperjs.com/">
+          Swiper
+        </a>
+      </td>
+      <td>輪播/滑動組件</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://vee-validate.logaretm.com/v4/">
+          VeeValidate
+        </a>
+      </td>
+      <td>表單驗證庫</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://fontawesome.com/">
+          Font Awesome
+        </a>
+      </td>
+      <td>大量開源向量圖標</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://fonts.google.com/icons">
+          Material Design Icons
+        </a>
+      </td>
+      <td>Google 開源圖標</td>
+    </tr>
+  </tbody>
+</table>
