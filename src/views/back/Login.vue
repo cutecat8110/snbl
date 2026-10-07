@@ -31,7 +31,7 @@
             />
             <label for="password">Password</label>
           </div>
-          <button class="btn btn-lg btn-primary w-100" type="submit">登入</button>
+          <button :disabled="isLoading" class="btn btn-lg btn-primary w-100" type="submit">登入</button>
         </form>
       </div>
     </div>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { saveSession } from '@/methods/authSession'
+
 export default {
   data() {
     return {
@@ -53,29 +55,33 @@ export default {
     }
   },
   methods: {
-    render() {
-      this.isLoading = true
+    async render() {
       const id = '-MoNVFrUSDDA2ZXh9gFh'
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
-      this.$http.get(url).then((res) => {
-        this.loginImage = res.data.article.articleImagesUrl
-        this.isLoading = false
-      })
+      try {
+        const res = await this.$http.get(url, { timeout: 15000 })
+        if (res.data.article) this.loginImage = res.data.article.articleImagesUrl
+      } catch (error) {
+        // The decorative background must not prevent signing in.
+        this.loginImage = []
+      }
     },
-    login() {
-      this.$http.post(`${process.env.VUE_APP_API}admin/signin`, this.user).then((res) => {
-        if (res.data.success === true) {
-          const { token } = res.data
-          const { expired } = res.data
-          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
-          this.$router.push('/admin/products')
-        } else {
-          this.user.username = ''
-          this.user.password = ''
-          // eslint-disable-next-line no-alert
-          alert('帳號或密碼錯誤')
-        }
-      })
+    async login() {
+      if (this.isLoading) return
+      this.isLoading = true
+      try {
+        const res = await this.$http.post(`${process.env.VUE_APP_API}admin/signin`, this.user, { timeout: 15000 })
+        if (!res.data.success) throw new Error(res.data.message || '帳號或密碼錯誤')
+        const { token, expired } = res.data
+        saveSession(token, expired)
+        await this.$router.push('/admin/products')
+      } catch (error) {
+        this.user.password = ''
+        const message = error.response?.data?.message || error.message
+        await this.$swal({ icon: 'error', title: '登入失敗', text: String(message || '請確認帳號密碼及網路連線後再試。') })
+      } finally {
+        this.isLoading = false
+      }
     }
   },
   created() {

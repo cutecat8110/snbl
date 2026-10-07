@@ -1,0 +1,654 @@
+[
+  {
+    "form": 296,
+    "header": 56,
+    "page": "product",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "form": 351,
+    "header": 56,
+    "page": "product",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "form": 366,
+    "header": 56,
+    "page": "product",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "form": 696,
+    "header": 56,
+    "page": "product",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "form": 696,
+    "header": 56,
+    "page": "product",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "form": 696,
+    "header": 56,
+    "page": "product",
+    "scroll": 991,
+    "width": 991,
+    "phase": "after"
+  },
+  {
+    "form": 272,
+    "header": 56,
+    "page": "product",
+    "scroll": 992,
+    "width": 992,
+    "phase": "after"
+  },
+  {
+    "form": 272,
+    "header": 56,
+    "page": "product",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "form": 272,
+    "header": 56,
+    "page": "product",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 344,
+    "width": 320,
+    "phase": "before"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "heading": "常見問題",
+    "page": "qa",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "heading": "購物流程",
+    "page": "shopping-process",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "heading": "退換貨政策",
+    "page": "policy",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "heading": "付款及配送方式",
+    "page": "payment-delivery",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "heading": "條款與細則",
+    "page": "terms",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "page": "story",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "page": "try-free",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "page": "vip",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "cards": 30,
+    "page": "home",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "cards": 10,
+    "page": "products",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 320,
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 375,
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 390,
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 768,
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 769,
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 1024,
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "heading": "購物清單 (2)",
+    "page": "cart",
+    "scroll": 1440,
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 320,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 320,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 375,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 375,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 390,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 390,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 768,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 768,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 769,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 769,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 1024,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 1024,
+    "phase": "after"
+  },
+  {
+    "page": "checkout",
+    "scroll": 1440,
+    "summary": "合計 NT$ 1,400 購物清單 (2)",
+    "width": 1440,
+    "phase": "after"
+  },
+  {
+    "page": "qa",
+    "width": 320,
+    "scroll": 320,
+    "phase": "after"
+  },
+  {
+    "page": "product-landscape",
+    "width": 844,
+    "height": 390,
+    "scroll": 844,
+    "phase": "after"
+  }
+]

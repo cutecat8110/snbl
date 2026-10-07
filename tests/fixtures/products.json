@@ -1,0 +1,104 @@
+[
+  {
+    "category": "上衣",
+    "clothSize": [
+      "XS",
+      "S"
+    ],
+    "colors": [
+      {
+        "name": "Dark Red",
+        "colorChart": "#800000"
+      },
+      {
+        "name": "Red",
+        "colorChart": "#ff0000"
+      }
+    ],
+    "detalImagesUrl": [
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632141201895.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632141207803.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632141215331.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632141240062.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632141249284.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632141253963.jpg"
+    ],
+    "id": "-MjwYxB0FLCnVLuy258I",
+    "imageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632030871435.jpg",
+    "imagesUrl": [
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632030876954.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632056142638.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632056149013.jpg"
+    ],
+    "infolImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632155732509.png",
+    "is_enabled": 1,
+    "modelImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632067129502.jpg",
+    "modelImagesUrl": [
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632140917078.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632140925420.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632140933448.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632140942194.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632140947936.jpg"
+    ],
+    "modelInfoImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632155748966.jpg",
+    "num": 30,
+    "origin_price": 1100,
+    "price": 700,
+    "sizeImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632155738986.jpg",
+    "tabricImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632155771696.jpg",
+    "title": "QA 日系學院風海軍領外套",
+    "tryOnImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632155753829.jpg",
+    "unit": "套"
+  },
+  {
+    "category": "裙裝",
+    "clothSize": [
+      "XS",
+      "S"
+    ],
+    "colors": [
+      {
+        "name": "Dark Red",
+        "colorChart": "#800000"
+      },
+      {
+        "name": "Red",
+        "colorChart": "#ff0000"
+      }
+    ],
+    "detalImagesUrl": [
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159419906.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159424007.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159428711.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159432803.jpg"
+    ],
+    "id": "-Mk3DSnrAx0G8hGyZdZ3",
+    "imageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632158987364.jpg",
+    "imagesUrl": [
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632158994489.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159007596.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159016623.jpg"
+    ],
+    "infolImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159502656.png",
+    "is_enabled": 1,
+    "modelImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159273055.jpg",
+    "modelImagesUrl": [
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159282851.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159291198.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159301278.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159309259.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159316596.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159322726.jpg",
+      "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159328038.jpg"
+    ],
+    "modelInfoImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159513405.jpg",
+    "num": 29,
+    "origin_price": 680,
+    "price": 700,
+    "sizeImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159509475.jpg",
+    "tabricImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159527757.jpg",
+    "title": "QA 奶茶格子百褶裙",
+    "tryOnImageUrl": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632159517431.jpg",
+    "unit": "件"
+  }
+]

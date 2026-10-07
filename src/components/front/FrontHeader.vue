@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed-top">
+  <header ref="header" class="fixed-top">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
         <router-link to="/">
@@ -10,11 +10,15 @@
           type="button"
           data-bs-target="#navbarNav,#navbartest"
           data-bs-toggle="collapse"
+          aria-label="切換導覽選單"
+          aria-controls="navbarNav navbartest"
+          aria-expanded="false"
+          @keydown.esc="closeNavigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
         <nav id="navbarNav" class="collapse navbar-collapse flex-grow-0">
-          <div class="navbar-nav fw-medium">
+          <div class="navbar-nav fw-medium" @click="closeNavigation">
             <router-link class="nav-link" to="/products"> ALL ITEMS </router-link>
             <router-link class="nav-link highlight" to="/products/NEW 新品"> NEW 新品 </router-link>
             <router-link class="nav-link" to="/products/上衣"> 上衣 </router-link>
@@ -62,6 +66,9 @@
 </template>
 
 <script>
+import { Collapse } from 'bootstrap'
+import quantity from '@/methods/quantity'
+import request from '@/methods/request'
 import AsideCartModal from '@/components/common/AsideCartModal.vue'
 import AsideWishModal from '@/components/common/AsideWishModal.vue'
 
@@ -96,6 +103,7 @@ export default {
     $route: {
       handler() {
         this.getCart()
+        this.closeNavigation()
       },
       immediate: true
     }
@@ -136,205 +144,139 @@ export default {
       sotrageMethods.save(this.myFavorite)
       this.emitter.emit('getMyFavorite')
     },
-    getCart(addToCart) {
-      this.emitter.emit('isLoading', true)
+    getCart() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      this.$http.get(url).then((res) => {
-        this.cart = res.data.data
-        // 渲染畫面
+      return request(this, () => this.$http.get(url), (res) => {
+        const carts = res.data.data.carts.map((item) => {
+          const variants = item.selected?.length ? item.selected : [{ color: '', size: '', qty: item.qty }]
+          const selected = variants.map((variant) => ({ ...variant, qty: Math.max(1, Number(variant.qty) || 1) }))
+          return { ...item, selected, qty: selected.reduce((total, variant) => total + variant.qty, 0) }
+        })
+        this.cart = { ...res.data.data, carts }
         this.showCart = []
-        this.cart.carts.forEach((item) => {
-          if (item.selected.length === 1) {
-            this.showCart.push(item)
-          } else {
-            for (let i = 0; i < item.selected.length; i += 1) {
-              const tempProduct = JSON.parse(JSON.stringify(item))
-              const singleSelected = [tempProduct.selected[i]]
-              delete tempProduct.selected
-              tempProduct.selected = singleSelected
-              this.showCart.push(tempProduct)
-            }
-          }
+        carts.forEach((item) => {
+          item.selected.forEach((variant) => {
+            this.showCart.push({ ...item, selected: [{ ...variant }] })
+          })
         })
         this.tempShowCart = JSON.parse(JSON.stringify(this.showCart))
-        // 計算 qty
-        this.qty = 0
-        if (this.cart.carts.length !== 0) {
-          this.cart.carts.forEach((item) => {
-            this.qty += item.qty
-          })
-        }
+        this.qty = this.cart.carts.reduce((total, item) => total + Number(item.qty), 0)
         this.emitter.emit('upDateQty', this.qty)
         this.emitter.emit('upDateCart', [this.cart, this.showCart, this.tempShowCart])
-        if (addToCart) {
-          this.addToCart()
-        } else {
-          this.emitter.emit('isLoading', false)
-        }
+        return true
       })
     },
     getAll() {
-      this.emitter.emit('isLoading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.productsAll = res.data.products
-        this.emitter.emit('isLoading', false)
       })
     },
-    delCart(id, selected) {
-      this.emitter.emit('isLoading', true)
-      const delCart = this.cart.carts.filter((item) => item.id.match(id))
-      if (delCart[0].selected.length === 1) {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-        this.$http.delete(url).then((res) => {
-          if (res.data.success) {
-            this.getCart()
-            this.$swal({
-              icon: 'success',
-              title: '商品已移出購物車',
-              timer: 1500,
-              showConfirmButton: false
-            })
-          }
-        })
-      } else {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-        const delPartCart = delCart
-        const cart = {
-          product_id: delPartCart[0].product_id,
-          qty: delPartCart[0].qty,
-          selected: delPartCart[0].selected
-        }
-        let selectedIndex = ''
-        cart.selected.forEach((item, index) => {
-          if (item.color.match(selected.color) && item.size.match(selected.size)) {
-            selectedIndex = index
-          }
-        })
-        cart.qty -= selected.qty
-        cart.selected.splice(selectedIndex, 1)
-        this.$http.put(url, { data: cart }).then(() => {
-          this.getCart()
-          this.$swal({
-            icon: 'success',
-            title: '商品已移出購物車',
-            timer: 1500,
-            showConfirmButton: false
-          })
-        })
-      }
+    queueCart(change) {
+      // Refresh before each write so rapid actions cannot overwrite an earlier variant.
+      this.cartMutation = (this.cartMutation || Promise.resolve()).then(async () => {
+        if (await this.getCart()) return change()
+        return undefined
+      })
+      return this.cartMutation
     },
-    addToCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      const cart = {
-        product_id: this.selected.id,
-        qty: this.selected.qty,
-        selected: []
-      }
-      // 檢查購物車是否已有該商品
-      const checkCart = this.cart.carts.filter((item) => item.product_id.match(this.selected.id))
-      let checkProduct = ''
-
-      if (checkCart.length === 0) {
-        cart.selected = [
-          {
-            color: this.selected.selected.color,
-            size: this.selected.selected.size,
-            qty: this.selected.qty
-          }
-        ]
-      } else {
-        checkCart[0].selected.forEach((item, index) => {
-          if (
-            item.color.match(this.selected.selected.color) &&
-            item.size.match(this.selected.selected.size)
-          ) {
-            checkProduct = index
-          }
+    delCart(id, selected) {
+      const variant = { ...selected }
+      return this.queueCart(() => {
+        const item = this.cart.carts.find((entry) => entry.id === id)
+        if (!item) return undefined
+        const remaining = item.selected.filter((entry) =>
+          entry.color !== variant.color || entry.size !== variant.size)
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
+        const send = remaining.length
+          ? () => this.$http.put(url, { data: {
+            product_id: item.product_id,
+            qty: remaining.reduce((total, entry) => total + entry.qty, 0),
+            selected: remaining
+          } })
+          : () => this.$http.delete(url)
+        return request(this, send, async () => {
+          await this.getCart()
+          this.$swal({ icon: 'success', title: '商品已移出購物車', timer: 1500, showConfirmButton: false })
         })
-      }
-
-      if (checkProduct === '' && checkCart.length !== 0) {
-        cart.selected = [
-          ...checkCart[0].selected,
-          {
-            color: this.selected.selected.color,
-            size: this.selected.selected.size,
-            qty: this.selected.qty
-          }
-        ]
-      } else if (checkProduct !== '') {
-        const tempSelected = JSON.parse(JSON.stringify(checkCart[0].selected))
-        tempSelected[checkProduct].qty += this.selected.qty
-        cart.selected = tempSelected
-      }
-
-      this.$http.post(url, { data: cart }).then((res) => {
-        if (res.data.success) {
-          this.getCart()
-          this.$swal({
-            icon: 'success',
-            title: '商品已加入購物車',
-            timer: 1500,
-            showConfirmButton: false
-          })
-        }
+      })
+    },
+    addToCart(selection) {
+      if (!selection?.selected?.color || !selection.selected.size) return Promise.resolve()
+      const selected = JSON.parse(JSON.stringify(selection))
+      selected.qty = quantity(selected.qty)
+      return this.queueCart(() => {
+        const item = this.cart.carts.find((entry) => entry.product_id === selected.id)
+        const variants = item ? item.selected.map((entry) => ({ ...entry })) : []
+        const variant = variants.find((entry) =>
+          entry.color === selected.selected.color && entry.size === selected.selected.size)
+        const added = selected.qty
+        if (variant) variant.qty += added
+        else variants.push({ ...selected.selected, qty: added })
+        const cart = { product_id: selected.id, qty: added, selected: variants }
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+        return request(this, () => this.$http.post(url, { data: cart }), async () => {
+          await this.getCart()
+          this.$swal({ icon: 'success', title: '商品已加入購物車', timer: 1500, showConfirmButton: false })
+        })
       })
     },
     upDate(index, id, selected) {
-      this.emitter.emit('isLoading', true)
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-      const delCart = this.cart.carts.filter((item) => item.id.match(id))
-      const cart = {
-        product_id: delCart[0].product_id,
-        qty: delCart[0].qty,
-        selected: delCart[0].selected
-      }
-      let selectedIndex = ''
-      cart.selected.forEach((item, i) => {
-        if (item.color.match(selected.color) && item.size.match(selected.size)) {
-          selectedIndex = i
+      const variant = { ...selected, qty: quantity(selected.qty) }
+      return this.queueCart(() => {
+        const item = this.cart.carts.find((entry) => entry.id === id)
+        if (!item) return undefined
+        const variants = item.selected.map((entry) =>
+          entry.color === variant.color && entry.size === variant.size ? variant : entry)
+        const cart = {
+          product_id: item.product_id,
+          qty: variants.reduce((total, entry) => total + entry.qty, 0),
+          selected: variants
         }
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
+        return request(this, () => this.$http.put(url, { data: cart }), () => this.getCart())
       })
-      cart.qty = cart.qty - this.tempShowCart[index].selected[0].qty + selected.qty
-      cart.selected.splice(selectedIndex, 1, selected)
-      this.$http.put(url, { data: cart }).then(() => {
-        this.getCart()
+    },
+    closeNavigation() {
+      if (!this.$refs.header) return
+      this.$refs.header.querySelectorAll('.navbar-collapse').forEach((element) => {
+        const collapse = Collapse.getOrCreateInstance(element, { toggle: false })
+        if (element.classList.contains('collapsing') && this.$refs.header.querySelector('.navbar-toggler').getAttribute('aria-expanded') === 'true') {
+          element.addEventListener('shown.bs.collapse', () => collapse.hide(), { once: true })
+        } else collapse.hide()
       })
     },
     openModal(item) {
+      this.closeNavigation()
       this.$refs[item].openModal()
     },
     createOrder(item) {
+      if (this.submittingOrder) return undefined
+      this.submittingOrder = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
-      this.$http.post(url, { data: item }).then((res) => {
-        if (res.data.success) {
-          this.getCart()
-          const id = res.data.orderId
-          this.$router.push(`/order/${id}`)
-        }
-      })
+      return request(this, () => this.$http.post(url, { data: item }), async (res) => {
+        await this.getCart()
+        await this.$router.push(`/order/${res.data.orderId}`)
+      }).finally(() => { this.submittingOrder = false })
     }
   },
+  mounted() {
+    this.desktopLayout = window.matchMedia('(min-width: 992px)')
+    this.desktopLayout.addEventListener('change', this.closeNavigation)
+  },
+  beforeUnmount() {
+    if (this.desktopLayout) this.desktopLayout.removeEventListener('change', this.closeNavigation)
+  },
   created() {
-    this.getCart()
     this.getAll()
     this.emitter.on('emitToCart', (item) => {
-      this.selected = item
-      this.getCart(item)
+      if (item) this.addToCart(item)
+      else this.getCart()
     })
-    this.emitter.on('emitDelCart', (item) => {
-      this.delCart(...item)
-    })
-    this.emitter.on('emitUpDate', (item) => {
-      this.upDate(...item)
-    })
-    this.emitter.on('emitCreateOrder', (item) => {
-      this.createOrder(item)
-    })
-    this.emitter.on('emitUpDateMyFavorite', (id) => {
-      this.addMyFavorite(id)
-    })
+    this.emitter.on('emitDelCart', (item) => this.delCart(...item))
+    this.emitter.on('emitUpDate', (item) => this.upDate(...item))
+    this.emitter.on('emitCreateOrder', (item) => this.createOrder(item))
+    this.emitter.on('emitUpDateMyFavorite', (id) => this.addMyFavorite(id))
   }
 }
 </script>
@@ -395,6 +337,14 @@ export default {
       background: $color-main;
       color: #fff;
     }
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar {
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow-y: auto;
   }
 }
 </style>

@@ -118,6 +118,7 @@
                 }"
                 class="btn w-100 checkout"
                 type="button"
+                :disabled="order.is_paid || order.message.payment.method === '超商取貨付款 (COD)' || order.message.payment.method === '貨到付款(COD)(+NT$30)'"
                 @click.prevent="payment"
               >
                 {{
@@ -137,6 +138,7 @@
 </template>
 
 <script>
+import request from '@/methods/request'
 import CartProcess from '@/components/common/CartProcess.vue'
 
 export default {
@@ -148,7 +150,7 @@ export default {
     return {
       orderId: '',
       order: {},
-      productsAll: {}
+      productsAll: []
     }
   },
   computed: {
@@ -185,37 +187,31 @@ export default {
         return Math.floor(Math.random() * max)
       }
       const num = getRandomInt(this.productsAll.length)
-      const scenery = this.productsAll[num].imageUrl
+      const scenery = this.productsAll[num]?.imageUrl || ''
       return scenery
     }
   },
   methods: {
     getOrder() {
-      this.emitter.emit('isLoading', true)
       const { id } = this.$route.params
       this.orderId = id
 
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${id}`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.order = res.data.order
-        this.emitter.emit('isLoading', false)
       })
     },
     getAll() {
-      this.emitter.emit('isLoading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.productsAll = res.data.products
-        this.emitter.emit('isLoading', false)
       })
     },
     payment() {
-      this.emitter.emit('isLoading', true)
       const { id } = this.$route.params
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${id}`
-      this.$http.post(url).then(() => {
+      return request(this, () => this.$http.post(url), () => {
         this.getOrder()
-        this.emitter.emit('isLoading', false)
         this.$swal({
           icon: 'success',
           title: '付款成功',

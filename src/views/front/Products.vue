@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import request from '@/methods/request'
 import AsideNavbar from '@/components/common/AsideNavbar.vue'
 import ProductCard from '@/components/common/ProductCard.vue'
 import SubNavbar from '@/components/common/SubNavbar.vue'
@@ -40,30 +41,27 @@ export default {
   },
   methods: {
     getData(page = 1) {
-      this.emitter.emit('isLoading', true)
       this.currentPage = page
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
+        if (this.currentPage !== page) return
         this.products = res.data.products
         this.pagination = res.data.pagination
         window.scrollTo({
           top: 0
         })
-        this.emitter.emit('isLoading', false)
       })
     },
     getAll() {
-      this.emitter.emit('isLoading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.productsAll = res.data.products
-        this.emitter.emit('isLoading', false)
       })
     }
   },
   computed: {
     filterproducts() {
-      return this.productsAll.filter((item) => item.category.match(this.selectCategory))
+      return this.productsAll.filter((item) => item.category.includes(this.selectCategory || ''))
     }
   },
   watch: {

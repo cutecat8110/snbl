@@ -41,9 +41,9 @@
         </div>
         會員制度更新一版囉!<br />
         會員制度說明&nbsp;>&nbsp;
-        <a href="https://cutecat8110.github.io/snbl/dist/#/vip">
-          https://cutecat8110.github.io/snbl/dist/#/vip
-        </a>
+        <router-link to="/vip">
+          https://cutecat8110.github.io/snbl/#/vip
+        </router-link>
       </div>
     </section>
     <section>
@@ -157,6 +157,7 @@
       }
 
       a {
+        overflow-wrap: anywhere;
         color: #337ab7;
       }
     }

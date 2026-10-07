@@ -56,12 +56,14 @@
             :key="index"
             :class="selected.color === item.name ? 'active' : ''"
             class="pointer"
-            :for="'colors' + index"
+            :for="'product-color-' + index"
           >
             <input
-              :id="'colors' + index"
+              :id="'product-color-' + index"
               v-model="selected.color"
-              class="d-none"
+              name="product-color"
+              :aria-label="item.name"
+              class="visually-hidden"
               type="radio"
               :value="item.name"
             />
@@ -73,19 +75,21 @@
       </div>
       <!-- 尺寸 -->
       <div class="size-container">
-        <div class="form-label">SIZE : &nbsp;{{ selected.size.name }}</div>
+        <div class="form-label">SIZE : &nbsp;{{ selected.size }}</div>
         <div class="size">
           <label
             v-for="(item, index) in product.clothSize"
             :key="index"
             :class="selected.size === item ? 'active' : ''"
             class="pointer"
-            :for="'clothSize' + index"
+            :for="'product-size-' + index"
           >
             <input
-              :id="'clothSize' + index"
+              :id="'product-size-' + index"
               v-model="selected.size"
-              class="d-none"
+              name="product-size"
+              :aria-label="item"
+              class="visually-hidden"
               type="radio"
               :value="item"
             />
@@ -98,7 +102,7 @@
       <!-- 數量 -->
       <div class="qty input-group bg-light border flex-nowrap rounded">
         <div>
-          <button class="qty-btn btn" type="button" :disabled="qty <= 1" @mousedown="qty--">
+          <button class="qty-btn btn" type="button" :disabled="qty <= 1" @click="qty--">
             <i class="material-icons md-dark">remove</i>
           </button>
         </div>
@@ -106,13 +110,15 @@
           v-model.number="qty"
           class="form-control border-0 text-center bg-light shadow-none"
           type="text"
+          inputmode="numeric"
+          aria-label="商品數量"
           :max="max"
           :min="min"
-          @blur="makeUp(index)"
+          @blur="makeUp"
           @input="handleInput"
         />
         <div>
-          <button class="qty-btn btn" type="button" :disabled="qty >= 99" @mousedown="qty++">
+          <button class="qty-btn btn" type="button" :disabled="qty >= 99" @click="qty++">
             <i class="material-icons md-dark">add</i>
           </button>
         </div>
@@ -162,6 +168,7 @@
 </template>
 
 <script>
+import quantity from '@/methods/quantity'
 import ProductFormModal from '@/components/common/ProductFormModal.vue'
 
 const sotrageMethods = {
@@ -188,19 +195,21 @@ export default {
         size: ''
       },
       qty: 1,
-      min: 0,
+      min: 1,
       max: 99,
       modal: false,
       myFavorite: sotrageMethods.get() || []
     }
   },
   watch: {
+    'product.id': function resetProductSelection() {
+      this.selected.color = ''
+      this.selected.size = ''
+      this.qty = 1
+    },
     qty() {
-      if (this.qty > this.max) {
-        this.qty = this.max
-      } else if (this.qty < this.min) {
-        this.qty = this.min
-      }
+      const next = quantity(this.qty, true)
+      if (this.qty !== next) this.qty = next
     }
   },
   methods: {
@@ -208,12 +217,10 @@ export default {
       this.emitter.emit('emitUpDateMyFavorite', id)
     },
     handleInput(e) {
-      this.qty = e.target.value.replace(/[^\d]/g, '')
+      this.qty = quantity(e.target.value, true)
     },
     makeUp() {
-      if (this.qty === '') {
-        this.qty = 1
-      }
+      this.qty = quantity(this.qty)
     },
     getQty(qty) {
       this.qty = qty
@@ -226,7 +233,7 @@ export default {
       this.emitter.emit('emitToCart', {
         id: this.product.id,
         selected: this.selected,
-        qty: this.qty
+        qty: quantity(this.qty)
       })
     }
   },
@@ -472,5 +479,10 @@ section {
       box-shadow: none;
     }
   }
+}
+
+input[type='radio']:focus-visible + .selected-box {
+  outline: 2px solid $color-main;
+  outline-offset: 2px;
 }
 </style>

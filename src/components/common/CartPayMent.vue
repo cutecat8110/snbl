@@ -118,7 +118,7 @@
             <div class="oder-text">
               <span class="text-name">合計</span>
               <span class="text-oder">
-                NT$&nbsp;{{ $filters.currency(cart.final_total + conveyanceCost) }}
+                NT$&nbsp;{{ $filters.currency(orderTotal) }}
               </span>
             </div>
           </div>
@@ -130,6 +130,9 @@
 </template>
 
 <script>
+import request from '@/methods/request'
+import { loadPayment, savePayment, shippingCost } from '@/methods/checkoutPayment'
+
 export default {
   inject: ['emitter'],
   props: ['qty'],
@@ -459,17 +462,18 @@ export default {
           ]
         }
       ],
-      payment: {
-        country: 'TW',
-        conveyance: '7-11 超商取貨',
-        method: '超商取貨付款 (COD)'
-      },
+      payment: loadPayment(),
       couponCode: '',
-      couponToogle: false,
-      conveyanceCost: ''
+      couponToogle: false
     }
   },
   computed: {
+    conveyanceCost() {
+      return shippingCost(this.payment, this.cart.final_total)
+    },
+    orderTotal() {
+      return Number(this.cart.final_total || 0) + (typeof this.conveyanceCost === 'number' ? this.conveyanceCost : 0)
+    },
     showConveyance() {
       const conveyance = JSON.parse(JSON.stringify(this.conveyance))
       if (this.payment.country !== 'TW') {
@@ -503,30 +507,15 @@ export default {
     }
   },
   watch: {
+    payment: {
+      deep: true,
+      handler(value) { savePayment(value) }
+    },
     showConveyance() {
       this.payment.conveyance = this.showConveyance[0].value
     },
     showMethod() {
       this.payment.method = this.showMethod[0].value
-    },
-    payment: {
-      handler() {
-        this.conveyanceCost = 0
-        if (this.payment.conveyance === '新竹物流') {
-          if (this.cart.final_total < 2000) {
-            this.conveyanceCost += 70
-          }
-          if (this.payment.method === '貨到付款(COD)(+NT$30)') {
-            this.conveyanceCost += 30
-          }
-        } else if (this.payment.conveyance === '國際配送') {
-          this.conveyanceCost = '未包含'
-        } else {
-          this.conveyanceCost = 0
-        }
-      },
-      deep: true,
-      immediate: true
     }
   },
   methods: {
@@ -538,7 +527,7 @@ export default {
       if (this.couponCode === '' && this.cart.total - this.cart.final_total !== 0) {
         couponCode.code = 'reset'
       }
-      this.$http.post(url, { data: couponCode }).then((res) => {
+      return request(this, () => this.$http.post(url, { data: couponCode }), (res) => {
         if (res.data.success) {
           this.$swal({
             icon: 'success',
@@ -554,7 +543,7 @@ export default {
           })
         }
         this.emitter.emit('emitToCart')
-      })
+      }, true)
     },
     clearFocus(ref) {
       this.$refs[ref].focus()

@@ -5,7 +5,8 @@
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve": "vue-cli-service serve"
+    "serve": "vue-cli-service serve",
+    "test": "node tests/qa.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^26.0.0",
@@ -38,11 +39,14 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/server-renderer": "3.2.7",
+    "@vue/test-utils": "2.4.6",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0",
+    "jsdom": "22.1.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2"
   }

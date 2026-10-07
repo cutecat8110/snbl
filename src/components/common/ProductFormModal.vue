@@ -21,7 +21,7 @@
           <div class="container">
             <div class="product">
               <div class="product-text">
-                <h1>{{ product.title }}</h1>
+                <h1 id="ProductFormModalLabel">{{ product.title }}</h1>
                 <!-- 價格 -->
                 <div class="price">
                   <span class="me-2">NT$&nbsp;{{ $filters.currency(product.price) }}</span>
@@ -38,12 +38,14 @@
                       :key="index"
                       :class="selected.color === item.name ? 'active' : ''"
                       class="pointer"
-                      :for="'colors' + index"
+                      :for="'modal-color-' + index"
                     >
                       <input
-                        :id="'colors' + index"
+                        :id="'modal-color-' + index"
                         v-model="selected.color"
-                        class="d-none"
+              name="modal-color"
+              :aria-label="item.name"
+                        class="visually-hidden"
                         type="radio"
                         :value="item.name"
                       />
@@ -58,19 +60,21 @@
                 </div>
                 <!-- 尺寸 -->
                 <div class="size-container">
-                  <div class="form-label">SIZE : &nbsp;{{ selected.size.name }}</div>
+                  <div class="form-label">SIZE : &nbsp;{{ selected.size }}</div>
                   <div class="size">
                     <label
                       v-for="(item, index) in product.clothSize"
                       :key="index"
                       :class="selected.size === item ? 'active' : ''"
                       class="pointer"
-                      :for="'clothSize' + index"
+                      :for="'modal-size-' + index"
                     >
                       <input
-                        :id="'clothSize' + index"
+                        :id="'modal-size-' + index"
                         v-model="selected.size"
-                        class="d-none"
+              name="modal-size"
+              :aria-label="item"
+                        class="visually-hidden"
                         type="radio"
                         :value="item"
                       />
@@ -91,8 +95,8 @@
                   <button
                     class="qty-btn btn"
                     type="button"
-                    :disabled="qty === 1"
-                    @mousedown="qty--"
+                    :disabled="qty <= 1"
+                    @click="qty--"
                   >
                     <i class="material-icons md-dark">remove</i>
                   </button>
@@ -101,6 +105,8 @@
                   v-model.number="qty"
                   class="form-control border-0 text-center bg-light shadow-none"
                   type="text"
+          inputmode="numeric"
+          aria-label="商品數量"
                   :max="max"
                   :min="min"
                   @blur="makeUp"
@@ -110,8 +116,8 @@
                   <button
                     class="qty-btn btn"
                     type="button"
-                    :disabled="qty === 99"
-                    @mousedown="qty++"
+                    :disabled="qty >= 99"
+                    @click="qty++"
                   >
                     <i class="material-icons md-dark">add</i>
                   </button>
@@ -135,6 +141,7 @@
 </template>
 
 <script>
+import quantity from '@/methods/quantity'
 import modalMixin from '@/mixins/modalMixin'
 
 export default {
@@ -147,7 +154,7 @@ export default {
         size: ''
       },
       qty: 1,
-      min: 0,
+      min: 1,
       max: 99
     }
   },
@@ -156,22 +163,17 @@ export default {
       this.qty = this.tempQty
     },
     qty() {
-      if (this.qty > this.max) {
-        this.qty = this.max
-      } else if (this.qty < this.min) {
-        this.qty = this.min
-      }
+      const next = quantity(this.qty, true)
+      if (this.qty !== next) this.qty = next
       this.$emit('getQty', this.qty)
     }
   },
   methods: {
     handleInput(e) {
-      this.qty = e.target.value.replace(/[^\d]/g, '')
+      this.qty = quantity(e.target.value, true)
     },
     makeUp() {
-      if (this.qty === '') {
-        this.qty = 1
-      }
+      this.qty = quantity(this.qty)
     }
   },
   mounted() {
@@ -342,5 +344,10 @@ export default {
 }
 .modal.show .modal-dialog {
   transform: none;
+}
+
+input[type='radio']:focus-visible + .selected-box {
+  outline: 2px solid $color-main;
+  outline-offset: 2px;
 }
 </style>

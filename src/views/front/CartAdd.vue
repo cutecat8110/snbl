@@ -10,7 +10,7 @@
         role="button"
         @click="orderInfor = !orderInfor"
       >
-        <div>合計&nbsp;NT$&nbsp;{{ $filters.currency(cart.final_total + conveyanceCost) }}</div>
+        <div>合計&nbsp;NT$&nbsp;{{ $filters.currency(orderTotal) }}</div>
         <div>
           購物清單 ({{ qty }})
           <i v-if="orderInfor" class="fas fa-caret-up"></i>
@@ -26,7 +26,7 @@
             <div>單價</div>
             <div>小計</div>
           </div>
-          <div v-for="item in showCart" :key="item.id" class="list-card">
+          <div v-for="item in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="list-card">
             <!-- 商品資訊 -->
             <img class="img-fluid rounded" :src="item.product.imageUrl" />
             <div class="product-infor">
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="mobile">
-          <div v-for="item in showCart" :key="item.id" class="list-card">
+          <div v-for="item in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="list-card">
             <!-- 商品圖 -->
             <div class="img-box">
               <img class="img-fluid rounded" :src="item.product.imageUrl" />
@@ -107,7 +107,7 @@
                 <div class="oder-text">
                   <span class="text-name">合計</span>
                   <span class="text-oder">
-                    NT$&nbsp;{{ $filters.currency(cart.final_total + conveyanceCost) }}
+                    NT$&nbsp;{{ $filters.currency(orderTotal) }}
                   </span>
                 </div>
               </div>
@@ -651,6 +651,8 @@
 </template>
 
 <script>
+import { loadPayment, shippingCost } from '@/methods/checkoutPayment'
+
 export default {
   inject: ['emitter'],
   data() {
@@ -930,11 +932,7 @@ export default {
           address: ''
         },
         message: {
-          payment: {
-            country: 'TW',
-            conveyance: '7-11 超商取貨',
-            method: '超商取貨付款 (COD)'
-          },
+          payment: loadPayment(),
           message: '',
           recipient: {
             name: '',
@@ -947,11 +945,16 @@ export default {
       cart: {},
       showCart: [],
       tempShowCart: [],
-      conveyanceCost: 0,
       timePeriod: ['09:00~13:00', '13:00~17:00', '17:00-20:00', '不指定']
     }
   },
   computed: {
+    conveyanceCost() {
+      return shippingCost(this.form.message.payment, this.cart.final_total)
+    },
+    orderTotal() {
+      return Number(this.cart.final_total || 0) + (typeof this.conveyanceCost === 'number' ? this.conveyanceCost : 0)
+    },
     showCountry() {
       return this.country.filter((item) => item.value.match(this.form.message.payment.country))[0]
         .name
@@ -1002,7 +1005,6 @@ export default {
   created() {
     this.emitter.on('emitToAdd', (item) => {
       this.form.message.payment = JSON.parse(JSON.stringify(item[0]))
-      this.conveyanceCost = JSON.parse(JSON.stringify(item[1]))
     })
     this.emitter.emit('upDatePayment')
     this.emitter.on('upDateCart', (item) => {
@@ -1013,6 +1015,7 @@ export default {
     this.emitter.on('upDateQty', (qty) => {
       this.qty = qty
     })
+    this.emitter.emit('emitToCart')
   }
 }
 </script>

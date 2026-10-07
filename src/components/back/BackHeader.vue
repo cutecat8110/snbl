@@ -31,15 +31,25 @@
 </template>
 
 <script>
+import { clearSession } from '@/methods/authSession'
+
 export default {
+  data() {
+    return { loggingOut: false }
+  },
   methods: {
-    logout() {
-      const api = `${process.env.VUE_APP_API}logout`
-      this.$http.post(api).then((res) => {
-        if (res.data.success) {
-          this.$router.push('/')
-        }
-      })
+    async logout() {
+      if (this.loggingOut) return
+      this.loggingOut = true
+      try {
+        await this.$http.post(`${process.env.VUE_APP_API}logout`, {}, { timeout: 15000 })
+      } catch (error) {
+        this.$swal({ icon: 'warning', title: '已清除本機登入', text: '暫時無法連線到登出服務，請稍後再試。' })
+      } finally {
+        clearSession(this.$http)
+        this.loggingOut = false
+        this.$router.replace('/')
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content border-0 rounded-0">
         <div class="modal-header border-0">
-          <h5 class="modal-title">購物車</h5>
+          <h5 id="CartModalLabel" class="modal-title">購物車</h5>
           <button
             class="btn-close"
             type="button"
@@ -21,7 +21,7 @@
         <template v-if="cart.carts">
           <div class="modal-body">
             <template v-if="cart.carts.length != 0">
-              <div v-for="item in showCart" :key="item.id" class="cart-card">
+              <div v-for="item in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="cart-card">
                 <router-link
                   class="text-reset"
                   :to="{ path: `/product/${item.product_id}` }"

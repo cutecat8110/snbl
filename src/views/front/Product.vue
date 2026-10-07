@@ -42,15 +42,13 @@
 </template>
 
 <script>
+import request from '@/methods/request'
+import sampleProducts from '@/methods/sampleProducts'
 import AsideNavbar from '@/components/common/AsideNavbar.vue'
 import MoreSwiper from '@/components/common/MoreSwiper.vue'
 import ProductForm from '@/components/common/ProductForm.vue'
 import ProductSwiper from '@/components/common/ProductSwiper.vue'
 import SubNavbar from '@/components/common/SubNavbar.vue'
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max)
-}
 
 export default {
   inject: ['emitter'],
@@ -75,24 +73,22 @@ export default {
   },
   methods: {
     getProduct() {
-      this.emitter.emit('isLoading', true)
       const { id } = this.$route.params
+      if (!id || !this.$route.path.startsWith('/product/')) return undefined
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
+        if (this.$route.params.id !== id) return undefined
         this.product = res.data.product
-        this.emitter.emit('isLoading', false)
-        this.getAll()
+        return this.getAll()
       })
     },
     subNav(item) {
       window.scrollTo(0, this.$refs[item].offsetTop - 56)
     },
     getAll() {
-      this.emitter.emit('isLoading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.productsAll = res.data.products
-        this.emitter.emit('isLoading', false)
         this.getLookAlick()
       })
     },
@@ -101,15 +97,7 @@ export default {
         (product) => product.category === this.product.category
       )
 
-      const arrSet = new Set([])
-      for (let index = 0; arrSet.size < filterProducts.length; index + 1) {
-        const num = getRandomInt(filterProducts.length)
-        arrSet.add(num)
-      }
-      this.randomProducts = []
-      arrSet.forEach((i) => {
-        this.randomProducts.push(filterProducts[i])
-      })
+      this.randomProducts = sampleProducts(filterProducts)
     }
   },
   created() {

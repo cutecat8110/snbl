@@ -25,11 +25,9 @@
 </template>
 
 <script>
+import request from '@/methods/request'
+import sampleProducts from '@/methods/sampleProducts'
 import HomeSwiper from '@/components/front/HomeSwiper.vue'
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max)
-}
 
 export default {
   inject: ['emitter'],
@@ -40,36 +38,25 @@ export default {
     return {
       image: [],
       image2: [],
-      productsAll: {},
+      productsAll: [],
       randomProducts: []
     }
   },
   methods: {
     render() {
-      this.emitter.emit('isLoading', true)
+      this.getAll()
       const id = '-MntdJ6iOSdc64gJi26G'
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
 
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.image = res.data.article.articleImagesUrl
       })
-
-      this.getAll()
     },
     getAll() {
-      this.emitter.emit('isLoading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.productsAll = res.data.products
-        const arrSet = new Set([])
-        for (let index = 0; arrSet.size < 30; index + 1) {
-          const num = getRandomInt(this.productsAll.length)
-          arrSet.add(num)
-        }
-        arrSet.forEach((i) => {
-          this.randomProducts.push(this.productsAll[i])
-        })
-        this.emitter.emit('isLoading', false)
+        this.randomProducts = sampleProducts(this.productsAll, 30)
       })
     }
   },

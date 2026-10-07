@@ -1,16 +1,16 @@
 <template>
   <div
-    id="CartModal"
+    id="WishModal"
     ref="modal"
     class="modal fade"
     aria-hidden="true"
-    aria-labelledby="CartModalLabel"
+    aria-labelledby="WishModalLabel"
     tabindex="-1"
   >
     <div class="modal-dialog modal-sm">
       <div class="modal-content border-0 rounded-0">
         <div class="modal-header border-0">
-          <h5 class="modal-title">願望清單</h5>
+          <h5 id="WishModalLabel" class="modal-title">願望清單</h5>
           <button
             class="btn-close"
             type="button"
@@ -97,7 +97,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/stylesheets/custom/_variable';
 
-#CartModal {
+#WishModal {
   .modal-dialog {
     height: 100%;
     width: 100%;

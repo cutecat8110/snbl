@@ -2,11 +2,12 @@
   <div id="dashboard">
     <BackHeader />
     <ToastMessages />
-    <router-view />
+    <router-view v-if="authenticated" />
   </div>
 </template>
 
 <script>
+import { clearSession } from '@/methods/authSession'
 import BackHeader from '@/components/back/BackHeader.vue'
 import ToastMessages from '@/components/back/ToastMessages.vue'
 import emitter from '@/methods/eventBus'
@@ -20,21 +21,25 @@ export default {
       httpMessageState
     }
   },
-  created() {
+  data() {
+    return { authenticated: false }
+  },
+  async created() {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    this.$http.defaults.headers.common.Authorization = `${token}`
-    const api = `${process.env.VUE_APP_API}api/user/check`
-    this.$http.post(api).then((res) => {
-      if (!res.data.success) {
-        this.$swal({
-          icon: 'warning',
-          title: '登入過期',
-          text: '請重新登入'
-        }).then(() => {
-          this.$router.push('/login')
-        })
-      }
-    })
+    this.$http.defaults.headers.common.Authorization = token
+    if (!token) {
+      this.$router.replace('/login')
+      return
+    }
+    try {
+      const res = await this.$http.post(`${process.env.VUE_APP_API}api/user/check`, {}, { timeout: 15000 })
+      if (!res.data.success) throw new Error('登入過期')
+      this.authenticated = true
+    } catch (error) {
+      clearSession(this.$http)
+      await this.$swal({ icon: 'warning', title: '無法驗證登入', text: '請重新登入' })
+      this.$router.replace('/login')
+    }
   }
 }
 </script>

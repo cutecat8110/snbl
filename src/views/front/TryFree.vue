@@ -4,6 +4,8 @@
   </div>
 </template>
 <script>
+import request from '@/methods/request'
+
 export default {
   inject: ['emitter'],
 
@@ -14,13 +16,11 @@ export default {
   },
   methods: {
     render() {
-      this.emitter.emit('isLoading', true)
       const id = '-MoCAPot4RFi3FXRZQCy'
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
 
-      this.$http.get(url).then((res) => {
+      return request(this, () => this.$http.get(url), (res) => {
         this.image = res.data.article.articleImagesUrl
-        this.emitter.emit('isLoading', false)
       })
     }
   },
