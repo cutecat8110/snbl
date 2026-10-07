@@ -1,0 +1,243 @@
+{
+  "url": "https://cutecat8110.github.io/snbl/",
+  "index_matches_build": true,
+  "index_sha256": "f0944f0a8857b2fc81aba23e1d6e0b72d382fdffbed3d9339a7c2510655982ea",
+  "assets": [
+    {
+      "path": "/snbl/css/app.657fe2f9.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-00c821a2.458f9030.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-05eb8daa.ed5ea6a9.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-0afbbaff.415ee705.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-1040581c.03176289.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-22c43c12.ed5ea752.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-2370b01f.4a833551.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-2b28dc4f.11637109.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-39b0e5a3.be5e33f5.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-3adba605.4cf00f66.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-3f29218a.d3819f4a.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-41a47850.8fe92912.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-46d8c66a.3b642654.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-50bf8165.edcfec79.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-57a57c76.e3824682.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-5cc7c143.b149e147.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-610acc82.dc8786c1.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-6fa34e0c.a7d52ceb.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-71f80061.cadf80bc.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-9500106e.2fc51dba.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-d0233a66.5703e189.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-d6dccfbc.46c7d145.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-e093a3e8.dc9452fd.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-ea61b57e.796643a0.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/css/chunk-vendors.f1fd7bb4.css",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/app.e882246a.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-00c821a2.3ca087d8.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-05eb8daa.c9e9ef2d.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-0afbbaff.32260219.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-1040581c.a710a5ee.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-22c43c12.faae412b.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-2370b01f.c3f5a505.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-2b28dc4f.e76b67cb.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-2d0c8d68.fa53c568.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-2d21eb0a.1b9a81fa.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-39b0e5a3.7c05bb4d.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-3adba605.f73e1008.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-3bb87ee3.9546c195.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-3f29218a.1192feb4.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-41a47850.918e6eb8.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-46d8c66a.c3c4a590.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-50bf8165.a90ee495.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-57a57c76.04461bf1.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-5cc7c143.18bf1159.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-610acc82.377d16a9.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-6fa34e0c.a3198a09.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-71f80061.e3a7ac46.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-7bcc0588.7cdfe281.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-9500106e.ebc28e40.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-d0233a66.d41761e0.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-d6dccfbc.bfc0d84b.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-e093a3e8.0b94c4bb.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-ea61b57e.42c2a19f.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/js/chunk-vendors.49ba0a1f.js",
+      "matches_build": true
+    },
+    {
+      "path": "/snbl/snbl.ico",
+      "matches_build": true
+    }
+  ],
+  "date": "2026-10-08",
+  "branch": "portfolio/qa",
+  "folder": "/docs",
+  "deployed_commit": "fcf092d2417f9be249b9187cb3db1c8d913ef92e",
+  "workflow_url": "https://github.com/cutecat8110/snbl/actions/runs/37702310760",
+  "workflow_result": "success",
+  "browser": "Chrome desktop; mobile viewport simulation, not a real device",
+  "smoke_checks": [
+    "home and catalogue content loaded",
+    "product images loaded; 390x844 document has no horizontal overflow",
+    "mobile navigation collapsed after category selection",
+    "category hash route reload restored content",
+    "admin link opened login UI in a new tab"
+  ],
+  "console_errors_or_warnings": 0,
+  "writes_to_business_api": false
+}

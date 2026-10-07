@@ -190,4 +190,6 @@
 - 使用者指定將線上版本切換至兩輪 QA 完成的 `portfolio/qa`。以上「不切換 Pages」敘述為前兩輪驗證當時的狀態。
 - 從 `b5ef56f` 的 QA 程式以 Node.js 16.20.2 執行 `npm run build`，重新產生 `docs/`；建置成功，沿用原有資產體積警告。
 - 發布來源：`portfolio/qa` → `/docs`；沿用 https://cutecat8110.github.io/snbl/ 與原六角學院 API。沒有更動原始設計、功能邏輯或資料。
-- 更新後仍須確認 GitHub Pages 部署成功、線上檔案與本次產物相符，並抽查首頁、商品頁、登入及手機導覽。
+- [Pages 部署 #151](https://github.com/cutecat8110/snbl/actions/runs/37702310760) 成功，部署程式提交為 `fcf092d`。線上首頁及其 55 個引用資源逐一比對皆與本機建置完全相符，紀錄見 [pages-deployment-results.json](qa/pages-deployment-results.json)。
+- Chrome 線上抽查：首頁、商品列表與商品詳細頁載入成功；390 × 844px 模擬商品圖片正常、無整頁橫向溢出，手機選單選分類後自動收合，帶分類 hash 的網址重新整理後仍顯示正確商品。管理後台連結另開登入頁，帳號／密碼輸入及登入按鈕正常顯示。
+- 本次線上抽查未捕捉到 console error / warn；未再次登入或送出交易／管理資料，完整登入及操作測試沿用上述兩輪 QA 紀錄。
