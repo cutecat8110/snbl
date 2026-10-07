@@ -184,3 +184,10 @@
 - 已檢查一般 8080 登入 bundle 指向 `https://vue3-course-api.hexschool.io/`，隔離 8081 指向本機 8787；正式 build 仍連真實服務。
 - 第一組帳密直接呼叫真實登入端點回傳 `success: false, message: 登入失敗`；更正帳密後回傳成功。因此不能把當時的結果歸因於 API 全站故障。
 - API 路徑與參數符合[六角官方登入規格](https://github.com/hexschool/vue3-course-api-wiki/wiki/%E7%99%BB%E5%85%A5%E5%8F%8A%E9%A9%97%E8%AD%89)。此紀錄不保存帳號、密碼或 token。
+
+## GitHub Pages 發布｜2026-10-08
+
+- 使用者指定將線上版本切換至兩輪 QA 完成的 `portfolio/qa`。以上「不切換 Pages」敘述為前兩輪驗證當時的狀態。
+- 從 `b5ef56f` 的 QA 程式以 Node.js 16.20.2 執行 `npm run build`，重新產生 `docs/`；建置成功，沿用原有資產體積警告。
+- 發布來源：`portfolio/qa` → `/docs`；沿用 https://cutecat8110.github.io/snbl/ 與原六角學院 API。沒有更動原始設計、功能邏輯或資料。
+- 更新後仍須確認 GitHub Pages 部署成功、線上檔案與本次產物相符，並抽查首頁、商品頁、登入及手機導覽。

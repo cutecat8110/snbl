@@ -59,7 +59,7 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 隔離環境只有兩件公開商品的測試樣本，使用 `QA10` 可測九折，`reset` 取消折扣。它不會轉送請求到六角 API，也不代表真實後端寫入、登入或資料庫測試已通過。表單僅填虛構資料。一般 `npm run serve` 與正式建置仍連原 API。
 
-部署沿用 `vue.config.js`：建置輸出 `docs/`，資源基底 `/snbl/`，適合現有 GitHub Pages。上線前須由 QA 分支重新建置並提交 `docs/`，再設定發布來源；本輪只推送程式與 QA 紀錄，不改現有 Pages 設定。若只驗證建置，可用 `npm run build -- --dest /tmp/snbl-preview/snbl`，再 `python3 -m http.server 8082 --bind 127.0.0.1 --directory /tmp/snbl-preview`，開啟 `http://127.0.0.1:8082/snbl/`。
+部署沿用 `vue.config.js`：建置輸出 `docs/`，資源基底 `/snbl/`，適合現有 GitHub Pages。發布來源使用 `portfolio/qa` 分支的 `/docs`；每次更新須先在此分支執行 `npm run build`，再將產物與程式一併提交及推送。網址維持 https://cutecat8110.github.io/snbl/。若只驗證建置，可用 `npm run build -- --dest /tmp/snbl-preview/snbl`，再 `python3 -m http.server 8082 --bind 127.0.0.1 --directory /tmp/snbl-preview`，開啟 `http://127.0.0.1:8082/snbl/`。
 
 ## 圖片載入維護（第二輪 QA）
 
@@ -69,7 +69,7 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 `qa/image-profile.html` 是本機量測工具，不放進 `public/`，不隨站台部署。把它複製到本機 production 預覽根目錄，與 `/snbl/` 同源開啟，等待 API 完成後量測 12 秒內、未捲動時的圖片資源請求。請用同一瀏覽器／尺寸比較；跨來源圖片無法取得可靠 transferSize，因此紀錄只比較請求數，不宣稱下載 MB 或載入時間的固定改善比例。
 
-第二輪結果見 [QA_CHANGELOG.md](QA_CHANGELOG.md)、[圖片量測](qa/image-loading-results.json)。圖片仍由原儲存服務供應；原站的 API 與 GitHub Pages 發布來源不變。
+第二輪結果見 [QA_CHANGELOG.md](QA_CHANGELOG.md)、[圖片量測](qa/image-loading-results.json)。圖片仍由原儲存服務供應；原站 API 不變。2026-10-08 發布包含兩輪 QA 修正的版本，Pages 改用 `portfolio/qa` 的 `/docs`。
 
 ## 🔨 核心技術
 
