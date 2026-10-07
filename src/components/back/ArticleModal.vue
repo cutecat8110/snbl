@@ -139,7 +139,7 @@
                     <div
                       class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                     >
-                      <img class="img-fluid" :src="tempArticle.articleImagesUrl[key]" alt="" />
+                      <img class="img-fluid" v-bind="$imageAttributes(tempArticle.articleImagesUrl[key])" alt="" />
                     </div>
                   </div>
                   <label

@@ -11,27 +11,27 @@
           </h1>
           <SubNavbar :product="product"></SubNavbar>
         </div>
-        <ProductSwiper :tempProduct="product"></ProductSwiper>
-        <img class="img-fluid" :src="product.modelImageUrl" />
+        <ProductSwiper :key="product.id" :tempProduct="product"></ProductSwiper>
+        <img class="img-fluid" v-if="product.modelImageUrl" v-bind="$imageAttributes(product.modelImageUrl)" />
         <div ref="modelImagesUrl"></div>
         <img
           v-for="(item, index) in product.modelImagesUrl"
           :key="index"
           class="img-fluid"
-          :src="item"
+          v-bind="$imageAttributes(item)"
         />
         <div ref="detalImagesUrl"></div>
         <img
           v-for="(item, index) in product.detalImagesUrl"
           :key="index"
           class="img-fluid"
-          :src="item"
+          v-bind="$imageAttributes(item)"
         />
-        <img class="img-fluid" :src="product.tabricImageUrl" />
-        <img ref="infolImageUrl" class="img-fluid" :src="product.infolImageUrl" />
-        <img class="img-fluid" :src="product.sizeImageUrl" />
-        <img class="img-fluid" :src="product.modelInfoImageUrl" />
-        <img class="img-fluid" :src="product.tryOnImageUrl" />
+        <img class="img-fluid" v-if="product.tabricImageUrl" v-bind="$imageAttributes(product.tabricImageUrl)" />
+        <img ref="infolImageUrl" class="img-fluid" v-if="product.infolImageUrl" v-bind="$imageAttributes(product.infolImageUrl)" />
+        <img class="img-fluid" v-if="product.sizeImageUrl" v-bind="$imageAttributes(product.sizeImageUrl)" />
+        <img class="img-fluid" v-if="product.modelInfoImageUrl" v-bind="$imageAttributes(product.modelInfoImageUrl)" />
+        <img class="img-fluid" v-if="product.tryOnImageUrl" v-bind="$imageAttributes(product.tryOnImageUrl)" />
         <MoreSwiper :tempProduct="randomProducts"></MoreSwiper>
       </div>
       <div class="product-form">
@@ -43,7 +43,9 @@
 
 <script>
 import request from '@/methods/request'
+import readCatalogue from '@/methods/catalogue'
 import sampleProducts from '@/methods/sampleProducts'
+import { imageSources } from '@/methods/images'
 import AsideNavbar from '@/components/common/AsideNavbar.vue'
 import MoreSwiper from '@/components/common/MoreSwiper.vue'
 import ProductForm from '@/components/common/ProductForm.vue'
@@ -76,18 +78,20 @@ export default {
       const { id } = this.$route.params
       if (!id || !this.$route.path.startsWith('/product/')) return undefined
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
         if (this.$route.params.id !== id) return undefined
-        this.product = res.data.product
+        this.product = { ...res.data.product,
+          modelImagesUrl: imageSources(res.data.product.modelImagesUrl),
+          detalImagesUrl: imageSources(res.data.product.detalImagesUrl) }
         return this.getAll()
       })
     },
     subNav(item) {
-      window.scrollTo(0, this.$refs[item].offsetTop - 56)
+      const target = this.$refs[item]
+      if (target) window.scrollTo(0, target.getBoundingClientRect().top + window.scrollY - 56)
     },
     getAll() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => readCatalogue(this.$http), (res) => {
         this.productsAll = res.data.products
         this.getLookAlick()
       })

@@ -12,7 +12,7 @@
         </div>
         <div v-for="(item, index) in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="list-card">
           <!-- 商品資訊 -->
-          <img class="img-fluid rounded" :src="item.product.imageUrl" />
+          <img class="img-fluid rounded" v-bind="$imageAttributes(item.product.imageUrl)" />
           <div class="product-infor">
             <div class="title">{{ item.product.title }}</div>
             <div class="color"><span> COLOR : &nbsp;</span>{{ item.selected[0].color }}</div>
@@ -76,7 +76,7 @@
         <div v-for="(item, index) in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="list-card">
           <!-- 商品圖 -->
           <div class="img-box">
-            <img class="img-fluid rounded" :src="item.product.imageUrl" />
+            <img class="img-fluid rounded" v-bind="$imageAttributes(item.product.imageUrl)" />
           </div>
 
           <div class="product-infor">

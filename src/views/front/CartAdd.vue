@@ -8,7 +8,6 @@
         aria-expanded="false"
         data-bs-toggle="collapse"
         role="button"
-        @click="orderInfor = !orderInfor"
       >
         <div>合計&nbsp;NT$&nbsp;{{ $filters.currency(orderTotal) }}</div>
         <div>
@@ -17,7 +16,7 @@
           <i v-if="!orderInfor" class="fas fa-caret-down"></i>
         </div>
       </a>
-      <div id="order-information" class="collapse">
+      <div id="order-information" ref="orderInformation" class="collapse">
         <div class="web">
           <div class="list-head">
             <div>商品</div>
@@ -28,7 +27,7 @@
           </div>
           <div v-for="item in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="list-card">
             <!-- 商品資訊 -->
-            <img class="img-fluid rounded" :src="item.product.imageUrl" />
+            <img class="img-fluid rounded" v-bind="$imageAttributes(item.product.imageUrl)" />
             <div class="product-infor">
               <div class="title">{{ item.product.title }}</div>
               <div class="color"><span> COLOR : &nbsp;</span>{{ item.selected[0].color }}</div>
@@ -52,7 +51,7 @@
           <div v-for="item in showCart" :key="`${item.id}-${item.selected[0].color}-${item.selected[0].size}`" class="list-card">
             <!-- 商品圖 -->
             <div class="img-box">
-              <img class="img-fluid rounded" :src="item.product.imageUrl" />
+              <img class="img-fluid rounded" v-bind="$imageAttributes(item.product.imageUrl)" />
             </div>
             <!-- 商品資訊 -->
             <div class="product-infor">
@@ -121,7 +120,6 @@
           aria-expanded="false"
           data-bs-toggle="collapse"
           role="button"
-          @click="orderInfor = !orderInfor"
         >
           <i v-if="orderInfor" class="fas fa-caret-up"></i>
           <i v-if="!orderInfor" class="fas fa-caret-down"></i>
@@ -978,6 +976,9 @@ export default {
     }
   },
   methods: {
+    syncOrderInformation(event) {
+      this.orderInfor = event.type === 'show.bs.collapse'
+    },
     createOrder() {
       this.emitter.emit('emitCreateOrder', this.form)
     },
@@ -1001,6 +1002,14 @@ export default {
   },
   activated() {
     this.emitter.emit('upDatePayment')
+  },
+  mounted() {
+    this.$refs.orderInformation.addEventListener('show.bs.collapse', this.syncOrderInformation)
+    this.$refs.orderInformation.addEventListener('hide.bs.collapse', this.syncOrderInformation)
+  },
+  beforeUnmount() {
+    this.$refs.orderInformation.removeEventListener('show.bs.collapse', this.syncOrderInformation)
+    this.$refs.orderInformation.removeEventListener('hide.bs.collapse', this.syncOrderInformation)
   },
   created() {
     this.emitter.on('emitToAdd', (item) => {

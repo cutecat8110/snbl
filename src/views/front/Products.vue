@@ -17,6 +17,7 @@
 
 <script>
 import request from '@/methods/request'
+import readCatalogue from '@/methods/catalogue'
 import AsideNavbar from '@/components/common/AsideNavbar.vue'
 import ProductCard from '@/components/common/ProductCard.vue'
 import SubNavbar from '@/components/common/SubNavbar.vue'
@@ -43,7 +44,7 @@ export default {
     getData(page = 1) {
       this.currentPage = page
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
         if (this.currentPage !== page) return
         this.products = res.data.products
         this.pagination = res.data.pagination
@@ -53,8 +54,7 @@ export default {
       })
     },
     getAll() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => readCatalogue(this.$http), (res) => {
         this.productsAll = res.data.products
       })
     }

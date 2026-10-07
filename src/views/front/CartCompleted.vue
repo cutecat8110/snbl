@@ -20,7 +20,7 @@
                 <div class="order-card">
                   <div v-for="(item, index) in products" :key="index" class="order-list">
                     <div class="img-box">
-                      <img class="img-fluid rounded" :src="item.product.imageUrl" />
+                      <img class="img-fluid rounded" v-bind="$imageAttributes(item.product.imageUrl)" />
                     </div>
                     <div class="card-text">
                       <div class="product-title">{{ item.product.title }}</div>
@@ -139,6 +139,7 @@
 
 <script>
 import request from '@/methods/request'
+import readCatalogue from '@/methods/catalogue'
 import CartProcess from '@/components/common/CartProcess.vue'
 
 export default {
@@ -197,13 +198,12 @@ export default {
       this.orderId = id
 
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${id}`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
         this.order = res.data.order
       })
     },
     getAll() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => readCatalogue(this.$http), (res) => {
         this.productsAll = res.data.products
       })
     },

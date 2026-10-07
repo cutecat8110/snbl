@@ -69,6 +69,7 @@
 import { Collapse } from 'bootstrap'
 import quantity from '@/methods/quantity'
 import request from '@/methods/request'
+import readCatalogue from '@/methods/catalogue'
 import AsideCartModal from '@/components/common/AsideCartModal.vue'
 import AsideWishModal from '@/components/common/AsideWishModal.vue'
 
@@ -146,7 +147,7 @@ export default {
     },
     getCart() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
         const carts = res.data.data.carts.map((item) => {
           const variants = item.selected?.length ? item.selected : [{ color: '', size: '', qty: item.qty }]
           const selected = variants.map((variant) => ({ ...variant, qty: Math.max(1, Number(variant.qty) || 1) }))
@@ -167,8 +168,7 @@ export default {
       })
     },
     getAll() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => readCatalogue(this.$http), (res) => {
         this.productsAll = res.data.products
       })
     },

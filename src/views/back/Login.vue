@@ -35,12 +35,13 @@
         </form>
       </div>
     </div>
-    <div class="loginImage" :style="{ backgroundImage: 'url(' + loginImage + ')' }"></div>
+    <div class="loginImage" :style="loginImage ? { backgroundImage: 'url(' + loginImage + ')' } : undefined"></div>
   </div>
 </template>
 
 <script>
 import { saveSession } from '@/methods/authSession'
+import { imageSources } from '@/methods/images'
 
 export default {
   data() {
@@ -49,7 +50,7 @@ export default {
         username: '',
         password: ''
       },
-      loginImage: [],
+      loginImage: '',
       isLoading: false,
       fullPage: true
     }
@@ -60,10 +61,10 @@ export default {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
       try {
         const res = await this.$http.get(url, { timeout: 15000 })
-        if (res.data.article) this.loginImage = res.data.article.articleImagesUrl
+        if (res.data.article) this.loginImage = imageSources(res.data.article.articleImagesUrl)[0] || ''
       } catch (error) {
         // The decorative background must not prevent signing in.
-        this.loginImage = []
+        this.loginImage = ''
       }
     },
     async login() {

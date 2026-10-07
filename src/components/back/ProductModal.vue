@@ -288,7 +288,7 @@
                   <div
                     class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                   >
-                    <img class="img-fluid" :src="product.imageUrl" alt="" />
+                    <img class="img-fluid" v-bind="$imageAttributes(product.imageUrl)" alt="" />
                   </div>
                 </div>
                 <div class="form-label mt-2 text-center">
@@ -307,7 +307,7 @@
                     <div
                       class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                     >
-                      <img class="img-fluid" :src="product.imagesUrl[key]" alt="" />
+                      <img class="img-fluid" v-bind="$imageAttributes(product.imagesUrl[key])" alt="" />
                     </div>
                   </div>
 
@@ -392,7 +392,7 @@
                   <div
                     class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                   >
-                    <img class="img-fluid" :src="product.modelImageUrl" alt="" />
+                    <img class="img-fluid" v-bind="$imageAttributes(product.modelImageUrl)" alt="" />
                   </div>
                 </div>
                 <div class="form-label mt-2 text-center">
@@ -411,7 +411,7 @@
                     <div
                       class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                     >
-                      <img class="img-fluid" :src="product.modelImagesUrl[key]" alt="" />
+                      <img class="img-fluid" v-bind="$imageAttributes(product.modelImagesUrl[key])" alt="" />
                     </div>
                   </div>
                   <label
@@ -482,7 +482,7 @@
                     <div
                       class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                     >
-                      <img class="img-fluid" :src="product.detalImagesUrl[key]" alt="" />
+                      <img class="img-fluid" v-bind="$imageAttributes(product.detalImagesUrl[key])" alt="" />
                     </div>
                   </div>
                   <label
@@ -567,7 +567,7 @@
                   <div
                     class="w-100 h-100 overflow-hidden d-flex justify-content-center align-items-center mask"
                   >
-                    <img class="img-fluid" :src="product[item.ref]" alt="" />
+                    <img class="img-fluid" v-bind="$imageAttributes(product[item.ref])" alt="" />
                   </div>
                 </div>
                 <div class="form-label mt-2 text-center">

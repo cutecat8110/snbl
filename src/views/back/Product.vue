@@ -8,14 +8,14 @@
     </div>
     <main>
       <div class="product">
-        <ProductSwiper :tempProduct="product"></ProductSwiper>
-        <img class="img-fluid" :src="product.modelImageUrl" alt="形象封面.png" />
+        <ProductSwiper :key="product.id" :tempProduct="product"></ProductSwiper>
+        <img class="img-fluid" v-bind="$imageAttributes(product.modelImageUrl)" alt="形象封面.png" />
         <div ref="modelImagesUrl"></div>
         <img
           v-for="(item, index) in product.modelImagesUrl"
           :key="index"
           class="img-fluid"
-          :src="item"
+          v-bind="$imageAttributes(item)"
           :alt="'展示圖.png' + index"
         />
         <div ref="detalImagesUrl"></div>
@@ -23,14 +23,14 @@
           v-for="(item, index) in product.detalImagesUrl"
           :key="index"
           class="img-fluid"
-          :src="item"
+          v-bind="$imageAttributes(item)"
           :alt="'細節圖.png' + index"
         />
-        <img ref="infolImageUrl" class="img-fluid" :src="product.infolImageUrl" alt="款號.png" />
-        <img class="img-fluid" :src="product.sizeImageUrl" alt="尺碼.png" />
-        <img class="img-fluid" :src="product.modelInfoImageUrl" alt="模特.png" />
-        <img class="img-fluid" :src="product.tryOnImageUrl" alt="試穿.png" />
-        <img class="img-fluid" :src="product.tabricImageUrl" alt="面料.png" />
+        <img ref="infolImageUrl" class="img-fluid" v-bind="$imageAttributes(product.infolImageUrl)" alt="款號.png" />
+        <img class="img-fluid" v-bind="$imageAttributes(product.sizeImageUrl)" alt="尺碼.png" />
+        <img class="img-fluid" v-bind="$imageAttributes(product.modelInfoImageUrl)" alt="模特.png" />
+        <img class="img-fluid" v-bind="$imageAttributes(product.tryOnImageUrl)" alt="試穿.png" />
+        <img class="img-fluid" v-bind="$imageAttributes(product.tabricImageUrl)" alt="面料.png" />
       </div>
       <div class="position-relative">
         <div class="product-order position-fixed">

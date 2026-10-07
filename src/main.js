@@ -23,6 +23,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 
 // 自訂
 import { currency, date } from './methods/filters'
+import imageAttributes from './methods/images'
 // 原生
 import App from './App.vue'
 import router from './router'
@@ -39,6 +40,7 @@ configure({
 setLocale('zh_TW')
 
 const app = createApp(App)
+app.config.globalProperties.$imageAttributes = imageAttributes
 app.config.globalProperties.$filters = {
   date,
   currency

@@ -36,6 +36,7 @@ function execute(source, filename) {
 }
 function load(filename) {
   const file = path.extname(filename) ? filename : `${filename}.js`
+  if (file.endsWith('.json')) return JSON.parse(fs.readFileSync(file, 'utf8'))
   if (!cache.has(file)) cache.set(file, execute(fs.readFileSync(file, 'utf8'), file))
   return cache.get(file)
 }
@@ -50,7 +51,8 @@ const emitter = load(path.join(root, 'src/methods/eventBus')).default
 const globals = {
   provide: { emitter },
   mocks: { $route: { params: {}, path: '/' }, $router: { push: async () => {}, replace: async () => {} },
-    $swal: async () => ({}), $filters: { currency: (value) => String(value ?? '') } },
+    $swal: async () => ({}), $filters: { currency: (value) => String(value ?? '') },
+    $imageAttributes: load(path.join(root, 'src/methods/images')).default },
   stubs: { 'router-link': { template: '<a><slot /></a>' }, 'router-view': true, Loading: true }
 }
 const product = { id: 'p1', title: 'Test product', price: 100, origin_price: 100, colors: [{name: 'Red', colorChart: '#f00'}], clothSize: ['S', 'M'] }
@@ -264,6 +266,97 @@ test('successful login stores an expiring session and navigates to products',asy
   const vm=vmFor(component('views/back/Login.vue'),{$http:{post:async()=>{writes++;return{data:{success:true,token:'test-only',expired:Date.now()+60000}}}},$swal:async()=>{},$router:{push:x=>{destination=x}}})
   await Promise.all([vm.login(),vm.login()]);assert.equal(writes,1);assert.equal(destination,'/admin/products');assert.ok(document.cookie.includes('hexToken=test-only'))
   document.cookie='hexToken=; Max-Age=0; path=/'
+})
+test('lazy images keep exact dimensions, original URLs and handle empty/new images',()=>{
+  const images=load(path.join(root,'src/methods/images'))
+  const src='https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1632030871435.jpg'
+  const attrs=images.default(src)
+  assert.equal(attrs.src,src);assert.ok(attrs.width>0 && attrs.height>0)
+  assert.equal(attrs.loading,'lazy');assert.equal(attrs.decoding,'async')
+  assert.equal(images.default(src,'eager').loading,'eager')
+  assert.equal(images.default('').src,undefined)
+  assert.equal(images.default([]).src,undefined)
+  assert.deepEqual(images.default('https://example.test/new.jpg'),{src:'https://example.test/new.jpg',loading:'lazy',decoding:'async'})
+  assert.deepEqual(images.imageSources(['',null,' /a.jpg ','/b.jpg','/a.jpg']),['/a.jpg','/b.jpg'])
+})
+test('product galleries show initial props, ignore blank images and follow a new product',async()=>{
+  for(const file of ['components/common/ProductSwiper.vue','components/back/ProductSwiper.vue']){
+    const w=mount(component(file),{props:{tempProduct:{id:'p1',imageUrl:'/cover.jpg',imagesUrl:['','/detail.jpg']}},global:globals})
+    assert.deepEqual(w.vm.slides,['/cover.jpg','/detail.jpg'])
+    await w.setProps({tempProduct:{id:'p2',imageUrl:'/next.jpg'}})
+    assert.deepEqual(w.vm.slides,['/next.jpg'])
+    w.unmount()
+  }
+})
+test('home carousel does not render undefined banners while its article is pending',async()=>{
+  const w=mount(component('components/front/HomeSwiper.vue'),{props:{image:[]},global:globals})
+  assert.deepEqual(w.vm.slides,[]);assert.equal(w.find('.mySwiperHome').exists(),false)
+  await w.setProps({image:['','/banner.jpg']});assert.deepEqual(w.vm.slides,['/banner.jpg'])
+  w.unmount()
+})
+test('article images render as individual URLs and login uses a single valid background',async()=>{
+  const response={data:{success:true,article:{articleImagesUrl:['/a.jpg','','/b.jpg']}}}
+  for(const file of ['Story','TryFree','Vip']){
+    const w=mount(component(`views/front/${file}.vue`),{global:{...globals,mocks:{...globals.mocks,$http:{get:async()=>response}}}})
+    await flushPromises()
+    assert.deepEqual(w.findAll('img').map(i=>i.attributes('src')),['/a.jpg','/b.jpg'])
+    assert.equal(w.findAll('img')[0].attributes('loading'),'eager')
+    assert.equal(w.findAll('img')[1].attributes('loading'),'lazy')
+    w.unmount()
+  }
+  const vm=vmFor(component('views/back/Login.vue'),{$http:{get:async()=>response}})
+  await vm.render();assert.equal(vm.loginImage,'/a.jpg')
+})
+test('product section navigation is safe before optional image content is available',()=>{
+  const vm=vmFor(component('views/front/Product.vue'),{$refs:{}})
+  assert.doesNotThrow(()=>vm.subNav('infolImageUrl'))
+  let position
+  const original=window.scrollTo
+  window.scrollTo=(x,y)=>{position=y}
+  vm.$refs.infolImageUrl={getBoundingClientRect:()=>({top:500})}
+  vm.subNav('infolImageUrl');assert.equal(position,444)
+  window.scrollTo=original
+})
+test('simultaneous catalogue consumers share one request, then revalidate after success or failure',async()=>{
+  const readCatalogue=load(path.join(root,'src/methods/catalogue')).default
+  let calls=0,finish,options
+  const http={get:(url,config)=>{calls++;options=config;return new Promise(resolve=>{finish=resolve})}}
+  const first=readCatalogue(http),second=readCatalogue(http)
+  assert.equal(calls,1);assert.equal(first,second);assert.equal(options.timeout,15000)
+  finish({data:{products:[product]}});await first
+  const next=readCatalogue(http);assert.equal(calls,2);finish({data:{products:[]}});await next
+  http.get=async()=>{calls++;throw Error('offline')}
+  await assert.rejects(readCatalogue(http),/offline/)
+  await assert.rejects(readCatalogue(http),/offline/);assert.equal(calls,4)
+})
+test('checkout arrows follow accepted collapse transitions rather than rapid clicks',async()=>{
+  const {Collapse}=require('bootstrap')
+  const checkout=component('views/front/CartAdd.vue')
+  const panel=document.createElement('div');panel.className='collapse';document.body.append(panel)
+  const vm=vmFor(checkout,{$refs:{orderInformation:panel}})
+  checkout.mounted.call(vm)
+  const collapse=new Collapse(panel,{toggle:false})
+  collapse.show();collapse.hide()
+  assert.equal(vm.orderInfor,true)
+  panel.dispatchEvent(new window.Event('transitionend'));await flushPromises()
+  assert.ok(panel.classList.contains('show'))
+  collapse.hide();assert.equal(vm.orderInfor,false)
+  panel.dispatchEvent(new window.Event('transitionend'));await flushPromises()
+  assert.ok(!panel.classList.contains('show'))
+  checkout.beforeUnmount.call(vm);collapse.dispose();panel.remove()
+})
+test('admin navigation closes on a same-page link, including an opening transition',async()=>{
+  const {Collapse}=require('bootstrap')
+  const w=mount(component('components/back/BackHeader.vue'),{attachTo:document.body,global:globals})
+  const panel=w.get('.navbar-collapse').element
+  const collapse=Collapse.getOrCreateInstance(panel,{toggle:false})
+  collapse.show()
+  await w.findAll('.navbar-nav a')[0].trigger('click')
+  panel.dispatchEvent(new window.Event('transitionend'));await flushPromises()
+  panel.dispatchEvent(new window.Event('transitionend'));await flushPromises()
+  assert.equal(w.get('.navbar-toggler').attributes('aria-expanded'),'false')
+  assert.ok(!panel.classList.contains('show'))
+  collapse.dispose();w.unmount()
 })
 async function main(){
   let failed=0

@@ -85,7 +85,7 @@
                   </div>
                 </div>
               </div>
-              <img class="img-fluid img-thumbnail rounded" :src="product.imageUrl" />
+              <img class="img-fluid img-thumbnail rounded" v-bind="$imageAttributes(product.imageUrl)" />
             </div>
 
             <!-- 數量 -->

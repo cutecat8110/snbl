@@ -1,5 +1,5 @@
 <template>
-  <template v-if="product.imagesUrl">
+  <template v-if="slides.length">
     <swiper
       class="mySwiperTop"
       :loop="true"
@@ -10,11 +10,9 @@
       :thumbs="{ swiper: thumbsSwiper }"
       @slideChange="onSlideChange"
     >
-      <swiper-slide>
-        <img ref="productImagesUrl0" class="img-fluid" :src="product.imageUrl" />
-      </swiper-slide>
-      <swiper-slide v-for="item in product.imagesUrl" :key="item">
-        <img :ref="'productImagesUrl' + item" class="img-fluid" :src="item" />
+      <swiper-slide v-for="(src, index) in slides" :key="src">
+        <img class="img-fluid" v-bind="$imageAttributes(src, index === 0 ? 'eager' : 'lazy')"
+          :fetchpriority="index === 0 ? 'high' : 'auto'" :alt="product.title" />
       </swiper-slide>
     </swiper>
     <swiper
@@ -27,11 +25,8 @@
       :spaceBetween="8"
       @swiper="setThumbsSwiper"
     >
-      <swiper-slide>
-        <img class="img-fluid" :src="product.imageUrl" />
-      </swiper-slide>
-      <swiper-slide v-for="item in product.imagesUrl" :key="item">
-        <img class="img-fluid" :src="item" />
+      <swiper-slide v-for="src in slides" :key="src">
+        <img class="img-fluid" v-bind="$imageAttributes(src)" :alt="product.title" />
       </swiper-slide>
     </swiper>
   </template>
@@ -53,6 +48,8 @@ import 'swiper/components/pagination/pagination.min.css'
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Thumbs } from 'swiper'
 
+import { imageSources } from '@/methods/images'
+
 // install Swiper modules
 SwiperCore.use([Navigation, Thumbs])
 
@@ -64,8 +61,7 @@ export default {
   props: ['tempProduct'],
   data() {
     return {
-      thumbsSwiper: null,
-      product: []
+      thumbsSwiper: null
     }
   },
   methods: {
@@ -73,10 +69,9 @@ export default {
       this.thumbsSwiper = swiper
     }
   },
-  watch: {
-    tempProduct() {
-      this.product = JSON.parse(JSON.stringify(this.tempProduct))
-    }
+  computed: {
+    product() { return this.tempProduct || {} },
+    slides() { return imageSources([this.product.imageUrl, ...(this.product.imagesUrl || [])]) }
   },
   setup() {
     const onSlideChange = (swiper) => {

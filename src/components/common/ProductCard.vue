@@ -2,7 +2,7 @@
   <div v-for="product in productcard" :key="product.id" class="product-card">
     <div class="img-wrapper">
       <router-link :to="{ path: `/product/${product.id}` }">
-        <img class="img-fluid pointer" :src="product.imageUrl" alt="..." />
+        <img class="img-fluid pointer" v-bind="$imageAttributes(product.imageUrl)" alt="..." />
       </router-link>
     </div>
     <div class="product-card-body">

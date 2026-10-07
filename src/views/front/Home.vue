@@ -8,17 +8,17 @@
           熱門商品
         </h2>
         <div class="card-wrapper">
-          <template v-for="(item, index) in randomProducts" :key="index">
+          <template v-for="item in randomProducts" :key="item.id">
             <router-link class="home-card rounded" :to="{ path: `/product/${item.id}` }">
               <div class="img-wrapper">
-                <div class="img" :style="{ backgroundImage: 'url(' + item.imageUrl + ')' }"></div>
+                <img class="img" v-bind="$imageAttributes(item.imageUrl)" :alt="item.title" />
               </div>
             </router-link>
           </template>
         </div>
       </section>
       <div class="qr">
-        <img src="@/assets/QR.jpg" alt="QR.jpg" />
+        <img src="@/assets/QR.jpg" alt="QR.jpg" width="150" height="173" loading="lazy" decoding="async" />
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@
 
 <script>
 import request from '@/methods/request'
+import readCatalogue from '@/methods/catalogue'
 import sampleProducts from '@/methods/sampleProducts'
 import HomeSwiper from '@/components/front/HomeSwiper.vue'
 
@@ -48,13 +49,12 @@ export default {
       const id = '-MntdJ6iOSdc64gJi26G'
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${id}`
 
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
         this.image = res.data.article.articleImagesUrl
       })
     },
     getAll() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      return request(this, () => this.$http.get(url), (res) => {
+      return request(this, () => readCatalogue(this.$http), (res) => {
         this.productsAll = res.data.products
         this.randomProducts = sampleProducts(this.productsAll, 30)
       })
@@ -142,8 +142,8 @@ export default {
 
           width: 100%;
           height: 100%;
-          background-position: center;
-          background-size: cover;
+          object-position: center;
+          object-fit: cover;
 
           transition: opacity 300ms ease-in-out;
         }

@@ -11,9 +11,9 @@
       :slidesPerView="3"
       :spaceBetween="16"
     >
-      <swiper-slide v-for="item in tempProduct" :key="item" class="img-wrapper">
+      <swiper-slide v-for="item in tempProduct" :key="item.id" class="img-wrapper">
         <router-link :to="{ path: `/product/${item.id}` }">
-          <img :ref="'productImagesUrl' + item" class="img-fluid" :src="item.imageUrl" />
+          <img :alt="item.title" class="img-fluid" v-bind="$imageAttributes(item.imageUrl)" />
         </router-link>
       </swiper-slide>
     </swiper>

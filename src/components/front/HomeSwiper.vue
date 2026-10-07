@@ -1,5 +1,5 @@
 <template>
-  <template v-if="image">
+  <template v-if="slides.length">
     <swiper
       class="mySwiperHome"
       :allowTouchMove="false"
@@ -10,45 +10,15 @@
       :effect="'fade'"
       :loop="true"
       :pagination="true"
+      :preloadImages="false"
+      :lazy="{ loadPrevNext: true, loadOnTransitionStart: true }"
     >
-      <swiper-slide>
-        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[0] + ')' }">
-          <div class="text-box">
-            <div class="title">SNBL</div>
-            <div class="slogan">一千萬少女的選擇</div>
-          </div>
-        </div>
-        <div class="mark"></div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[1] + ')' }">
-          <div class="text-box">
-            <div class="title">SNBL</div>
-            <div class="slogan">一千萬少女的選擇</div>
-          </div>
-        </div>
-        <div class="mark"></div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[2] + ')' }">
-          <div class="text-box">
-            <div class="title">SNBL</div>
-            <div class="slogan">一千萬少女的選擇</div>
-          </div>
-        </div>
-        <div class="mark"></div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[3] + ')' }">
-          <div class="text-box">
-            <div class="title">SNBL</div>
-            <div class="slogan">一千萬少女的選擇</div>
-          </div>
-        </div>
-        <div class="mark"></div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="banner-img" :style="{ backgroundImage: 'url(' + image[4] + ')' }">
+      <swiper-slide v-for="(src, index) in slides" :key="src">
+        <div class="banner-img">
+          <img v-if="index === 0" class="banner-photo" v-bind="$imageAttributes(src, 'eager')"
+            fetchpriority="high" alt="" />
+          <img v-else class="banner-photo swiper-lazy" v-bind="imageSize(src)"
+            :data-src="src" decoding="async" alt="" />
           <div class="text-box">
             <div class="title">SNBL</div>
             <div class="slogan">一千萬少女的選擇</div>
@@ -80,17 +50,23 @@ import 'swiper/components/navigation/navigation.min.css'
 import 'swiper/components/pagination/pagination.min.css'
 
 // import Swiper core and required modules
-import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination, Thumbs } from 'swiper'
+import SwiperCore, { Autoplay, EffectFade, Lazy, Navigation, Pagination, Thumbs } from 'swiper'
+
+import { imageSize, imageSources } from '@/methods/images'
 
 // install Swiper modules
-SwiperCore.use([Pagination, EffectFade, Autoplay, Navigation, Thumbs])
+SwiperCore.use([Pagination, EffectFade, Autoplay, Lazy, Navigation, Thumbs])
 
 export default {
   components: {
     Swiper,
     SwiperSlide
   },
-  props: ['image']
+  props: ['image'],
+  methods: { imageSize },
+  computed: {
+    slides() { return imageSources(this.image) }
+  }
 }
 </script>
 
@@ -111,6 +87,7 @@ export default {
   border-radius: 0.25rem;
 
   .banner-img {
+    position: relative;
     display: flex;
     align-items: flex-end;
 
@@ -118,6 +95,15 @@ export default {
     height: 100%;
     background-position: center;
     background-size: cover;
+
+    .banner-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
 
     .text-box {
       position: relative;

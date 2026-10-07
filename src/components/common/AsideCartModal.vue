@@ -27,7 +27,7 @@
                   :to="{ path: `/product/${item.product_id}` }"
                   @click="hideModal"
                 >
-                  <img class="img-fluid rounded" :src="item.product.imageUrl" />
+                  <img class="img-fluid rounded" v-bind="$imageAttributes(item.product.imageUrl)" />
                 </router-link>
                 <div class="text-container cursor">
                   <h4

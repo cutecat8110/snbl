@@ -1,0 +1,49 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SNBL image loading QA</title>
+<style>body{font:14px sans-serif;margin:12px}iframe{border:1px solid #ddd}pre{white-space:pre-wrap}</style>
+<h1>SNBL image loading QA</h1>
+<p>Same-origin production preview only. Waits for API loading to finish, then measures a fresh iframe for 12 seconds without scrolling. External image transfer sizes are unavailable without Timing-Allow-Origin.</p>
+<label>Route <input id="route" value="/"></label>
+<label>Width <input id="width" type="number" value="390"></label>
+<label>Height <input id="height" type="number" value="844"></label>
+<button id="start">Measure</button>
+<pre id="report">Ready</pre><div id="preview"></div>
+<script>
+document.querySelector('#start').onclick = () => {
+  const frame = document.createElement('iframe')
+  frame.width = document.querySelector('#width').value
+  frame.height = document.querySelector('#height').value
+  frame.src = '/snbl/#' + document.querySelector('#route').value
+  document.querySelector('#preview').replaceChildren(frame)
+  document.querySelector('#report').textContent = 'Measuring…'
+  const started = Date.now()
+  frame.onload = () => {
+    const timer = setInterval(() => {
+      const doc = frame.contentDocument
+      const loading = doc.querySelector('.vld-overlay[aria-busy="true"]')
+      const ready = doc.querySelector('.home-card, .mySwiperMore') && !loading && !doc.querySelector('.swal2-popup')
+      if (ready) { clearInterval(timer); setTimeout(measure, 12000) }
+      else if (Date.now() - started > 60000) {
+        clearInterval(timer)
+        document.querySelector('#report').textContent = JSON.stringify({valid:false,reason:'API did not finish; discard this sample'})
+      }
+    }, 100)
+  }
+  function measure() {
+    const doc = frame.contentDocument
+    const images = [...doc.images].filter(i => i.src.startsWith('https://storage.googleapis.com/'))
+    const resources = frame.contentWindow.performance.getEntriesByType('resource').filter(r => r.name.startsWith('https://storage.googleapis.com/'))
+    const result = {valid:true,route: frame.contentWindow.location.hash, width: doc.documentElement.clientWidth,
+      height: Number(frame.height), elapsedMs: Date.now() - started,
+      externalImageRequests: resources.length, uniqueExternalImageRequests: new Set(resources.map(r => r.name)).size,
+      imageElements: images.length, decodedImages: images.filter(i => i.complete && i.naturalWidth > 0).length,
+      lazyImages: images.filter(i => i.loading === 'lazy').length,
+      catalogueRequests: frame.contentWindow.performance.getEntriesByType('resource').filter(r=>r.name.endsWith('/products/all')).length,
+      brokenImages: images.filter(i => i.complete && !i.naturalWidth).map(i => i.src),
+      horizontalOverflow: doc.documentElement.scrollWidth > doc.documentElement.clientWidth,
+      urls: resources.map(r => r.name)}
+    document.querySelector('#report').textContent = JSON.stringify(result, null, 2)
+  }
+}
+</script>
