@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1634408108892.jpg",
+    "bytes": 165910,
+    "seconds": 0.94,
+    "cache": "public, max-age=3600"
+  },
+  {
+    "url": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1636449519385.jpg",
+    "bytes": 130056,
+    "seconds": 0.89,
+    "cache": "public, max-age=3600"
+  },
+  {
+    "url": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1636449507140.jpg",
+    "bytes": 106209,
+    "seconds": 0.83,
+    "cache": "public, max-age=3600"
+  },
+  {
+    "url": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1636449510202.jpg",
+    "bytes": 92596,
+    "seconds": 1.48,
+    "cache": "public, max-age=3600"
+  },
+  {
+    "url": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1636449513649.jpg",
+    "bytes": 83745,
+    "seconds": 0.59,
+    "cache": "public, max-age=3600"
+  },
+  {
+    "url": "https://storage.googleapis.com/vue-course-api.appspot.com/haohao/1636449516239.jpg",
+    "bytes": 86927,
+    "seconds": 0.63,
+    "cache": "public, max-age=3600"
+  }
+]
