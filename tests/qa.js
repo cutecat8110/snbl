@@ -195,14 +195,55 @@ test('admin waits for successful auth and redirects missing/rejected sessions', 
   const vm=vmFor(admin,{$http:{defaults:{headers:{common:{}}},post:async()=>{calls++;throw Error('expired')}},$router:{replace:x=>{destination=x}},$swal:async()=>{}})
   await admin.created.call(vm)
   assert.equal(calls,0);assert.equal(destination,'/login');assert.equal(vm.authenticated,false)
-  document.cookie='hexToken=test-only'
+  document.cookie='snblAuthToken=test-only'
   destination='';await admin.created.call(vm)
   assert.equal(calls,1);assert.equal(destination,'/login');assert.equal(vm.authenticated,false)
-  assert.ok(!document.cookie.includes('hexToken='))
-  document.cookie='hexToken=test-only'
+  assert.ok(!document.cookie.includes('snblAuthToken='))
+  document.cookie='snblAuthToken=test-only'
   vm.$http.post=async()=>({data:{success:true}})
   await admin.created.call(vm);assert.equal(vm.authenticated,true)
-  document.cookie='hexToken=; Max-Age=0'
+  document.cookie='snblAuthToken=; Max-Age=0'
+})
+test('admin ignores legacy tokens from other projects on the same host', async () => {
+  const auth=load(path.join(root,'src/methods/authSession'))
+  document.cookie='hexToken=stale-other-project; path=/'
+  document.cookie='otherSession=keep; path=/'
+  auth.saveSession('current-snbl-token',Date.now()+60000)
+  assert.equal(auth.readSession(),'current-snbl-token')
+  let checked=''
+  const http={defaults:{headers:{common:{}}},post:async()=>{checked=http.defaults.headers.common.Authorization;return{data:{success:true}}}}
+  const admin=component('views/back/Dashboard.vue')
+  const vm=vmFor(admin,{$http:http,$router:{replace:()=>{}},$swal:async()=>{}})
+  await admin.created.call(vm)
+  assert.equal(checked,'current-snbl-token');assert.equal(vm.authenticated,true)
+  auth.clearSession(http)
+  assert.equal(auth.readSession(),'');assert.ok(document.cookie.includes('otherSession=keep'))
+  document.cookie='hexToken=stale-other-project; path=/'
+  assert.equal(auth.readSession(),'')
+  document.cookie='hexToken=; Max-Age=0; path=/'
+  document.cookie='otherSession=; Max-Age=0; path=/'
+})
+test('project-scoped sign-out leaves another application root cookie intact', () => {
+  const previousBase=process.env.BASE_URL
+  process.env.BASE_URL='/snbl/'
+  dom.reconfigure({url:'http://localhost/snbl/'})
+  const filename=path.join(root,'src/methods/authSession.js')
+  const auth=execute(fs.readFileSync(filename,'utf8'),filename)
+  try {
+    document.cookie='hexToken=other-project; path=/'
+    document.cookie='hexToken=old-snbl; path=/snbl/'
+    auth.saveSession('current-snbl',Date.now()+60000)
+    assert.equal(auth.readSession(),'current-snbl')
+    auth.clearSession({defaults:{headers:{common:{Authorization:'current-snbl'}}}})
+    assert.equal(auth.readSession(),'')
+    assert.ok(document.cookie.includes('hexToken=other-project'))
+    assert.ok(!document.cookie.includes('old-snbl'))
+  } finally {
+    document.cookie='hexToken=; Max-Age=0; path=/'
+    dom.reconfigure({url:'http://localhost/'})
+    if(previousBase===undefined)delete process.env.BASE_URL
+    else process.env.BASE_URL=previousBase
+  }
 })
 test('login remains usable after background or sign-in network failures', async () => {
   const login=component('views/back/Login.vue')
@@ -254,18 +295,18 @@ test('logout clears cookie and Authorization even when the server is unreachable
   const auth=load(path.join(root,'src/methods/authSession'))
   for(const fail of [false,true]){
     auth.saveSession('test-only',Date.now()+60000)
-    assert.ok(document.cookie.includes('hexToken='))
+    assert.ok(document.cookie.includes('snblAuthToken='))
     let destination=''
     const vm=vmFor(component('components/back/BackHeader.vue'),{$http:{defaults:{headers:{common:{Authorization:'test-only'}}},post:async()=>{if(fail)throw Error('offline');return{data:{success:true}}}},$swal:async()=>{},$router:{replace:x=>{destination=x}}})
     await vm.logout()
-    assert.ok(!document.cookie.includes('hexToken='));assert.equal(vm.$http.defaults.headers.common.Authorization,undefined);assert.equal(destination,'/')
+    assert.ok(!document.cookie.includes('snblAuthToken='));assert.equal(vm.$http.defaults.headers.common.Authorization,undefined);assert.equal(destination,'/')
   }
 })
 test('successful login stores an expiring session and navigates to products',async()=>{
   let destination='',writes=0
   const vm=vmFor(component('views/back/Login.vue'),{$http:{post:async()=>{writes++;return{data:{success:true,token:'test-only',expired:Date.now()+60000}}}},$swal:async()=>{},$router:{push:x=>{destination=x}}})
-  await Promise.all([vm.login(),vm.login()]);assert.equal(writes,1);assert.equal(destination,'/admin/products');assert.ok(document.cookie.includes('hexToken=test-only'))
-  document.cookie='hexToken=; Max-Age=0; path=/'
+  await Promise.all([vm.login(),vm.login()]);assert.equal(writes,1);assert.equal(destination,'/admin/products');assert.ok(document.cookie.includes('snblAuthToken=test-only'))
+  document.cookie='snblAuthToken=; Max-Age=0; path=/'
 })
 test('lazy images keep exact dimensions, original URLs and handle empty/new images',()=>{
   const images=load(path.join(root,'src/methods/images'))

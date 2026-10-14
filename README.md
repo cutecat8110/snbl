@@ -14,8 +14,10 @@
 此專案旨在提升 Vue Options API 技術熟練度，從企劃、設計到前端皆獨立開發。<br />執行流程涵蓋網站架構、流程功能規劃、RWD 網頁設計、切版與動效實現，以及 API 串接與整合等。
 
 * [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
-* [Demo](https://cutecat8110.github.io/snbl/) 
+* [Demo](https://cutecat8110.github.io/snbl/)
 
+
+前台可直接體驗；後台需管理帳號，不提供公開帳密。
 
 ## 🌸 啟動指南
 
@@ -69,7 +71,7 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 `qa/image-profile.html` 是本機量測工具，不放進 `public/`，不隨站台部署。把它複製到本機 production 預覽根目錄，與 `/snbl/` 同源開啟，等待 API 完成後量測 12 秒內、未捲動時的圖片資源請求。請用同一瀏覽器／尺寸比較；跨來源圖片無法取得可靠 transferSize，因此紀錄只比較請求數，不宣稱下載 MB 或載入時間的固定改善比例。
 
-第二輪結果見 [QA_CHANGELOG.md](QA_CHANGELOG.md)、[圖片量測](qa/image-loading-results.json)。圖片仍由原儲存服務供應；原站 API 不變。2026-10-08 發布包含兩輪 QA 修正的版本，Pages 改用 `portfolio/qa` 的 `/docs`。
+第二輪結果見 [QA_CHANGELOG.md](QA_CHANGELOG.md)、[圖片量測](qa/image-loading-results.json)。圖片仍由原儲存服務供應；原站 API 不變。目前 Pages 使用 `main` 的 `/docs`。
 
 ## 🔨 核心技術
 

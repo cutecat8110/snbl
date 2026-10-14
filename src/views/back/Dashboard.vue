@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { clearSession } from '@/methods/authSession'
+import { clearSession, readSession } from '@/methods/authSession'
 import BackHeader from '@/components/back/BackHeader.vue'
 import ToastMessages from '@/components/back/ToastMessages.vue'
 import emitter from '@/methods/eventBus'
@@ -25,7 +25,7 @@ export default {
     return { authenticated: false }
   },
   async created() {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    const token = readSession()
     this.$http.defaults.headers.common.Authorization = token
     if (!token) {
       this.$router.replace('/login')
