@@ -32,7 +32,7 @@ npm run serve
 
 ## QA 與本機驗證
 
-本輪修正位於 `portfolio/qa`，完整問題、重現步驟、測試範圍與限制請看 [QA_CHANGELOG.md](QA_CHANGELOG.md)。保留原設計、商品內容及六角學院 API；沒有改為假資料展示站。
+QA 修正已整併至 `main`，完整問題、重現步驟、測試範圍與限制請看 [QA_CHANGELOG.md](QA_CHANGELOG.md)。保留原設計、商品內容及六角學院 API；沒有改為假資料展示站。
 
 使用專案原有 Node.js **16.20.2 / npm 8**，先 `npm ci`。開發網址為 `http://localhost:8080/snbl/`，Router 使用 hash 路徑。
 
@@ -59,7 +59,7 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 隔離環境只有兩件公開商品的測試樣本，使用 `QA10` 可測九折，`reset` 取消折扣。它不會轉送請求到六角 API，也不代表真實後端寫入、登入或資料庫測試已通過。表單僅填虛構資料。一般 `npm run serve` 與正式建置仍連原 API。
 
-部署沿用 `vue.config.js`：建置輸出 `docs/`，資源基底 `/snbl/`，適合現有 GitHub Pages。發布來源使用 `portfolio/qa` 分支的 `/docs`；每次更新須先在此分支執行 `npm run build`，再將產物與程式一併提交及推送。網址維持 https://cutecat8110.github.io/snbl/。若只驗證建置，可用 `npm run build -- --dest /tmp/snbl-preview/snbl`，再 `python3 -m http.server 8082 --bind 127.0.0.1 --directory /tmp/snbl-preview`，開啟 `http://127.0.0.1:8082/snbl/`。
+部署沿用 `vue.config.js`：建置輸出 `docs/`，資源基底 `/snbl/`，適合現有 GitHub Pages。發布來源使用 `main` 分支的 `/docs`；每次更新須先在此分支執行 `npm run build`，再將產物與程式一併提交及推送。網址維持 https://cutecat8110.github.io/snbl/。若只驗證建置，可用 `npm run build -- --dest /tmp/snbl-preview/snbl`，再 `python3 -m http.server 8082 --bind 127.0.0.1 --directory /tmp/snbl-preview`，開啟 `http://127.0.0.1:8082/snbl/`。
 
 ## 圖片載入維護（第二輪 QA）
 
