@@ -1,6 +1,6 @@
 <template>
   <div id="front">
-    <Loading :active="isLoading" :z-index="1060"></Loading>
+    <Loading :active="isLoading" :enforce-focus="false" :z-index="1060"></Loading>
     <FrontHeader></FrontHeader>
     <router-view></router-view>
     <ScrollTop></ScrollTop>

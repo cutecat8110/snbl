@@ -62,18 +62,18 @@
                   <div class="item-group">
                     <span>{{ order.message.payment.conveyance }}</span>
                     <br />
-                    全家台中忠孝夜店&nbsp;F010256
+                    民生門市&nbsp;186700
                     <br />
-                    台中市南區忠孝路102號
+                    台中市南區復興路三段322號324號326號
                   </div>
                 </template>
                 <template v-else-if="order.message.payment.conveyance == '全家 超商取貨'">
                   <div class="item-group">
                     <span>{{ order.message.payment.conveyance }}</span>
                     <br />
-                    民生門市&nbsp;186700
+                    全家台中忠孝夜店&nbsp;F010256
                     <br />
-                    台中市南區復興路三段322號324號326號
+                    台中市南區忠孝路102號
                   </div>
                 </template>
                 <template v-else>

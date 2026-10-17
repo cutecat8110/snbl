@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading :active="isLoading" :z-index="1060"></Loading>
+    <Loading :active="isLoading" :enforce-focus="false" :z-index="1060"></Loading>
     <div class="container py-4">
       <div class="bg-white px-4 border">
         <div class="navbar py-3">

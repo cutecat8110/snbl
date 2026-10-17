@@ -399,6 +399,44 @@ test('admin navigation closes on a same-page link, including an opening transiti
   assert.ok(!panel.classList.contains('show'))
   collapse.dispose();w.unmount()
 })
+test('loading inside an open product modal preserves the modal keyboard focus', async () => {
+  const Loading = require('vue-loading-overlay')
+  const { Modal } = require('bootstrap')
+  const w = mount(component('views/front/Index.vue'), { attachTo: document.body,
+    global: { ...globals, components: { Loading }, stubs: { ...globals.stubs, Loading: false } } })
+  const dialog = document.createElement('div')
+  dialog.className = 'modal'
+  dialog.tabIndex = -1
+  dialog.innerHTML = '<div class="modal-dialog"><input aria-label="商品數量"></div>'
+  document.body.appendChild(dialog)
+  const modal = new Modal(dialog)
+  modal.show()
+  emitter.emit('isLoading', true)
+  await Vue.nextTick()
+  dialog.querySelector('input').focus()
+  assert.equal(document.activeElement, dialog.querySelector('input'))
+  emitter.emit('isLoading', false)
+  await Vue.nextTick()
+  modal.hide(); modal.dispose(); dialog.remove(); w.unmount()
+})
+test('completed pickup store matches the store offered during checkout', async () => {
+  const checkout = component('views/front/CartAdd.vue').data()
+  const completed = component('views/front/CartCompleted.vue')
+  const w = mount({ ...completed, created() {} }, { global: globals })
+  for (const [index, conveyance] of ['7-11 超商取貨', '全家 超商取貨'].entries()) {
+    await w.setData({ orderId: '-qa-order', order: {
+      user: { name: 'QA', tel: '0900000000', email: 'qa@example.test', address: '測試地址' },
+      products: {}, is_paid: false,
+      message: { recipient: { name: 'QA', tel: '0900000000' }, payment: { conveyance, method: '超商取貨付款 (COD)' } }
+    } })
+    const store = checkout.tempConveyance[index]
+    assert.ok(w.text().includes(store.name))
+    assert.ok(w.text().includes(store.number))
+    assert.ok(w.text().includes(store.address))
+    assert.ok(!w.text().includes(checkout.tempConveyance[1 - index].name))
+  }
+  w.unmount()
+})
 async function main(){
   let failed=0
   for(const [name,fn] of tests){try{await fn();console.log(`PASS ${name}`)}catch(error){failed++;console.error(`FAIL ${name}\n${error.stack}`)}}

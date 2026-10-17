@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading" :z-index="1060"></Loading>
+  <Loading :active="isLoading" :enforce-focus="false" :z-index="1060"></Loading>
   <div class="container py-4">
     <div class="position-relative">
       <div class="aside-navbar position-fixed">
