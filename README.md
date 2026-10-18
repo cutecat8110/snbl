@@ -1,24 +1,130 @@
-# SNBL｜服飾電商
+# SNBL - 電商網站
 
 ![Node](https://img.shields.io/badge/Node.js-v16.20.2-brightgreen.svg)
 ![Vue](https://img.shields.io/badge/Vue.js-v3-blue.svg)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-v5-purple.svg)
 
-商品瀏覽、收藏、購物車與訂單查詢，包含商品及訂單後台管理。
-
-**[Demo](https://cutecat8110.github.io/snbl/)** · [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
+> 以「少女時尚」為主題的電商網站，提供商品瀏覽、收藏、購物車、下單與後台管理。
 
 ![SNBL 服飾首頁與商品導覽](public/demo.png)
 
-<details>
-<summary>使用說明</summary>
+## 📋 專案概述
+
+此專案旨在提升 Vue Options API 技術熟練度，從企劃、設計到前端皆獨立開發。內容涵蓋網站架構、購物流程規劃、RWD 網頁設計、切版與動效，以及六角學院 API 串接。
+
+**[Demo](https://cutecat8110.github.io/snbl/)** · [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
+
+## 🔨 核心技術
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://vuejs.org/" >
+          Vue 3
+        </a>
+      </td>
+      <td>JavaScript 框架</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://www.npmjs.com/package/vue-axios" >
+          Vue Axios
+        </a>
+      </td>
+      <td>HTTP 請求工具</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://getbootstrap.com/" >
+          Bootstrap 5
+        </a>
+      </td>
+      <td>CSS/HTML 框架</td>
+    </tr>
+  </tbody>
+</table>
+
+## 🛠️ 擴展套件
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://www.npmjs.com/package/mitt/">
+          mitt
+        </a>
+      </td>
+      <td>處理組件間事件交互</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://sweetalert2.github.io/">
+          SweetAlert 2
+        </a>
+      </td>
+      <td>可定製訊息彈框</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://www.npmjs.com/package/vue-loading-overlay">
+          Vue Loading Overlay
+        </a>
+      </td>
+      <td>loading 效果組件</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://swiperjs.com/">
+          Swiper
+        </a>
+      </td>
+      <td>輪播/滑動組件</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://vee-validate.logaretm.com/v4/">
+          VeeValidate
+        </a>
+      </td>
+      <td>表單驗證庫</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://fontawesome.com/">
+          Font Awesome
+        </a>
+      </td>
+      <td>大量開源向量圖標</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://fonts.google.com/icons">
+          Material Design Icons
+        </a>
+      </td>
+      <td>Google 開源圖標</td>
+    </tr>
+  </tbody>
+</table>
+
+## 🌸 啟動指南
+
+使用 Node 16.20.2／npm 8：
+
+```sh
+npm ci
+npm run serve
+```
+
+開啟 `http://localhost:8080/snbl/`。
+
+## 使用說明
 
 前台可直接體驗；後台需管理帳號，不提供公開帳密。請使用測試資料操作訂單，勿填入個人資訊。
 
-</details>
-
 <details>
-<summary>開發、測試與部署</summary>
+<summary>測試、部署與維護</summary>
 
 使用專案原有 Node.js **16.20.2 / npm 8**，先 `npm ci`。開發網址為 `http://localhost:8080/snbl/`，Router 使用 hash 路徑。
 
@@ -60,13 +166,6 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 ### 素材維護
 
 頁面仍採原本的非同步路由；`vue.config.js` 關閉全路由 prefetch，避免前台提前下載後台編輯器。字型網址維護於 `public/index.html`；圖片尺寸表與原 API 維持原流程。
-
-</details>
-
-<details>
-<summary>技術與套件</summary>
-
-[Vue 3](https://vuejs.org/) · [Vue Axios](https://www.npmjs.com/package/vue-axios) · [Bootstrap 5](https://getbootstrap.com/) · [mitt](https://www.npmjs.com/package/mitt/) · [SweetAlert 2](https://sweetalert2.github.io/) · [Vue Loading Overlay](https://www.npmjs.com/package/vue-loading-overlay) · [Swiper](https://swiperjs.com/) · [VeeValidate](https://vee-validate.logaretm.com/v4/) · [Font Awesome](https://fontawesome.com/) · [Material Design Icons](https://fonts.google.com/icons)
 
 </details>
 
