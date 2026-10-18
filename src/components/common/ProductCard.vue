@@ -19,20 +19,18 @@
           </span>
         </div>
       </div>
-      <a
-        :class="{ active: myFavorite.includes(product.id) }"
-        class="pointer"
-        @click.prevent="emitUpDateMyFavorite(product.id)"
-      >
-        <i class="material-icons">
-          {{ myFavorite.includes(product.id) ? 'bookmark' : 'bookmark_border' }}
-        </i>
-      </a>
+      <FavoriteButton
+        :active="myFavorite.includes(product.id)"
+        :name="product.title"
+        @toggle="emitUpDateMyFavorite(product.id)"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import FavoriteButton from './FavoriteButton.vue'
+
 const sotrageMethods = {
   save(favorite) {
     const favoriteString = JSON.stringify(favorite)
@@ -44,6 +42,7 @@ const sotrageMethods = {
 }
 
 export default {
+  components: { FavoriteButton },
   props: ['filterproducts', 'products'],
   inject: ['emitter'],
 
@@ -134,26 +133,7 @@ export default {
         }
       }
     }
-    a {
-      .material-icons {
-        color: $gray-500;
-        transition: color 150ms ease-in-out;
-        &:hover {
-          color: $color-main;
-        }
-        &:active {
-          color: $color-main-active;
-        }
-      }
-      &.active {
-        .material-icons {
-          color: $color-main;
-          &:active {
-            color: $color-main-active;
-          }
-        }
-      }
-    }
+
   }
 }
 </style>

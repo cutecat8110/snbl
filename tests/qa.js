@@ -64,6 +64,36 @@ function vmFor(options, values = {}) {
 const tests = []
 function test(name, fn) { tests.push([name, fn]) }
 
+test('favorite control exposes its product and pressed state without submitting forms', async () => {
+  const w = mount(component('components/common/FavoriteButton.vue'), { props: { name: product.title, active: false } })
+  const button = w.get('button')
+  assert.equal(button.attributes('type'), 'button')
+  assert.equal(button.attributes('aria-label'), `收藏${product.title}`)
+  assert.equal(button.attributes('aria-pressed'), 'false')
+  await button.trigger('click')
+  assert.equal(w.emitted('toggle').length, 1)
+  await w.setProps({ active: true })
+  assert.equal(button.attributes('aria-pressed'), 'true')
+  assert.equal(button.attributes('aria-label'), `取消收藏${product.title}`)
+  w.unmount()
+})
+
+test('product pagination prevents boundary navigation and identifies the current page', async () => {
+  const w = mount(component('components/front/Pagination.vue'), { props: { pages: { current_page: 1, total_pages: 3 } } })
+  assert.equal(w.get('[aria-current="page"]').text(), '1')
+  assert.equal(w.get('[aria-label="上一頁"]').attributes('disabled'), '')
+  await w.get('[aria-label="上一頁"]').trigger('click')
+  assert.equal(w.emitted('emit-page'), undefined)
+  await w.get('[aria-label="下一頁"]').trigger('click')
+  assert.deepEqual(w.emitted('emit-page'), [[2]])
+  await w.setProps({ pages: { current_page: 3, total_pages: 3 } })
+  assert.equal(w.get('[aria-label="下一頁"]').attributes('disabled'), '')
+  await w.setProps({ pages: {} })
+  assert.equal(w.get('[aria-label="上一頁"]').attributes('disabled'), '')
+  assert.equal(w.get('[aria-label="下一頁"]').attributes('disabled'), '')
+  w.unmount()
+})
+
 test('product quantity rejects zero/blank/over-limit and click supports keyboard activation', async () => {
   const w = mount(component('components/common/ProductForm.vue'), { props: { product }, global: globals })
   const input = w.get('input[aria-label="商品數量"]')

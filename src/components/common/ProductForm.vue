@@ -4,15 +4,11 @@
       <!-- 商品名稱 -->
       <div class="product-title">
         <h1>{{ product.title }}</h1>
-        <a
-          :class="{ active: myFavorite.includes(product.id) }"
-          class="pointer"
-          @click.prevent="emitUpDateMyFavorite(product.id)"
-        >
-          <i class="material-icons">
-            {{ myFavorite.includes(product.id) ? 'bookmark' : 'bookmark_border' }}
-          </i>
-        </a>
+        <FavoriteButton
+          :active="myFavorite.includes(product.id)"
+          :name="product.title"
+          @toggle="emitUpDateMyFavorite(product.id)"
+        />
       </div>
       <!-- 價格 -->
       <div class="price">
@@ -102,8 +98,8 @@
       <!-- 數量 -->
       <div class="qty input-group bg-light border flex-nowrap rounded">
         <div>
-          <button class="qty-btn btn" type="button" :disabled="qty <= 1" @click="qty--">
-            <i class="material-icons md-dark">remove</i>
+          <button class="qty-btn btn" type="button" :disabled="qty <= 1" @click="qty--" aria-label="減少商品數量">
+            <i class="material-icons md-dark" aria-hidden="true">remove</i>
           </button>
         </div>
         <input
@@ -118,8 +114,8 @@
           @input="handleInput"
         />
         <div>
-          <button class="qty-btn btn" type="button" :disabled="qty >= 99" @click="qty++">
-            <i class="material-icons md-dark">add</i>
+          <button aria-label="增加商品數量" class="qty-btn btn" type="button" :disabled="qty >= 99" @click="qty++">
+            <i class="material-icons md-dark" aria-hidden="true">add</i>
           </button>
         </div>
       </div>
@@ -168,6 +164,7 @@
 </template>
 
 <script>
+import FavoriteButton from './FavoriteButton.vue'
 import quantity from '@/methods/quantity'
 import ProductFormModal from '@/components/common/ProductFormModal.vue'
 
@@ -183,6 +180,7 @@ const sotrageMethods = {
 
 export default {
   components: {
+    FavoriteButton,
     ProductFormModal
   },
   inject: ['emitter'],
@@ -272,27 +270,7 @@ section {
         @include font-xl;
         margin: 0;
       }
-      a {
-        .material-icons {
-          margin-top: 0.25rem;
-          color: $gray-500;
-          transition: color 150ms ease-in-out;
-          &:hover {
-            color: $color-main;
-          }
-          &:active {
-            color: $color-main-active;
-          }
-        }
-        &.active {
-          .material-icons {
-            color: $color-main;
-            &:active {
-              color: $color-main-active;
-            }
-          }
-        }
-      }
+
     }
     .price {
       @include font-lg;

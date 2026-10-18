@@ -14,7 +14,7 @@
           <button
             class="btn-close"
             type="button"
-            aria-label="Close"
+            aria-label="關閉"
             data-bs-dismiss="modal"
           ></button>
         </div>

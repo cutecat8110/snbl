@@ -173,3 +173,5 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 頁面仍採原本的非同步路由；`vue.config.js` 關閉全路由 prefetch，避免前台提前下載後台編輯器。字型網址維護於 `public/index.html`；圖片尺寸表與原 API 維持原流程。
 
 檢查方法、數據及外部服務限制見 [QA_CHANGELOG.md](QA_CHANGELOG.md)。
+
+[介面設計規範](DESIGN_GUIDELINES.md)

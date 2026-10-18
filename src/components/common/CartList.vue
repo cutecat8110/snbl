@@ -28,8 +28,9 @@
                   type="button"
                   :disabled="item.selected[0].qty <= 1"
                   @click="item.selected[0].qty--, this.upDate(index, item.id, item.selected[0])"
+                  aria-label="減少商品數量"
                 >
-                  <i class="material-icons md-dark">remove</i>
+                  <i class="material-icons md-dark" aria-hidden="true">remove</i>
                 </button>
               </div>
               <input
@@ -48,10 +49,11 @@
                   :class="{ disabled: item.selected[0].qty >= 99 }"
                   class="qty-btn btn"
                   type="button"
+                  aria-label="增加商品數量"
                   :disabled="item.selected[0].qty >= 99"
                   @click="item.selected[0].qty++, this.upDate(index, item.id, item.selected[0])"
                 >
-                  <i class="material-icons md-dark">add</i>
+                  <i class="material-icons md-dark" aria-hidden="true">add</i>
                 </button>
               </div>
             </div>
@@ -104,8 +106,9 @@
                   type="button"
                   :disabled="item.selected[0].qty <= 1"
                   @click="item.selected[0].qty--, this.upDate(index, item.id, item.selected[0])"
+                  aria-label="減少商品數量"
                 >
-                  <i class="material-icons md-dark">remove</i>
+                  <i class="material-icons md-dark" aria-hidden="true">remove</i>
                 </button>
               </div>
               <input
@@ -124,10 +127,11 @@
                   :class="{ disabled: item.selected[0].qty >= 99 }"
                   class="qty-btn btn"
                   type="button"
+                  aria-label="增加商品數量"
                   :disabled="item.selected[0].qty >= 99"
                   @click="item.selected[0].qty++, this.upDate(index, item.id, item.selected[0])"
                 >
-                  <i class="material-icons md-dark">add</i>
+                  <i class="material-icons md-dark" aria-hidden="true">add</i>
                 </button>
               </div>
             </div>

@@ -1,0 +1,42 @@
+
+> snbl@0.1.0 test
+> node tests/qa.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS favorite control exposes its product and pressed state without submitting forms
+PASS product pagination prevents boundary navigation and identifies the current page
+PASS product quantity rejects zero/blank/over-limit and click supports keyboard activation
+PASS selected size is shown and changes reset when navigating between products
+PASS desktop and mobile option IDs are unique; mobile zero is normalized
+PASS cart quantity input handles zero and empty values without throwing
+PASS component subscriptions are released when navigating away
+PASS home accepts catalogues with 0, 1, 29 or 30 products and resets repeat results
+PASS shipping fee responds to new totals without reselecting delivery
+PASS order image remains safe while catalogue is empty or still loading
+PASS rapid adds serialize numeric amounts and keep similarly named variants separate
+PASS API failures clear loading and preserve failed mutations
+PASS loading remains active until every concurrent request settles
+PASS admin waits for successful auth and redirects missing/rejected sessions
+PASS admin ignores legacy tokens from other projects on the same host
+PASS project-scoped sign-out leaves another application root cookie intact
+PASS login remains usable after background or sign-in network failures
+PASS international checkout total excludes unknown shipping instead of concatenating text
+PASS checkout delivery survives refresh and shipping uses the refreshed cart total
+PASS leaving a product page does not request an undefined product
+PASS checkout subscribes before refreshing a fast API cart
+PASS background image does not block login or release an active sign-in lock
+PASS logout clears cookie and Authorization even when the server is unreachable
+PASS successful login stores an expiring session and navigates to products
+PASS lazy images keep exact dimensions, original URLs and handle empty/new images
+PASS product galleries show initial props, ignore blank images and follow a new product
+PASS home carousel does not render undefined banners while its article is pending
+PASS article images render as individual URLs and login uses a single valid background
+PASS product section navigation is safe before optional image content is available
+PASS simultaneous catalogue consumers share one request, then revalidate after success or failure
+PASS checkout arrows follow accepted collapse transitions rather than rapid clicks
+PASS admin navigation closes on a same-page link, including an opening transition
+PASS loading inside an open product modal preserves the modal keyboard focus
+PASS completed pickup store matches the store offered during checkout
+34/34 regression tests passed

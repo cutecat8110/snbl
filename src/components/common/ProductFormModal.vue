@@ -13,7 +13,7 @@
           <button
             class="btn-close btn-close-white"
             type="button"
-            aria-label="Close"
+            aria-label="關閉"
             data-bs-dismiss="modal"
           ></button>
         </div>
@@ -97,8 +97,9 @@
                     type="button"
                     :disabled="qty <= 1"
                     @click="qty--"
+                    aria-label="減少商品數量"
                   >
-                    <i class="material-icons md-dark">remove</i>
+                    <i class="material-icons md-dark" aria-hidden="true">remove</i>
                   </button>
                 </div>
                 <input
@@ -116,10 +117,11 @@
                   <button
                     class="qty-btn btn"
                     type="button"
+                    aria-label="增加商品數量"
                     :disabled="qty >= 99"
                     @click="qty++"
                   >
-                    <i class="material-icons md-dark">add</i>
+                    <i class="material-icons md-dark" aria-hidden="true">add</i>
                   </button>
                 </div>
               </div>
