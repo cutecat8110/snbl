@@ -1,40 +1,24 @@
-# Snbl - 電商網站
+# SNBL｜服飾電商
 
 ![Node](https://img.shields.io/badge/Node.js-v16.20.2-brightgreen.svg)
 ![Vue](https://img.shields.io/badge/Vue.js-v3-blue.svg)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-v5-purple.svg)
 
-> 這是一個以「少女時尚」為主題的電商平台，提供多元服飾選擇與便捷購物體驗，主要功能有商品瀏覽、下單、後台管理及訂單追蹤等。
+商品瀏覽、收藏、購物車與訂單查詢，包含商品及訂單後台管理。
 
-![](https://cutecat8110.github.io/snbl/demo.png)
+**[Demo](https://cutecat8110.github.io/snbl/)** · [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
 
+![SNBL 服飾首頁與商品導覽](public/demo.png)
 
-## 📋 專案概述
+<details>
+<summary>使用說明</summary>
 
-此專案旨在提升 Vue Options API 技術熟練度，從企劃、設計到前端皆獨立開發。<br />執行流程涵蓋網站架構、流程功能規劃、RWD 網頁設計、切版與動效實現，以及 API 串接與整合等。
+前台可直接體驗；後台需管理帳號，不提供公開帳密。請使用測試資料操作訂單，勿填入個人資訊。
 
-* [API 文件](https://github.com/hexschool/vue3-course-api-wiki/wiki)
-* [Demo](https://cutecat8110.github.io/snbl/)
+</details>
 
-
-前台可直接體驗；後台需管理帳號，不提供公開帳密。
-
-## 🌸 啟動指南
-
-```bash
-# 取得專案
-git clone https://github.com/cutecat8110/snbl.git
-
-# 安裝依賴
-npm ci
-
-# 啟動開發伺服器
-npm run serve
-```
-
-## QA 與本機驗證
-
-QA 修正已整併至 `main`，完整問題、重現步驟、測試範圍與限制請看 [QA_CHANGELOG.md](QA_CHANGELOG.md)。保留原設計、商品內容及六角學院 API；沒有改為假資料展示站。
+<details>
+<summary>開發、測試與部署</summary>
 
 使用專案原有 Node.js **16.20.2 / npm 8**，先 `npm ci`。開發網址為 `http://localhost:8080/snbl/`，Router 使用 hash 路徑。
 
@@ -63,7 +47,7 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 部署沿用 `vue.config.js`：建置輸出 `docs/`，資源基底 `/snbl/`，適合現有 GitHub Pages。發布來源使用 `main` 分支的 `/docs`；每次更新須先在此分支執行 `npm run build`，再將產物與程式一併提交及推送。網址維持 https://cutecat8110.github.io/snbl/。若只驗證建置，可用 `npm run build -- --dest /tmp/snbl-preview/snbl`，再 `python3 -m http.server 8082 --bind 127.0.0.1 --directory /tmp/snbl-preview`，開啟 `http://127.0.0.1:8082/snbl/`。
 
-## 圖片載入維護（第二輪 QA）
+### 圖片維護
 
 保留原始圖片網址、像素與裁切。首頁商品改用延後載入的圖片，商品／文章圖預留原始尺寸並非同步解碼；首頁首張及商品主圖優先載入。輪播使用專案既有 Swiper 6 的 Lazy 模組，不升級套件。
 
@@ -73,105 +57,17 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 第二輪結果見 [QA_CHANGELOG.md](QA_CHANGELOG.md)、[圖片量測](qa/image-loading-results.json)。圖片仍由原儲存服務供應；原站 API 不變。目前 Pages 使用 `main` 的 `/docs`。
 
-## 🔨 核心技術
-
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://vuejs.org/" >
-          Vue 3
-        </a>
-      </td>
-      <td>JavaScript 框架</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://www.npmjs.com/package/vue-axios" >
-          Vue Axios
-        </a>
-      </td>
-      <td>HTTP 請求工具</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://getbootstrap.com/" >
-          Bootstrap 5
-        </a>
-      </td>
-      <td>CSS/HTML 框架</td>
-    </tr>
-  </tbody>
-</table>
-
-
-## 🛠️ 擴展套件
-
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://www.npmjs.com/package/mitt/">
-          mitt
-        </a>
-      </td>
-      <td>處理組件間事件交互</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://sweetalert2.github.io/">
-          SweetAlert 2
-        </a>
-      </td>
-      <td>可定製訊息彈框</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://www.npmjs.com/package/vue-loading-overlay">
-          Vue Loading Overlay
-        </a>
-      </td>
-      <td>loading 效果組件</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://swiperjs.com/">
-          Swiper
-        </a>
-      </td>
-      <td>輪播/滑動組件</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://vee-validate.logaretm.com/v4/">
-          VeeValidate
-        </a>
-      </td>
-      <td>表單驗證庫</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://fontawesome.com/">
-          Font Awesome
-        </a>
-      </td>
-      <td>大量開源向量圖標</td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://fonts.google.com/icons">
-          Material Design Icons
-        </a>
-      </td>
-      <td>Google 開源圖標</td>
-    </tr>
-  </tbody>
-</table>
-
-## 載入維護（2026-10-08）
+### 素材維護
 
 頁面仍採原本的非同步路由；`vue.config.js` 關閉全路由 prefetch，避免前台提前下載後台編輯器。字型網址維護於 `public/index.html`；圖片尺寸表與原 API 維持原流程。
 
-檢查方法、數據及外部服務限制見 [QA_CHANGELOG.md](QA_CHANGELOG.md)。
+</details>
 
-[介面設計規範](DESIGN_GUIDELINES.md)
+<details>
+<summary>技術與套件</summary>
+
+[Vue 3](https://vuejs.org/) · [Vue Axios](https://www.npmjs.com/package/vue-axios) · [Bootstrap 5](https://getbootstrap.com/) · [mitt](https://www.npmjs.com/package/mitt/) · [SweetAlert 2](https://sweetalert2.github.io/) · [Vue Loading Overlay](https://www.npmjs.com/package/vue-loading-overlay) · [Swiper](https://swiperjs.com/) · [VeeValidate](https://vee-validate.logaretm.com/v4/) · [Font Awesome](https://fontawesome.com/) · [Material Design Icons](https://fonts.google.com/icons)
+
+</details>
+
+[QA 紀錄](QA_CHANGELOG.md) · [介面設計規範](DESIGN_GUIDELINES.md)
