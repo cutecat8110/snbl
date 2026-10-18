@@ -161,12 +161,10 @@ VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
 
 `qa/image-profile.html` 是本機量測工具，不放進 `public/`，不隨站台部署。把它複製到本機 production 預覽根目錄，與 `/snbl/` 同源開啟，等待 API 完成後量測 12 秒內、未捲動時的圖片資源請求。請用同一瀏覽器／尺寸比較；跨來源圖片無法取得可靠 transferSize，因此紀錄只比較請求數，不宣稱下載 MB 或載入時間的固定改善比例。
 
-第二輪結果見 [QA_CHANGELOG.md](QA_CHANGELOG.md)、[圖片量測](qa/image-loading-results.json)。圖片仍由原儲存服務供應；原站 API 不變。目前 Pages 使用 `main` 的 `/docs`。
+圖片仍由原儲存服務供應；原站 API 不變。目前 Pages 使用 `main` 的 `/docs`。
 
 ### 素材維護
 
 頁面仍採原本的非同步路由；`vue.config.js` 關閉全路由 prefetch，避免前台提前下載後台編輯器。字型網址維護於 `public/index.html`；圖片尺寸表與原 API 維持原流程。
 
 </details>
-
-[QA 紀錄](QA_CHANGELOG.md) · [介面設計規範](DESIGN_GUIDELINES.md)
