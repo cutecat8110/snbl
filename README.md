@@ -28,7 +28,7 @@
     </tr>
     <tr>
       <td>
-        <a href="https://www.npmjs.com/package/vue-axios" >
+        <a href="https://github.com/imcvampire/vue-axios" >
           Vue Axios
         </a>
       </td>
@@ -51,7 +51,7 @@
   <tbody>
     <tr>
       <td>
-        <a href="https://www.npmjs.com/package/mitt/">
+        <a href="https://github.com/developit/mitt">
           mitt
         </a>
       </td>
@@ -67,7 +67,7 @@
     </tr>
     <tr>
       <td>
-        <a href="https://www.npmjs.com/package/vue-loading-overlay">
+        <a href="https://github.com/ankurk91/vue-loading-overlay">
           Vue Loading Overlay
         </a>
       </td>
@@ -117,54 +117,8 @@ npm ci
 npm run serve
 ```
 
-開啟 `http://localhost:8080/snbl/`。
+開啟 `http://localhost:8080/snbl/`。可用 `.env.local` 的 `VUE_APP_API`、`VUE_APP_PATH` 設定自己的課程 API。
 
 ## 使用說明
 
-前台可直接體驗；後台需管理帳號，不提供公開帳密。請使用測試資料操作訂單，勿填入個人資訊。
-
-<details>
-<summary>測試、部署與維護</summary>
-
-使用專案原有 Node.js **16.20.2 / npm 8**，先 `npm ci`。開發網址為 `http://localhost:8080/snbl/`，Router 使用 hash 路徑。
-
-```bash
-npm run serve
-npm run lint -- --no-fix
-npm test
-npm run build
-```
-
-`.env` 的 `VUE_APP_API` 是 API 根網址（含結尾 `/`），`VUE_APP_PATH` 是課程 API 路徑。後台須使用對應的六角學院帳號登入；不要把密碼或 token 寫入儲存庫。可用 `.env.local` 設定自己的路徑。
-
-`npm test` 使用 jsdom 與實際 Vue 元件進行回歸測試，HTTP 以測試替身隔離，不會寫入既有 API。若要手動測試新增、刪除、優惠碼及結帳，另開兩個終端：
-
-```bash
-# 終端一：只在 127.0.0.1 開放的記憶體 API，重啟即清空
-node tests/mock-api.js
-
-# 終端二：獨立 QA 網址 http://127.0.0.1:8081/snbl/
-VUE_APP_API=http://127.0.0.1:8787/ npm run serve -- --host 127.0.0.1 --port 8081
-```
-
-**一般預覽：8080，連六角 API，可登入後台；隔離測試：8081 → 8787，只能測前台，不提供管理員登入。完成隔離測試後請關閉這兩個終端服務。**
-
-隔離環境只有兩件公開商品的測試樣本，使用 `QA10` 可測九折，`reset` 取消折扣。它不會轉送請求到六角 API，也不代表真實後端寫入、登入或資料庫測試已通過。表單僅填虛構資料。一般 `npm run serve` 與正式建置仍連原 API。
-
-部署沿用 `vue.config.js`：建置輸出 `docs/`，資源基底 `/snbl/`，適合現有 GitHub Pages。發布來源使用 `main` 分支的 `/docs`；每次更新須先在此分支執行 `npm run build`，再將產物與程式一併提交及推送。網址維持 https://cutecat8110.github.io/snbl/。若只驗證建置，可用 `npm run build -- --dest /tmp/snbl-preview/snbl`，再 `python3 -m http.server 8082 --bind 127.0.0.1 --directory /tmp/snbl-preview`，開啟 `http://127.0.0.1:8082/snbl/`。
-
-### 圖片維護
-
-保留原始圖片網址、像素與裁切。首頁商品改用延後載入的圖片，商品／文章圖預留原始尺寸並非同步解碼；首頁首張及商品主圖優先載入。輪播使用專案既有 Swiper 6 的 Lazy 模組，不升級套件。
-
-`src/assets/image-dimensions.json` 只保存公開圖片的寬高。後台新增／替換圖片後，可執行 `python3 scripts/image-metadata.py` 更新（需 Python 3、curl 與網路）。腳本只讀取目前公開 API／圖片檔頭，不寫入 API、不保存帳密或下載原圖檔。未知的新網址仍會正常載入，只是在更新尺寸表前沒有預留精確高度。
-
-`qa/image-profile.html` 是本機量測工具，不放進 `public/`，不隨站台部署。把它複製到本機 production 預覽根目錄，與 `/snbl/` 同源開啟，等待 API 完成後量測 12 秒內、未捲動時的圖片資源請求。請用同一瀏覽器／尺寸比較；跨來源圖片無法取得可靠 transferSize，因此紀錄只比較請求數，不宣稱下載 MB 或載入時間的固定改善比例。
-
-圖片仍由原儲存服務供應；原站 API 不變。目前 Pages 使用 `main` 的 `/docs`。
-
-### 素材維護
-
-頁面仍採原本的非同步路由；`vue.config.js` 關閉全路由 prefetch，避免前台提前下載後台編輯器。字型網址維護於 `public/index.html`；圖片尺寸表與原 API 維持原流程。
-
-</details>
+前台可直接體驗；後台需管理帳號，不提供公開帳密。訂單與付款為練習流程，不會實際扣款或出貨；請勿填入個人資訊。
