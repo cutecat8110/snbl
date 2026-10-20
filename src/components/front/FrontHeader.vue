@@ -145,9 +145,16 @@ export default {
       sotrageMethods.save(this.myFavorite)
       this.emitter.emit('getMyFavorite')
     },
-    getCart() {
+    getCart(fresh = false) {
+      if (this.cartRead && !fresh) return this.cartRead
+      const version = (this.cartReadVersion || 0) + 1
+      this.cartReadVersion = version
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      return request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
+      const pending = request(this, () => this.$http.get(url, { timeout: 15000 }), (res) => {
+        if (version !== this.cartReadVersion) return true
+        // A count update can mount checkout consumers before this request's finally runs.
+        // They must not reuse a completed read whose events they have already missed.
+        this.cartRead = null
         const carts = res.data.data.carts.map((item) => {
           const variants = item.selected?.length ? item.selected : [{ color: '', size: '', qty: item.qty }]
           const selected = variants.map((variant) => ({ ...variant, qty: Math.max(1, Number(variant.qty) || 1) }))
@@ -166,6 +173,11 @@ export default {
         this.emitter.emit('upDateCart', [this.cart, this.showCart, this.tempShowCart])
         return true
       })
+      this.cartRead = pending
+      pending.finally(() => {
+        if (this.cartRead === pending) this.cartRead = null
+      })
+      return pending
     },
     getAll() {
       return request(this, () => readCatalogue(this.$http), (res) => {
@@ -196,7 +208,7 @@ export default {
           } })
           : () => this.$http.delete(url)
         return request(this, send, async () => {
-          await this.getCart()
+          await this.getCart(true)
           this.$swal({ icon: 'success', title: '商品已移出購物車', timer: 1500, showConfirmButton: false })
         })
       })
@@ -216,7 +228,7 @@ export default {
         const cart = { product_id: selected.id, qty: added, selected: variants }
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
         return request(this, () => this.$http.post(url, { data: cart }), async () => {
-          await this.getCart()
+          await this.getCart(true)
           this.$swal({ icon: 'success', title: '商品已加入購物車', timer: 1500, showConfirmButton: false })
         })
       })
@@ -234,7 +246,7 @@ export default {
           selected: variants
         }
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-        return request(this, () => this.$http.put(url, { data: cart }), () => this.getCart())
+        return request(this, () => this.$http.put(url, { data: cart }), () => this.getCart(true))
       })
     },
     closeNavigation() {
@@ -255,7 +267,7 @@ export default {
       this.submittingOrder = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
       return request(this, () => this.$http.post(url, { data: item }), async (res) => {
-        await this.getCart()
+        await this.getCart(true)
         await this.$router.push(`/order/${res.data.orderId}`)
       }).finally(() => { this.submittingOrder = false })
     }

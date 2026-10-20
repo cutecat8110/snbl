@@ -68,8 +68,8 @@
           </div>
           <!-- 刪除 -->
           <div class="align-box">
-            <button class="btn delCart" @click.prevent="delCart(item.id, item.selected[0])">
-              <i class="material-icons md-dark">close</i>
+            <button class="btn delCart" type="button" :aria-label="`移除 ${item.product.title} ${item.selected[0].color} ${item.selected[0].size}`" @click.prevent="delCart(item.id, item.selected[0])">
+              <i class="material-icons md-dark" aria-hidden="true">close</i>
             </button>
           </div>
         </div>
@@ -87,8 +87,8 @@
               {{ item.product.title }}
               <!-- 刪除 -->
               <div class="del-box">
-                <button class="btn delCart" @click.prevent="delCart(item.id, item.selected[0])">
-                  <i class="material-icons md-dark">close</i>
+                <button class="btn delCart" type="button" :aria-label="`移除 ${item.product.title} ${item.selected[0].color} ${item.selected[0].size}`" @click.prevent="delCart(item.id, item.selected[0])">
+                  <i class="material-icons md-dark" aria-hidden="true">close</i>
                 </button>
               </div>
             </div>

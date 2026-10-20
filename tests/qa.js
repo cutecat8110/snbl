@@ -209,6 +209,64 @@ test('API failures clear loading and preserve failed mutations', async () => {
   assert.equal(received,false);assert.equal(states.at(-1),false)
   emitter.off('isLoading',handler)
 })
+test('late cart reads cannot replace a newer mutation refresh', async () => {
+  const responses = []
+  const vm = vmFor(component('components/front/FrontHeader.vue'), {
+    $http: { get: () => new Promise(resolve => responses.push(resolve)) },
+    emitter, $swal: async () => ({})
+  })
+  const response = qty => ({ data: { success: true, data: {
+    carts: [{ id: 'c1', product_id: 'p1', product, qty, selected: [{ color: 'Red', size: 'S', qty }] }],
+    total: qty * 100, final_total: qty * 100
+  } } })
+  const old = vm.getCart()
+  const fresh = vm.getCart(true)
+  responses[1](response(3)); await fresh
+  responses[0](response(1)); await old
+  assert.equal(vm.qty, 3)
+  assert.equal(vm.cart.total, 300)
+})
+test('simultaneous cart consumers share a pending read and can retry after it fails', async () => {
+  let calls = 0
+  const rejections = []
+  const vm = vmFor(component('components/front/FrontHeader.vue'), {
+    $http: { get: () => { calls++; return new Promise((resolve, fail) => { rejections.push(fail) }) } },
+    emitter, $swal: async () => ({})
+  })
+  const first = vm.getCart(), second = vm.getCart()
+  rejections.forEach(reject => reject(Error('offline')))
+  await Promise.all([first, second]); await flushPromises()
+  assert.equal(calls, 1)
+  vm.$http.get = async () => ({ data: { success: true, data: { carts: [], total: 0, final_total: 0 } } })
+  assert.equal(await vm.getCart(), true)
+})
+test('checkout mounted after the cart count receives items and totals from a completed read', async () => {
+  const api = cartApi()
+  api.state.items = [{ id: 'c1', product_id: 'p1', product, qty: 2, selected: [{ color: 'Red', size: 'S', qty: 2 }] }]
+  const header = vmFor(component('components/front/FrontHeader.vue'), { $http: api, emitter, $swal: async () => ({}) })
+  const refresh = () => header.getCart()
+  emitter.on('emitToCart', refresh)
+  const checkout = component('views/front/CartCheckOut.vue')
+  checkout.components = {
+    CartList: component('components/common/CartList.vue'),
+    CartPayMent: component('components/common/CartPayMent.vue')
+  }
+  const host = mount({
+    data: () => ({ qty: 0 }),
+    created() { emitter.on('upDateQty', qty => { this.qty = qty }) },
+    render() { return this.qty ? Vue.h(checkout) : null }
+  }, { global: globals })
+  try {
+    await header.getCart()
+    await flushPromises()
+    assert.equal(host.get('h1').text(), '購物清單 (2)')
+    assert.equal(host.findComponent(checkout.components.CartList).vm.showCart.length, 1)
+    assert.equal(host.findComponent(checkout.components.CartPayMent).vm.cart.final_total, 100)
+  } finally {
+    host.unmount()
+    emitter.off('emitToCart', refresh)
+  }
+})
 test('loading remains active until every concurrent request settles', async () => {
   const run=load(path.join(root,'src/methods/request')).default
   const states=[]; const handler=value=>states.push(value);emitter.on('isLoading',handler)
